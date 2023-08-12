@@ -70,17 +70,17 @@ class LatestNewsWidget extends StatelessWidget {
                     getVerSpace(FetchPixels.getPixelHeight(5)),
                     Container(
                       decoration: BoxDecoration(
-                          color: Color(news.coinColor!).withOpacity(0.3),
+                          color: R.colors.theme.withOpacity(0.3),
                           borderRadius: BorderRadius.circular(
                               FetchPixels.getPixelHeight(3))),
                       padding: EdgeInsets.symmetric(
                           horizontal: FetchPixels.getPixelWidth(8),
                           vertical: FetchPixels.getPixelHeight(5)),
                       child: Text(
-                        news.coinName!.toUpperCase(),
+                        news.coinCategory!.toUpperCase(),
                         style: R.textStyle.regularLato().copyWith(
                             fontSize: FetchPixels.getPixelHeight(10),
-                            color: Color(news.coinColor!)),
+                            color: R.colors.theme),
                       ),
                     ),
                     getVerSpace(FetchPixels.getPixelHeight(5)),
@@ -220,17 +220,17 @@ class MyLatestNewsWidget extends StatelessWidget {
                     getVerSpace(FetchPixels.getPixelHeight(5)),
                     Container(
                       decoration: BoxDecoration(
-                          color: Color(news.coinColor!).withOpacity(0.3),
+                          color: R.colors.theme.withOpacity(0.3),
                           borderRadius: BorderRadius.circular(
                               FetchPixels.getPixelHeight(3))),
                       padding: EdgeInsets.symmetric(
                           horizontal: FetchPixels.getPixelWidth(8),
                           vertical: FetchPixels.getPixelHeight(5)),
                       child: Text(
-                        news.coinName!.toUpperCase(),
+                        news.coinCategory!.toUpperCase(),
                         style: R.textStyle.regularLato().copyWith(
                             fontSize: FetchPixels.getPixelHeight(10),
-                            color: Color(news.coinColor!)),
+                            color: R.colors.theme),
                       ),
                     ),
                     getVerSpace(FetchPixels.getPixelHeight(5)),

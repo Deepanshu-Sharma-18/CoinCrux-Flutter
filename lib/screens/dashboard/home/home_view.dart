@@ -80,7 +80,7 @@ class _HomeViewState extends State<HomeView> {
                   child: Text(
                     "See All",
                     style: R.textStyle.regularLato().copyWith(
-                        // decoration: TextDecoration.underline,
+                        //
                         fontSize: FetchPixels.getPixelHeight(12),
                         color: R.colors.blackColor.withOpacity(0.5)),
                   ),
@@ -138,8 +138,7 @@ class _HomeViewState extends State<HomeView> {
                                             ? news[index]
                                             : userNews[index],
                                     index: index,
-                                    currentImage:currentImage,
-                                    
+                                    currentImage: currentImage,
                                   ),
                                 ),
                               ),
@@ -293,7 +292,6 @@ class _HomeViewState extends State<HomeView> {
                   child: Text(
                     "See All",
                     style: R.textStyle.regularLato().copyWith(
-                        decoration: TextDecoration.underline,
                         fontSize: FetchPixels.getPixelHeight(12),
                         color: R.colors.headings.withOpacity(0.5)),
                   ),
@@ -308,8 +306,7 @@ class _HomeViewState extends State<HomeView> {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       List<NewsModel> news = snapshot.data!.docs
-                          .map((e) => NewsModel.fromJson(
-                              e.data() as Map<String, dynamic>))
+                          .map((e) => NewsModel.fromJson(e.data()))
                           .toList();
                       List<NewsModel> userNews = [];
                       news.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
@@ -329,6 +326,7 @@ class _HomeViewState extends State<HomeView> {
                             : userNews.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
+                          
                           return MyLatestNewsWidget(
                             news: firebaseAuth.currentUser == null ||
                                     auth.userM.topics!.isEmpty
@@ -369,7 +367,6 @@ class _HomeViewState extends State<HomeView> {
                   child: Text(
                     "See all",
                     style: R.textStyle.regularLato().copyWith(
-                        decoration: TextDecoration.underline,
                         fontSize: FetchPixels.getPixelHeight(12),
                         color: R.colors.headings.withOpacity(0.5)),
                   ),
@@ -447,7 +444,6 @@ class _HomeViewState extends State<HomeView> {
                   child: Text(
                     "See all",
                     style: R.textStyle.regularLato().copyWith(
-                        decoration: TextDecoration.underline,
                         fontSize: FetchPixels.getPixelHeight(12),
                         color: R.colors.headings.withOpacity(0.5)),
                   ),

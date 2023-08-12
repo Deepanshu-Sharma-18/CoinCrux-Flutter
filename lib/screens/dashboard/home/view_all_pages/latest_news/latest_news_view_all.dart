@@ -56,7 +56,7 @@ class LatestViewAll extends StatelessWidget {
                          // ),
                          Container(
                            decoration: BoxDecoration(
-                               color: Color(news.coinColor!).withOpacity(0.3),
+                               color: R.colors.theme.withOpacity(0.3),
                                borderRadius: BorderRadius.circular(
                                    FetchPixels.getPixelHeight(3))),
                            padding: EdgeInsets.symmetric(
@@ -67,7 +67,7 @@ class LatestViewAll extends StatelessWidget {
                              news.coinName!,
                              style: R.textStyle.regularLato().copyWith(
                                  fontSize: FetchPixels.getPixelHeight(10),
-                                 color: Color(news.coinColor!)),
+                                 color: R.colors.theme),
                            ),
                          ),
                        ],

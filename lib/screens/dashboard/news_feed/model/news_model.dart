@@ -1,11 +1,11 @@
-class NewsModel{
+class NewsModel {
   String? coinImage;
   String? coinDescription;
   String? coinType;
   String? coinHeading;
   String? coinName;
   String? newsId;
-  int? coinColor;
+  String? coinCategory;
   List<dynamic>? totalLikes = [];
   List<dynamic>? totalDislikes = [];
   DateTime? createdAt;
@@ -13,22 +13,20 @@ class NewsModel{
   String? topicTitle;
   String? marketsCard;
 
-
   NewsModel(
       {this.coinImage,
-        this.coinDescription,
-        this.coinType,
-        this.coinHeading,
-        this.coinName,
-        this.newsId,
-        this.totalLikes,
-        this.totalDislikes,
-        this.createdAt,
-        this.coinColor,
-        this.createdBy,
-        this.topicTitle,
-        this.marketsCard
-      });
+      this.coinDescription,
+      this.coinType,
+      this.coinHeading,
+      this.coinName,
+      this.newsId,
+      this.totalLikes,
+      this.totalDislikes,
+      this.createdAt,
+      this.coinCategory,
+      this.createdBy,
+      this.topicTitle,
+      this.marketsCard});
 
   NewsModel.fromJson(Map<String, dynamic> json) {
     coinImage = json['coinImage'];
@@ -40,7 +38,7 @@ class NewsModel{
     totalLikes = json['totalLikes'];
     totalDislikes = json['totalDislikes'];
     createdAt = json['createdAt'].toDate();
-    coinColor = json['coinColor'];
+    coinCategory = json['category'];
   }
 
   Map<String, dynamic> toJson() {
@@ -54,7 +52,7 @@ class NewsModel{
     data['totalLikes'] = this.totalLikes;
     data['totalDislikes'] = this.totalDislikes;
     data['createdAt'] = this.createdAt;
-    data['coinColor'] = this.coinColor;
+    data['category'] = this.coinCategory;
     data['createdBy'] = this.createdBy;
     data['marketsCard'] = this.marketsCard;
     data['topicTitle'] = this.topicTitle;

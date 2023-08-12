@@ -18,7 +18,7 @@ class StoriesWidget extends StatelessWidget {
     return getPaddingWidget(
       EdgeInsets.only(right: FetchPixels.getPixelWidth(10),),
       SizedBox( 
-        width: FetchPixels.getPixelWidth(isAllView?140:75),
+        width: FetchPixels.getPixelWidth(isAllView?150:90),
         child: Column(
           children: [
             Container(
@@ -34,7 +34,7 @@ class StoriesWidget extends StatelessWidget {
                 },
                 child: Container(
                   height: FetchPixels.getPixelHeight(isAllView?200:120),
-                  width: FetchPixels.getPixelWidth(isAllView?140:75),
+                  width: FetchPixels.getPixelWidth(isAllView?150:75),
                   decoration: BoxDecoration(
                       borderRadius:
                       BorderRadius.circular(FetchPixels.getPixelHeight(10)),
@@ -49,7 +49,7 @@ class StoriesWidget extends StatelessWidget {
                 getVerSpace(FetchPixels.getPixelHeight(10)),
                 Container(
                   decoration: BoxDecoration(
-                      color: Color(news.coinColor!).withOpacity(0.3),
+                      color: R.colors.theme.withOpacity(0.3),
                       borderRadius: BorderRadius.circular(
                           FetchPixels.getPixelHeight(5))),
                   padding: EdgeInsets.symmetric(
@@ -60,7 +60,7 @@ class StoriesWidget extends StatelessWidget {
                     news.coinName!,
                     style: R.textStyle.regularLato().copyWith(
                         fontSize: FetchPixels.getPixelHeight(12),
-                        color: Color(news.coinColor!)),
+                        color: R.colors.theme),
                   ),
                 ),
                 getVerSpace(FetchPixels.getPixelHeight(5)),

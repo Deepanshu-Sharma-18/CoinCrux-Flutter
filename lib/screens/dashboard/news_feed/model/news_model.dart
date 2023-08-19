@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 class NewsModel {
   String? coinImage;
   String? coinDescription;
@@ -11,7 +12,7 @@ class NewsModel {
   DateTime? createdAt;
   String? createdBy;
   String? topicTitle;
-  String? marketsCard;
+  bool? marketsCard;
 
   NewsModel(
       {this.coinImage,
@@ -41,21 +42,21 @@ class NewsModel {
     coinCategory = json['category'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['coinImage'] = this.coinImage;
-    data['coinDescription'] = this.coinDescription;
-    data['coinType'] = this.coinType;
-    data['coinHeading'] = this.coinHeading;
-    data['coinName'] = this.coinName;
-    data['newsId'] = this.newsId;
-    data['totalLikes'] = this.totalLikes;
-    data['totalDislikes'] = this.totalDislikes;
-    data['createdAt'] = this.createdAt;
-    data['category'] = this.coinCategory;
-    data['createdBy'] = this.createdBy;
-    data['marketsCard'] = this.marketsCard;
-    data['topicTitle'] = this.topicTitle;
-    return data;
+  factory NewsModel.fromMap(Map<String, dynamic> map) {
+    return NewsModel(
+      coinImage: map['coinImage'] ?? 'https://cryptologos.cc/logos/bitcoin-btc-logo.png',
+      coinDescription: map['coinDescription'] ?? '',
+      coinType: map['coinType'] ?? '',
+      coinHeading: map['coinHeading'] ?? '',
+      coinName: map['coinName'] ?? '',
+      newsId: map['newsId'] ?? '',
+      totalLikes: map['totalLikes'] ?? 0,
+      totalDislikes: map['totalDislikes'] ?? 0,
+      createdAt: map['createdAt'] != null ? (map['createdAt'] as Timestamp).toDate() : null,
+      coinCategory: map['coinCategory'] ?? '',
+      createdBy: map['createdBy'] ?? '',
+      topicTitle: map['topicTitle'] ?? '',
+      marketsCard: map['marketCards'] ?? false,
+    );
   }
 }

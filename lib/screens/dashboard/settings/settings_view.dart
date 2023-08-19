@@ -7,7 +7,6 @@ import 'package:coincrux/screens/dashboard/settings/pages/book_marks_view.dart';
 import 'package:coincrux/screens/dashboard/settings/pages/feedback_view.dart';
 import 'package:coincrux/screens/dashboard/settings/pages/privacy_policy.dart';
 import 'package:coincrux/screens/dashboard/settings/pages/terms_condition.dart';
-import 'package:coincrux/screens/dashboard/settings/pages/your_feed.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -93,7 +92,7 @@ class _SettingsViewState extends State<SettingsView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("Save Your Preferences",style: R.textStyle.mediumLato().copyWith(color: R.colors.blackColor,fontSize: FetchPixels.getPixelHeight(20)),),
-                  Text("Sing in to save your Likes & Bookmarks.",style: R.textStyle.regularLato().copyWith(color: R.colors.blackColor,fontSize: FetchPixels.getPixelHeight(16)),),
+                  Text("Sign in to save your Likes & Bookmarks.",style: R.textStyle.regularLato().copyWith(color: R.colors.blackColor,fontSize: FetchPixels.getPixelHeight(16)),),
                   SizedBox(height: FetchPixels.getPixelHeight(30),),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

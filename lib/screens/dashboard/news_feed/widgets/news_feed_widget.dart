@@ -108,42 +108,6 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                             );
                           },
                         ),
-                        // Consumer<AuthProvider>(
-                        //   builder: (context,authProvider,child){
-                        //     return InkWell(
-                        //       onTap: () async {
-                        //         if(firebaseAuth.currentUser == null){
-                        //           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please login")));
-                        //         }else{
-                        //           DocumentSnapshot document = await fireStore
-                        //               .collection('users')
-                        //               .doc(firebaseAuth.currentUser!.uid)
-                        //               .get();
-                        //           List<dynamic> isBookMark = document.get('bookMarks');
-                        //
-                        //           if (isBookMark.contains(widget.news.newsId)) {
-                        //             isBookMark.remove(widget.news.newsId);
-                        //           } else {
-                        //             isBookMark.add(widget.news.newsId);
-                        //           }
-                        //
-                        //           await fireStore
-                        //               .collection('users')
-                        //               .doc(firebaseAuth.currentUser!.uid)
-                        //               .update({"bookMarks": isBookMark});
-                        //           authProvider.userM.bookMarks = isBookMark;
-                        //           authProvider.update();
-                        //         }
-                        //
-                        //       },
-                        //       child: Icon(
-                        //         Icons.bookmark,
-                        //         size: FetchPixels.getPixelHeight(40),
-                        //         color: firebaseAuth.currentUser == null ? R.colors.unSelectedIcon
-                        //             : authProvider.userM.bookMarks == null ? R.colors.unSelectedIcon : authProvider.userM.bookMarks!.contains(widget.news.newsId) ? R.colors.theme : R.colors.unSelectedIcon,
-                        //       ),
-                        //     );
-                        //   },
                         // ),
                       ],
                     ),
@@ -340,30 +304,30 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
               ],
             ),
           ),
-          authProvider.isFeedView == true? Container(
-            padding: EdgeInsets.all(FetchPixels.getPixelHeight(20)),
-            width: FetchPixels.width,
-            color: R.colors.bgContainer2.withOpacity(0.2),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Hash Key will charge \$15.00 per month.",
-                  style: R.textStyle.mediumLato().copyWith(
-                      fontSize: FetchPixels.getPixelHeight(17),
-                      color: R.colors.blackColor),
-                ),
-                Text(
-                  "Tap to read more.",
-                  style: R.textStyle.mediumLato().copyWith(
-                      fontSize: FetchPixels.getPixelHeight(15),
-                      color: R.colors.fill),
-                ),
-              ],
-            ),
-          ):SizedBox() ,
-          getDivider(R.colors.fill.withOpacity(0.5),
-              FetchPixels.getPixelHeight(30), FetchPixels.getPixelHeight(1)),
+          // authProvider.isFeedView == true? Container(
+          //   padding: EdgeInsets.all(FetchPixels.getPixelHeight(20)),
+          //   width: FetchPixels.width,
+          //   color: R.colors.bgContainer2.withOpacity(0.2),
+          //   child: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: [
+          //       Text(
+          //         "Hash Key will charge \$15.00 per month.",
+          //         style: R.textStyle.mediumLato().copyWith(
+          //             fontSize: FetchPixels.getPixelHeight(17),
+          //             color: R.colors.blackColor),
+          //       ),
+          //       Text(
+          //         "Tap to read more.",
+          //         style: R.textStyle.mediumLato().copyWith(
+          //             fontSize: FetchPixels.getPixelHeight(15),
+          //             color: R.colors.fill),
+          //       ),
+          //     ],
+          //   ),
+          // ):SizedBox() ,
+          // getDivider(R.colors.fill.withOpacity(0.5),
+          //     FetchPixels.getPixelHeight(30), FetchPixels.getPixelHeight(1)),
         ],
       ),
     );
@@ -824,31 +788,31 @@ class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
               ],
             ),
           ),
-          authProvider.isFeedView == true?Container(
-            padding: EdgeInsets.all(FetchPixels.getPixelHeight(20)),
-            width: FetchPixels.width,
-            color: R.colors.bgContainer2.withOpacity(0.2),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Hash Key will charge \$15.00 per month.",
-                  style: R.textStyle.mediumLato().copyWith(
-                      fontSize: FetchPixels.getPixelHeight(17),
-                      color: R.colors.blackColor),
-                ),
-                Text(
-                  "Tap to read more.",
-                  style: R.textStyle.mediumLato().copyWith(
-                      fontSize: FetchPixels.getPixelHeight(15),
-                      color: R.colors.fill),
-                ),
-              ],
-            ),
-          ):SizedBox() ,
+          // authProvider.isFeedView == true?Container(
+          //   padding: EdgeInsets.all(FetchPixels.getPixelHeight(20)),
+          //   width: FetchPixels.width,
+          //   color: R.colors.bgContainer2.withOpacity(0.2),
+          //   child: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: [
+          //       Text(
+          //         "Hash Key will charge \$15.00 per month.",
+          //         style: R.textStyle.mediumLato().copyWith(
+          //             fontSize: FetchPixels.getPixelHeight(17),
+          //             color: R.colors.blackColor),
+          //       ),
+          //       Text(
+          //         "Tap to read more.",
+          //         style: R.textStyle.mediumLato().copyWith(
+          //             fontSize: FetchPixels.getPixelHeight(15),
+          //             color: R.colors.fill),
+          //       ),
+          //     ],
+          //   ),
+          // ):SizedBox() ,
 
-          getDivider(R.colors.fill.withOpacity(0.5),
-              FetchPixels.getPixelHeight(30), FetchPixels.getPixelHeight(1)),
+          // getDivider(R.colors.fill.withOpacity(0.5),
+          //     FetchPixels.getPixelHeight(30), FetchPixels.getPixelHeight(1)),
         ],
       ),
     );

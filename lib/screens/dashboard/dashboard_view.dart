@@ -10,7 +10,6 @@ import '../../base/widget_utils.dart';
 import '../../resources/resources.dart';
 import '../auth/provider/auth_provider.dart';
 import 'home/home_view.dart';
-import 'home/notifications/notifications_view.dart';
 import 'news_feed/news_feed_view.dart';
 import 'settings/settings_view.dart';
 import 'profile/profile_view.dart';
@@ -36,11 +35,10 @@ class _DashBoardPageState extends State<DashBoardPage> {
     currentPage = widget.index;
     pageController = PageController(initialPage: widget.index);
     super.initState();
-  } 
-  
+  }
+
   @override
   Widget build(BuildContext context) {
-    
     return Consumer<AuthProvider>(
       builder: (context, auth, child) {
         return Scaffold(
@@ -62,9 +60,9 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                     ? "Settings"
                                     : "Profile",
                         style: R.textStyle.mediumLato().copyWith(
-                          fontSize: FetchPixels.getPixelHeight(23),
-                          color: R.colors.blackColor,
-                        ),
+                              fontSize: FetchPixels.getPixelHeight(23),
+                              color: R.colors.blackColor,
+                            ),
                       ),
                       Spacer(),
                       // ... your other AppBar content ...
@@ -96,7 +94,6 @@ class _DashBoardPageState extends State<DashBoardPage> {
               ? null
               : CurvedNavigationBar(
                   backgroundColor: R.colors.theme,
-                  
                   items: [
                     Icon(
                       Icons.home,

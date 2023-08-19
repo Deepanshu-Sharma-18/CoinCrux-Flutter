@@ -27,14 +27,17 @@ class LatestViewAll extends StatelessWidget {
           },
           child: Row(
             children: [
-              Container(
-                height: FetchPixels.getPixelHeight(90),
-                width: FetchPixels.getPixelWidth(80),
-                margin: EdgeInsets.only(left: 5),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    image: isNotification ? getDecorationAssetImage(context, news.coinImage!,fit: BoxFit.fill) : getDecorationNetworkImage(context, news.coinImage!,
-                        fit: BoxFit.cover)
+               ClipRRect(
+                borderRadius: BorderRadius.circular(5),
+                child: Container(
+                  height: FetchPixels.getPixelHeight(90),
+                  width: FetchPixels.getPixelWidth(80),
+                  margin: EdgeInsets.only(left: 5),
+                  decoration: BoxDecoration(
+                    image: isNotification
+                        ? getDecorationAssetImage(context, news.coinImage!, fit: BoxFit.fill)
+                        : getDecorationNetworkImage(context, news.coinImage!, fit: BoxFit.fill),
+                  ),
                 ),
               ),
               getHorSpace(FetchPixels.getPixelWidth(10)),
@@ -48,12 +51,6 @@ class LatestViewAll extends StatelessWidget {
                      padding: EdgeInsets.only(right: 10),
                      child: Row(
                        children: [
-                         // Text(
-                         //   "Source ${19} min",
-                         //   style: R.textStyle.regularLato().copyWith(
-                         //       fontSize: FetchPixels.getPixelHeight(13),
-                         //       color: Colors.grey),
-                         // ),
                          Container(
                            decoration: BoxDecoration(
                                color: R.colors.theme.withOpacity(0.3),

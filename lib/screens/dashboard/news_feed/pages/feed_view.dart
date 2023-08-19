@@ -130,8 +130,7 @@ class _FeedViewState extends State<FeedView> {
                             .update({"totalRead": totalRead}).then((value) {
                           c.isFeedView = !c.isFeedView;
                           c.update();
-                          // Get.to(NewsDetailPage(
-                          //     news: widget.news, index: widget.index));
+
                         });
                       }
                     }

@@ -19,7 +19,8 @@ class PriceAnalysis extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool isActive = index == currentImage; // Determine if this card is active
+    final bool isActive =
+        index == currentImage; // Determine if this card is active
 
     return InkWell(
       onTap: () {
@@ -66,11 +67,11 @@ class PriceAnalysis extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                       style: R.textStyle.mediumLato().copyWith(
-                        fontSize: FetchPixels.getPixelHeight(14),
-                        color: isActive
-                            ? R.colors.headings
-                            : R.colors.darkBlue, // Adjust text color
-                      ),
+                            fontSize: FetchPixels.getPixelHeight(14),
+                            color: isActive
+                                ? R.colors.headings
+                                : R.colors.darkBlue, // Adjust text color
+                          ),
                     ),
                   ),
                   getVerSpace(FetchPixels.getPixelHeight(1)),

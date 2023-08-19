@@ -53,12 +53,6 @@ class _MyAppState extends State<MyApp> {
       locale: _locale,
 
       fallbackLocale: Locale('en', 'US'),
-      // localizationsDelegates: [
-      //   AppLocalization.delegate,
-      //   GlobalMaterialLocalizations.delegate,
-      //   GlobalWidgetsLocalizations.delegate,
-      //   GlobalCupertinoLocalizations.delegate,
-      // ],
       supportedLocales: const [
         Locale('en', 'US'),
         Locale('ar', 'SA'),

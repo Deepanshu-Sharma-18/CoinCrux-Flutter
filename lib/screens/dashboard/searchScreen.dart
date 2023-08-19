@@ -93,7 +93,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         .toList();
 
                    List<NewsModel> searchedNews = news.where((element) {
-                      String coinName = element.coinName!.toLowerCase();
+                      String coinName = element.assetName!.toLowerCase();
                       return coinName.contains(query.toLowerCase());
                     }).toList();
 

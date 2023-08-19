@@ -135,7 +135,7 @@ class _BookmarkState extends State<Bookmark> {
                         }
 
                         List<NewsModel> filteredNews = bookMarkedNews.where((element) {
-                         String coinName = element.coinName!.toLowerCase();
+                         String coinName = element.assetName!.toLowerCase();
                          return coinName.contains(query.toLowerCase());
                         }).toList();
 

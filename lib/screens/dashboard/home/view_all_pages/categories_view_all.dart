@@ -57,7 +57,7 @@ class CategoriesViewAll extends StatelessWidget {
                             userNews = news
                                 .where((newsItem) => auth.userM.topics!.any(
                                     (topic) =>
-                                        newsItem.coinName == topic.name &&
+                                        newsItem.assetName == topic.name &&
                                         (topic.newsType == 0 ||
                                             topic.newsType == 1)))
                                 .toList();
@@ -74,8 +74,8 @@ class CategoriesViewAll extends StatelessWidget {
                                       coinName:
                                           firebaseAuth.currentUser == null ||
                                                   auth.userM.topics!.isEmpty
-                                              ? news[index].coinName!
-                                              : userNews[index].coinName!,
+                                              ? news[index].assetName!
+                                              : userNews[index].assetName!,
                                     ));
                                     // Get.to(NewsDetailPage(news: newsModel,index: index,));
                                   },
@@ -179,7 +179,7 @@ class CategoriesViewAll extends StatelessWidget {
                           List<NewsModel> userNews = [];
                           if(auth.userM.topics != null){
                             userNews = news.where((newsItem) =>
-                                auth.userM.topics!.any((topic) => newsItem.coinName == topic.name && (topic.newsType == 0 || topic.newsType == 1))
+                                auth.userM.topics!.any((topic) => newsItem.assetName == topic.name && (topic.newsType == 0 || topic.newsType == 1))
                             ).toList();
                           }
                           return GridView.builder(
@@ -190,7 +190,7 @@ class CategoriesViewAll extends StatelessWidget {
                             itemBuilder: (context,index){
                               return InkWell(
                                 onTap: (){
-                                  Get.to(TopicsView(coinsName: firebaseAuth.currentUser == null || auth.userM.topics!.isEmpty ? news[index].coinName! : userNews[index].coinName!));
+                                  Get.to(TopicsView(coinsName: firebaseAuth.currentUser == null || auth.userM.topics!.isEmpty ? news[index].assetName! : userNews[index].assetName!));
                                 },
                                 child: getPaddingWidget(
                                   EdgeInsets.only(right: FetchPixels.getPixelWidth(8)),
@@ -207,7 +207,7 @@ class CategoriesViewAll extends StatelessWidget {
                                       ),
                                       getVerSpace(FetchPixels.getPixelHeight(5)),
                                       Text(
-                                        firebaseAuth.currentUser == null || auth.userM.topics!.isEmpty ? news[index].coinName! : userNews[index].coinName!,
+                                        firebaseAuth.currentUser == null || auth.userM.topics!.isEmpty ? news[index].assetName! : userNews[index].assetName!,
                                         style: R.textStyle.regularLato().copyWith(
                                             fontSize: FetchPixels.getPixelHeight(14),
                                             color: R.colors.unSelectedIcon),

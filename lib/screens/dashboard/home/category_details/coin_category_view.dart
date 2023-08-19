@@ -59,7 +59,7 @@ class _CoinCategoryViewState extends State<CoinCategoryView> {
               List<NewsModel> userNews = [];
               if(auth.userM.topics != null){
                 userNews = news.where((newsItem) =>
-                    auth.userM.topics!.any((topic) => newsItem.coinName == topic.name)
+                    auth.userM.topics!.any((topic) => newsItem.assetName == topic.name)
                 ).toList();
               }
               return CardSwiper(

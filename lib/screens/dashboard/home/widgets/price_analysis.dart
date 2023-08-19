@@ -25,7 +25,7 @@ class PriceAnalysis extends StatelessWidget {
     return InkWell(
       onTap: () {
         Get.to(CoinCategoryView(
-          coinName: newsModel.coinName!,
+          coinName: newsModel.assetName!,
         ));
       },
       child: AnimatedContainer(

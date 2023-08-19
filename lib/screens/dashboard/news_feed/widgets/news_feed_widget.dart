@@ -78,7 +78,7 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                               borderRadius: BorderRadius.circular(
                                   FetchPixels.getPixelHeight(5))),
                           child: Text(
-                            widget.news.coinName!,
+                            widget.news.assetName!,
                             style: R.textStyle.regularLato().copyWith(
                                 fontSize: FetchPixels.getPixelHeight(13),
                                 color: R.colors.unSelectedIcon),
@@ -526,7 +526,7 @@ class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
                               borderRadius: BorderRadius.circular(
                                   FetchPixels.getPixelHeight(5))),
                           child: Text(
-                            widget.news.coinName!,
+                            widget.news.assetName!,
                             style: R.textStyle.regularLato().copyWith(
                                 fontSize: FetchPixels.getPixelHeight(13),
                                 color: R.colors.unSelectedIcon),

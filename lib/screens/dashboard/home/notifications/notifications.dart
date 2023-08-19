@@ -84,7 +84,7 @@ class Notifications extends StatelessWidget {
                                         vertical: FetchPixels.getPixelHeight(3),
                                       ),
                                       child: Text(
-                                        news.coinName!,
+                                        news.assetName!,
                                         style: R.textStyle.regularLato().copyWith(
                                             fontSize: FetchPixels.getPixelHeight(10),
                                             color: R.colors.bitcoinColor),

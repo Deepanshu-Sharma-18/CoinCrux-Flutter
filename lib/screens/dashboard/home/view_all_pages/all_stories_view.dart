@@ -69,7 +69,7 @@ class _AllStoriesViewState extends State<AllStoriesView> {
                           NewsModel.fromJson(e.data() as Map<String, dynamic>))
                       .toList();
                   searchNews = news.where((element) {
-                    String name = element.coinName!.toLowerCase();
+                    String name = element.assetName!.toLowerCase();
                     return name.contains(query);
                   }).toList();
                   return Center(

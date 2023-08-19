@@ -30,7 +30,7 @@ class StoriesWidget extends StatelessWidget {
               ),
               child: InkWell(
                 onTap: (){
-                  Get.to(StoriesView(coinsName: news.coinName!,));
+                  Get.to(StoriesView(coinsName: news.assetName!,));
                 },
                 child: Container(
                   height: FetchPixels.getPixelHeight(isAllView?200:120),
@@ -57,7 +57,7 @@ class StoriesWidget extends StatelessWidget {
                     vertical: FetchPixels.getPixelHeight(5),
                   ),
                   child: Text(
-                    news.coinName!,
+                    news.assetName!,
                     style: R.textStyle.regularLato().copyWith(
                         fontSize: FetchPixels.getPixelHeight(12),
                         color: R.colors.theme),

@@ -38,7 +38,7 @@ class _HomeViewState extends State<HomeView> {
         Set<String> uniqueTopics = Set();
         List<String> topicImage = [];
         for (NewsModel news in newsList) {
-          String? nullableTopic = news.coinName;
+          String? nullableTopic = news.assetName;
           String nullablecoinImage = news.coinImage ?? "";
           String topic = nullableTopic ?? '';
           if (topic != '') {

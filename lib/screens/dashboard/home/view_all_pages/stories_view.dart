@@ -59,9 +59,9 @@ class _StoriesViewState extends State<StoriesView> {
               builder: (context,snapshot){
                 if(snapshot.hasData){
                   List<NewsModel> news = snapshot.data!.docs.map((e) => NewsModel.fromJson(e.data() as Map<String,dynamic>)).toList();
-                  List<NewsModel> allNews = news.where((element) => element.coinName == widget.coinsName).toList();
+                  List<NewsModel> allNews = news.where((element) => element.assetName == widget.coinsName).toList();
                   searchList = allNews.where((element) {
-                    String name = element.coinName!.toLowerCase();
+                    String name = element.assetName!.toLowerCase();
                     return name.contains(query);
                   }).toList();
                   return  Center(

@@ -67,11 +67,11 @@ class _GraphViewState extends State<GraphView> {
                           Row(
                             children: [
                               Text(
-                                widget.news.coinName!,
+                                widget.news.assetName!,
                                 style: R.textStyle.semiBoldLato().copyWith(fontSize: 20),
                               ),
                               Text(
-                                " (${widget.news.coinType!})",
+                                " (${widget.news.assetName!})",
                                 style: R.textStyle.semiBoldLato().copyWith(color: Colors.grey.withOpacity(0.5)),
                               ),
                             ],
@@ -135,7 +135,7 @@ class _GraphViewState extends State<GraphView> {
                           onTap: () {
                             setState(() {});
                             isCheck = 0;
-                            auth.getDataFromAPI(widget.news.coinType ?? 'BTC').then((value) {
+                            auth.getDataFromAPI(widget.news.assetName ?? 'BTC').then((value) {
                               setState(() {});
                             });
                           },
@@ -149,7 +149,7 @@ class _GraphViewState extends State<GraphView> {
                           onTap: () {
                             setState(() {});
                             isCheck = 1;
-                            auth.getDataFromAPIWeekly(widget.news.coinType ?? 'BTC').then((value) {
+                            auth.getDataFromAPIWeekly(widget.news.assetName?? 'BTC').then((value) {
                               setState(() {});
                             });
                           },
@@ -163,7 +163,7 @@ class _GraphViewState extends State<GraphView> {
                           onTap: () {
                             setState(() {});
                             isCheck = 2;
-                            auth.getDataFromAPIMonthly(widget.news.coinType ?? 'BTC').then((value) {
+                            auth.getDataFromAPIMonthly(widget.news.assetName ?? 'BTC').then((value) {
                               setState(() {});
                             });
                           },

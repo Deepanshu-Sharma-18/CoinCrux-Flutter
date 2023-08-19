@@ -65,7 +65,7 @@ class _FeedViewState extends State<FeedView> {
                 c.candleListWeekly.clear();
                 c.candleListMonthly.clear();
                 c.update();
-                c.getDataFromAPI(widget.news.coinType!);
+                c.getDataFromAPI(widget.news.assetName!);
                 p = 0;
                 pCtr.jumpToPage(0);
               }

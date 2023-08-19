@@ -32,7 +32,7 @@ class LatestNewsWidget extends StatelessWidget {
         //   index: index,
         // ));
         Get.to(CoinCategoryView(
-          coinName: news.coinType ?? "BTC",
+          coinName: news.assetName ?? "BTC",
         ));
       },
       child: getPaddingWidget(
@@ -77,7 +77,7 @@ class LatestNewsWidget extends StatelessWidget {
                           horizontal: FetchPixels.getPixelWidth(8),
                           vertical: FetchPixels.getPixelHeight(5)),
                       child: Text(
-                        news.coinCategory!.toUpperCase(),
+                        news.category!.toUpperCase(),
                         style: R.textStyle.regularLato().copyWith(
                             fontSize: FetchPixels.getPixelHeight(10),
                             color: R.colors.theme),
@@ -182,7 +182,7 @@ class MyLatestNewsWidget extends StatelessWidget {
         //   index: index,
         // ));
         Get.to(CoinCategoryView(
-          coinName: news.coinType ?? "BTC",
+          coinName: news.assetName ?? "BTC",
         ));
       },
       child: getPaddingWidget(
@@ -227,7 +227,7 @@ class MyLatestNewsWidget extends StatelessWidget {
                           horizontal: FetchPixels.getPixelWidth(8),
                           vertical: FetchPixels.getPixelHeight(5)),
                       child: Text(
-                        news.coinCategory!.toUpperCase(),
+                        news.category!.toUpperCase(),
                         style: R.textStyle.regularLato().copyWith(
                             fontSize: FetchPixels.getPixelHeight(10),
                             color: R.colors.theme),

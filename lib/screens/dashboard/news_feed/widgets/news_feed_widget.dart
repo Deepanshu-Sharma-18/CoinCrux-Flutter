@@ -125,7 +125,7 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                 InkWell(
                   onDoubleTap: ()async{
                     if(firebaseAuth.currentUser == null){
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please login")));
+                      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please login")));
                     }else{
                       DocumentSnapshot document = await fireStore
                           .collection('users')
@@ -342,7 +342,7 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
             onTap: () async {
 
               if(firebaseAuth.currentUser == null){
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please login')));
+                // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please login')));
               }else{
                 if (index == 0) {
                   DocumentSnapshot document = await fireStore
@@ -609,7 +609,7 @@ class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
                 InkWell(
                   onDoubleTap: ()async{
                     if(firebaseAuth.currentUser == null){
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please login")));
+                      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please login")));
                     }else{
                       DocumentSnapshot document = await fireStore
                           .collection('users')
@@ -683,46 +683,46 @@ class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
                 getVerSpace(FetchPixels.getPixelHeight(30)),
                 Row(
                   children: [
-                    Row(
-                      children: List.generate(2, (index) {
-                        return likeWidget(index);
-                      }),
-                    ),
-                    getHorSpace(FetchPixels.getPixelWidth(20)),
-                    InkWell(
-                      onTap: () {
-                        Get.to(CommentsView(
-                          news: widget.news,
-                        ));
-                      },
-                      child: Icon(
-                        Icons.chat_outlined,
-                        color: R.colors.unSelectedIcon,
-                      ),
-                    ),
-                    getHorSpace(FetchPixels.getPixelWidth(5)),
-                    StreamBuilder(
-                        stream: fireStore
-                            .collection("comments")
-                            .where("newsId", isEqualTo: widget.news.newsId)
-                            .snapshots(),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            List<CommentModel> commentsList = snapshot
-                                .data!.docs
-                                .map((e) => CommentModel.fromJson(
-                                e.data() as Map<String, dynamic>))
-                                .toList();
-                            return Text(
-                              '${commentsList.length}',
-                              style: R.textStyle.regularLato().copyWith(
-                                  fontSize: FetchPixels.getPixelHeight(15),
-                                  color: R.colors.unSelectedIcon),
-                            );
-                          } else {
-                            return SizedBox();
-                          }
-                        }),
+                    // Row(
+                    //   children: List.generate(2, (index) {
+                    //     return likeWidget(index);
+                    //   }),
+                    // ),
+                    // getHorSpace(FetchPixels.getPixelWidth(20)),
+                    // InkWell(
+                    //   onTap: () {
+                    //     Get.to(CommentsView(
+                    //       news: widget.news,
+                    //     ));
+                    //   },
+                    //   child: Icon(
+                    //     Icons.chat_outlined,
+                    //     color: R.colors.unSelectedIcon,
+                    //   ),
+                    // ),
+                    // getHorSpace(FetchPixels.getPixelWidth(5)),
+                    // StreamBuilder(
+                    //     stream: fireStore
+                    //         .collection("comments")
+                    //         .where("newsId", isEqualTo: widget.news.newsId)
+                    //         .snapshots(),
+                    //     builder: (context, snapshot) {
+                    //       if (snapshot.hasData) {
+                    //         List<CommentModel> commentsList = snapshot
+                    //             .data!.docs
+                    //             .map((e) => CommentModel.fromJson(
+                    //             e.data() as Map<String, dynamic>))
+                    //             .toList();
+                    //         return Text(
+                    //           '${commentsList.length}',
+                    //           style: R.textStyle.regularLato().copyWith(
+                    //               fontSize: FetchPixels.getPixelHeight(15),
+                    //               color: R.colors.unSelectedIcon),
+                    //         );
+                    //       } else {
+                    //         return SizedBox();
+                    //       }
+                    //     }),
                     Spacer(),
                     Card(
                       shape: RoundedRectangleBorder(
@@ -827,7 +827,7 @@ class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
             onTap: () async {
 
               if(firebaseAuth.currentUser == null){
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please login')));
+                // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please login')));
               }else{
                 if (index == 0) {
                   DocumentSnapshot document = await fireStore

@@ -98,7 +98,7 @@ TextEditingController commentTC =TextEditingController();
                 InkWell(
                     onTap: ()async{
                       if(firebaseAuth.currentUser == null){
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please login")));
+                        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please login")));
                       }else{
                         if(commentTC.text == ''){
                         }else{

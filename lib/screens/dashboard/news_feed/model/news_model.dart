@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+
 class NewsModel {
   String? coinImage;
   String? coinDescription;
@@ -39,7 +40,6 @@ class NewsModel {
     createdAt = json['createdAt'].toDate();
     category = json['category'];
   }
-
   factory NewsModel.fromMap(Map<String, dynamic> map) {
     return NewsModel(
       coinImage: map['coinImage'] ??

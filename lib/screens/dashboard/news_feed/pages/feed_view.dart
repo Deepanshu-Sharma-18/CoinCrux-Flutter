@@ -74,8 +74,8 @@ class _FeedViewState extends State<FeedView> {
               InkWell(
                   onTap: () async {
                     if (firebaseAuth.currentUser == null) {
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text("Please login")));
+                      // ScaffoldMessenger.of(context)
+                      //     .showSnackBar(SnackBar(content: Text("Please login")));
                       c.isFeedView = !c.isFeedView;
                       c.update();
                     } else {
@@ -109,8 +109,8 @@ class _FeedViewState extends State<FeedView> {
               InkWell(
                   onTap: () async {
                     if (firebaseAuth.currentUser == null) {
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text("Please login")));
+                      // ScaffoldMessenger.of(context)
+                      //     .showSnackBar(SnackBar(content: Text("Please login")));
                     } else {
                       DocumentSnapshot docs = await fireStore
                           .collection("users")

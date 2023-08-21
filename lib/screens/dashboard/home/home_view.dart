@@ -34,6 +34,11 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Consumer2<AuthProvider, NewsProvider>(
       builder: (context, auth, newsProvider, child) {
+        if (newsProvider.isLoading) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
         List<NewsModel> newsList = Provider.of<NewsProvider>(context).newsList;
         Set<String> uniqueTopics = Set();
         List<String> topicImage = [];
@@ -102,7 +107,7 @@ class _HomeViewState extends State<HomeView> {
                   final double elevation = realIndex == currentImage
                       ? 5.0
                       : 0.0; // Adjust elevation based on currentImage
-                  
+
                   return Transform.scale(
                     scale: 1.0 +
                         (0.03 *

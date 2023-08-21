@@ -5,6 +5,7 @@ import '../model/news_model.dart';
 
 class NewsProvider extends ChangeNotifier {
   List<NewsModel> newsList = [];
+  bool isLoading = true;
   NewsProvider() {
     _listenToNews();
   }
@@ -19,6 +20,7 @@ class NewsProvider extends ChangeNotifier {
   }
 
   void _listenToNews() async {
+    
     FirebaseFirestore.instance
         .collection("News")
         .snapshots()
@@ -37,6 +39,7 @@ class NewsProvider extends ChangeNotifier {
         newsList.add(newsModel);
       }
       newsList.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
+      isLoading = false;
       notifyListeners();
     });
   }

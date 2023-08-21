@@ -29,10 +29,10 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(seconds: 2), () {
       if(firebaseAuth.currentUser == null){
         auth.isLogin = false;
-        Get.offAllNamed(Routes.landing);
+        Get.offAllNamed(Routes.dashBoardPage);
       }else{
           auth.isLogin = true;
-          Get.offAllNamed(Routes.landing);
+          Get.offAllNamed(Routes.dashBoardPage);
       }
     });
   }

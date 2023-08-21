@@ -17,11 +17,7 @@ abstract class AppPages {
       GetPage(name: Routes.bookmark, page: () =>   Bookmark()),
 
       GetPage(name: Routes.loginView, page: () =>   LoginView()),
-    GetPage(name: Routes.landing, page: () =>   LatestLandingScreen()),
-
-
-
-
+    // GetPage(name: Routes.landing, page: () =>   LatestLandingScreen()),
 
   ];
 }

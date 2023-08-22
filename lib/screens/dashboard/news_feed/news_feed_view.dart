@@ -109,24 +109,8 @@ class _NewsFeedViewState extends State<NewsFeedView> {
   }
 
   Widget newsType(index) {
-    return InkWell(
-      onTap: () {
-        currentType = index;
-        pageCT.animateToPage(currentType,
-            duration: Duration(milliseconds: 500), curve: Curves.ease);
-      },
-      child: Column(
+    return  Column(
         children: [
-          Text(
-            index == 0
-                ? "Hot"
-                : index == 1
-                    ? "Trending"
-                    : "Fresh",
-            style: R.textStyle.mediumLato().copyWith(
-                fontSize: FetchPixels.getPixelHeight(13),
-                color: currentType == index ? null : Color(0xff5f5f5f)),
-          ),
           getVerSpace(FetchPixels.getPixelHeight(5)),
           Container(
             padding: EdgeInsets.symmetric(
@@ -141,7 +125,6 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                     BorderRadius.circular(FetchPixels.getPixelHeight(15))),
           )
         ],
-      ),
     );
   }
 }

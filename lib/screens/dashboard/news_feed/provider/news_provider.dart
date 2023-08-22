@@ -6,9 +6,6 @@ import '../model/news_model.dart';
 class NewsProvider extends ChangeNotifier {
   List<NewsModel> newsList = [];
   bool isLoading = true;
-  NewsProvider() {
-    _listenToNews();
-  }
 
   Future<String> getImageUrl(String imagePath) async {
     if (imagePath.isNotEmpty) {
@@ -19,8 +16,8 @@ class NewsProvider extends ChangeNotifier {
     return ""; // Return a default value if imagePath is empty
   }
 
-  void _listenToNews() async {
-    
+  void listenToNews() async{
+    isLoading = true;
     FirebaseFirestore.instance
         .collection("News")
         .snapshots()
@@ -31,9 +28,7 @@ class NewsProvider extends ChangeNotifier {
         final newsData = element.data();
         final imageUrl = await getImageUrl(newsData['coinImage']);
 
-        newsData['coinImage'] =
-            imageUrl; // Update the newsData with the image URL
-        print(imageUrl);
+        newsData['coinImage'] = imageUrl;
         final newsModel = NewsModel.fromMap(newsData);
 
         newsList.add(newsModel);

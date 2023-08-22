@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coincrux/screens/dashboard/news_feed/provider/news_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:get/get.dart';
@@ -31,6 +32,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
   @override
   void initState() {
     var c = Provider.of<AuthProvider>(context, listen: false);
+    Provider.of<NewsProvider>(context,listen:false).listenToNews();
     c.isFeedView = false;
     currentPage = widget.index;
     pageController = PageController(initialPage: widget.index);

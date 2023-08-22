@@ -8,37 +8,50 @@ import '../../news_feed/pages/feed_view.dart';
 
 class TopicsView extends StatelessWidget {
   String coinsName;
-  TopicsView({super.key,required this.coinsName});
+  TopicsView({super.key, required this.coinsName});
 
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
     FetchPixels(context);
-    return SafeArea(child: Scaffold(
+    return SafeArea(
+        child: Scaffold(
       appBar: AppBar(
         elevation: 0.00,
         backgroundColor: R.colors.bgColor,
         automaticallyImplyLeading: false,
         title: Text(
-            coinsName,
-        style: R.textStyle.mediumLato().copyWith(
-            fontSize: FetchPixels.getPixelHeight(17),
-            color: R.colors.blackColor),
-      ),),
-      body:  StreamBuilder(
-          stream: firebaseFirestore.collection('News').where('coinName',isEqualTo: coinsName).snapshots(),
-          builder: (context,snapshot){
-            if(snapshot.hasData){
-              List<NewsModel> news = snapshot.data!.docs.map((e) => NewsModel.fromJson(e.data() as Map<String,dynamic>)).toList();
+          coinsName,
+          style: R.textStyle.mediumLato().copyWith(
+              fontSize: FetchPixels.getPixelHeight(17),
+              color: R.colors.blackColor),
+        ),
+      ),
+      body: StreamBuilder(
+          stream: firebaseFirestore
+              .collection('News')
+              .where('coinName', isEqualTo: coinsName)
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              List<NewsModel> news = snapshot.data!.docs
+                  .map((e) =>
+                      NewsModel.fromJson(e.data() as Map<String, dynamic>))
+                  .toList();
               return ListView.builder(
                 itemCount: news.length,
                 itemBuilder: (context, index) {
-                  return FeedView(news: news[index],index: index,);
+                  return FeedView(
+                    news: news[index],
+                    index: index,
+                  );
                 },
               );
-            }else{
-              return Center(child: SingleChildScrollView(),);
+            } else {
+              return Center(
+                child: SingleChildScrollView(),
+              );
             }
           }),
     ));

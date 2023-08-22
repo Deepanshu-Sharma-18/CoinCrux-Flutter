@@ -75,8 +75,7 @@ class _LatestViewState extends State<LatestView> {
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           List<NewsModel> news = snapshot.data!.docs
-                              .map((e) => NewsModel.fromJson(
-                                  e.data()))
+                              .map((e) => NewsModel.fromJson(e.data()))
                               .toList();
                           List<NewsModel> freshNews = news.where((element) {
                             DateTime createdAt = element

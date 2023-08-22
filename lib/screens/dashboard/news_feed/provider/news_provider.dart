@@ -16,7 +16,7 @@ class NewsProvider extends ChangeNotifier {
     return ""; // Return a default value if imagePath is empty
   }
 
-  void listenToNews() async{
+  Future<void> listenToNews() async{
     isLoading = true;
     FirebaseFirestore.instance
         .collection("News")

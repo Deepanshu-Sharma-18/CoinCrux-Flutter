@@ -55,6 +55,7 @@ class _SettingsViewState extends State<SettingsView> {
           ),
         ),
         body: Container(
+          padding: EdgeInsets.all(15),
           child: Column(
             children: [
               SizedBox(

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:coincrux/base/resizer/fetch_pixels.dart';
 import 'package:coincrux/base/widget_utils.dart';
 import 'package:coincrux/screens/dashboard/news_feed/model/news_model.dart';
@@ -20,77 +21,103 @@ class NewsFeedView extends StatefulWidget {
 class _NewsFeedViewState extends State<NewsFeedView> {
   PageController pageCT = PageController();
   int currentType = 0;
+  bool _isAppBarVisible = true;
+  Timer? _appBarTimer;
   CardSwiperController cardSwiperController = CardSwiperController();
+  void _startTimer() {
+    _appBarTimer = Timer(Duration(seconds: 2), () {
+      setState(() {
+        _isAppBarVisible = false;
+      });
+    });
+  }
+
+  void _stopTimer() {
+    _appBarTimer?.cancel();
+  }
+  void _resetTimer() {
+    if (!_isAppBarVisible) {
+      setState(() {
+        _isAppBarVisible = true;
+      });
+      _stopTimer();
+      _startTimer();
+    }
+  }
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
 
   @override
+  void dispose() {
+    _stopTimer();
+    super.dispose();
+  }
+  @override
   Widget build(BuildContext context) {
-    bool isParentScaffoldVisible = true;
+    
     // String title = "Feed";
 
-    void updateParentScaffoldVisibility(bool isVisible) {
-      setState(() {
-        isParentScaffoldVisible = !isVisible;
-        // title = "Fullscreen";
-      });
-    }
+    
 
     List<NewsModel> newsList = Provider.of<NewsProvider>(context).newsList;
     return Scaffold(
-        backgroundColor: R.colors.bgColor,
-        appBar: isParentScaffoldVisible
-            ? AppBar(
-                iconTheme: IconThemeData(
-                  color: R.colors.blackColor, //change your color here
-                ),
-                elevation: 0.0,
-                backgroundColor: R.colors.bgColor,
-                centerTitle: true,
-                title: Text(
-                  "Feed",
-                  style: R.textStyle
-                      .mediumLato()
-                      .copyWith(fontSize: FetchPixels.getPixelHeight(17)),
-                ),
-              )
-            : null,
-        body: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: List.generate(3, (index) {
-                return newsType(index);
-              }),
-            ),
-            getVerSpace(FetchPixels.getPixelHeight(10)),
-            Expanded(
-              child: PageView(
-                controller: pageCT,
-                onPageChanged: (page) {
-                  currentType = page;
-                  setState(() {});
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(_isAppBarVisible ? kToolbarHeight : 0),
+        child: AnimatedContainer(
+          duration: Duration(milliseconds: 300), // Animation duration
+          height: _isAppBarVisible ? kToolbarHeight : 0,
+          child:AppBar(
+          iconTheme: IconThemeData(
+            color: R.colors.blackColor, //change your color here
+          ),
+          elevation: 0.0,
+          backgroundColor: R.colors.bgColor,
+          centerTitle: true,
+          title: Text(
+            "My Feed",
+            style: R.textStyle
+                .mediumLato()
+                .copyWith(fontSize: FetchPixels.getPixelHeight(17)),
+          ),
+        ),
+        ),
+      ),
+      body:GestureDetector(
+        onTap:_resetTimer,
+        child:Container(
+        child: Column(
+      children: [
+        Expanded(
+          child: PageView(
+            controller: pageCT,
+            onPageChanged: (page) {
+              currentType = page;
+              setState(() {});
+            },
+            physics: NeverScrollableScrollPhysics(),
+            children: [
+              CardSwiper(
+                padding: EdgeInsets.only(left: 1),
+                isLoop: true,
+                controller: cardSwiperController,
+                allowedSwipeDirection: AllowedSwipeDirection.only(
+                    right: false, left: false, down: true, up: true),
+                cardBuilder: (context, index) {
+                  return FeedView(
+                    news: newsList[index],
+                    index: index,
+                  );
                 },
-                physics: NeverScrollableScrollPhysics(),
-                children: [
-                  CardSwiper(
-                    padding: EdgeInsets.only(left: 1),
-                    isLoop: true,
-                    controller: cardSwiperController,
-                    allowedSwipeDirection: AllowedSwipeDirection.only(
-                        right: false, left: false, down: true, up: true),
-                    cardBuilder: (context, index) {
-                      return FeedView(
-                        news: newsList[index],
-                        index: index,
-                        onTapCallback: updateParentScaffoldVisibility,
-                      );
-                    },
-                    cardsCount: newsList.length,
-                  ),
-                ],
+                cardsCount: newsList.length,
               ),
-            ),
-          ],
-        ));
+            ],
+          ),
+        ),
+      ],
+    ))));
   }
 
   Widget newsType(index) {

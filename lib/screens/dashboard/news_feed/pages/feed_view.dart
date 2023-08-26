@@ -13,10 +13,9 @@ import 'graph_view.dart';
 
 class FeedView extends StatefulWidget {
   final NewsModel news;
-  final Function(bool) onTapCallback;
   int? index;
   FeedView(
-      {Key? key, required this.news, this.index, required this.onTapCallback})
+      {Key? key, required this.news, this.index,})
       : super(key: key);
 
   @override
@@ -24,8 +23,6 @@ class FeedView extends StatefulWidget {
 }
 
 class _FeedViewState extends State<FeedView> {
-  FirebaseFirestore fireStore = FirebaseFirestore.instance;
-  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   PageController pCtr = PageController();
 
   int p = 0;
@@ -43,42 +40,39 @@ class _FeedViewState extends State<FeedView> {
       height: FetchPixels.height * 0.8,
       width: FetchPixels.width,
       child: PageView(
-        physics: check == true
-            ? NeverScrollableScrollPhysics()
-            : AlwaysScrollableScrollPhysics(),
+        physics: 
+            // NeverScrollableScrollPhysics()
+            AlwaysScrollableScrollPhysics(),
         controller: pCtr,
-        onPageChanged: (page) {
-          p = page;
-          if (p == 1) {
-            print("Enter in one");
-            Get.to(() => GraphView(
-                  news: widget.news,
-                  isGraphCheck: true,
-                ));
-            setState(() {});
-            var c = Provider.of<AuthProvider>(context, listen: false);
-            c.cryptoModelList.clear();
-            c.cryptoModeWeeklyList.clear();
-            c.cryptoModelMonthlyList.clear();
-            c.candleList.clear();
-            c.candleListWeekly.clear();
-            c.candleListMonthly.clear();
-            c.update();
-            c.getDataFromAPI(widget.news.assetName!);
-            p = 0;
-            pCtr.jumpToPage(0);
-          }
-        },
+        // onPageChanged: (page) {
+        //   p = page;
+        //   if (p == 1) {
+        //     print("Enter in one");
+        //     Get.to(() => GraphView(
+        //           news: widget.news,
+        //           isGraphCheck: true,
+        //         ));
+        //     setState(() {});
+        //     var c = Provider.of<AuthProvider>(context, listen: false);
+        //     c.cryptoModelList.clear();
+        //     c.cryptoModeWeeklyList.clear();
+        //     c.cryptoModelMonthlyList.clear();
+        //     c.candleList.clear();
+        //     c.candleListWeekly.clear();
+        //     c.candleListMonthly.clear();
+        //     c.update();
+        //     c.getDataFromAPI(widget.news.assetName!);
+        //     p = 0;
+        //     pCtr.jumpToPage(0);
+        //   }
+        // },
         children: [
           InkWell(
               onTap: () {
-                setState(() {
-                  fullScreen = !fullScreen;
-                  widget.onTapCallback(fullScreen);
-                });
+                  
               },
               child: MyNewsFeedWidget(
-                  isDetailed: false, news: widget.news, index: widget.index!)),
+                isDetailed: false, news: widget.news, index: widget.index!)),
         ],
       ),
     );

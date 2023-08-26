@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coincrux/screens/auth/provider/auth_provider.dart';
 import 'package:coincrux/screens/auth/userModel.dart';
+import 'package:coincrux/screens/dashboard/news_feed/provider/news_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,18 +38,20 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
 
   @override
   Widget build(BuildContext context) {
-    AuthProvider authProvider = Provider.of(context,listen: false);
+    AuthProvider authProvider = Provider.of(context, listen: false);
     return Scaffold(
-      body:  Column(
+      body: Column(
         children: [
           Container(
-            height: FetchPixels.getPixelHeight(authProvider.isFeedView == true?300:290),
+            height: FetchPixels.getPixelHeight(
+                authProvider.isFeedView == true ? 300 : 290),
             child: Stack(
               children: [
                 Align(
                   alignment: Alignment.topCenter,
                   child: Container(
-                    height: FetchPixels.getPixelHeight(authProvider.isFeedView == true?300:240),
+                    height: FetchPixels.getPixelHeight(
+                        authProvider.isFeedView == true ? 300 : 240),
                     decoration: BoxDecoration(
                         image: getDecorationNetworkImage(
                             context, widget.news.coinImage!,
@@ -59,7 +62,8 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Padding(
-                    padding: EdgeInsets.only(top: FetchPixels.getPixelHeight(230)),
+                    padding:
+                        EdgeInsets.only(top: FetchPixels.getPixelHeight(230)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -87,18 +91,22 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                         getHorSpace(FetchPixels.getPixelWidth(1)),
                         getHorSpace(FetchPixels.getPixelWidth(1)),
                         Consumer<AuthProvider>(
-                          builder: (context,authProvider,child){
+                          builder: (context, authProvider, child) {
                             return InkWell(
-                              onTap: (){
+                              onTap: () {
                                 authProvider.page++;
-                                authProvider.pageController2.jumpToPage(authProvider.page,);
+                                authProvider.pageController2.jumpToPage(
+                                  authProvider.page,
+                                );
                                 authProvider.update();
                               },
                               child: Container(
                                 height: FetchPixels.getPixelHeight(40),
-                                padding:
-                                EdgeInsets.all(FetchPixels.getPixelHeight(8)),
-                                decoration: BoxDecoration(shape: BoxShape.circle,color: R.colors.coinBoxColor),
+                                padding: EdgeInsets.all(
+                                    FetchPixels.getPixelHeight(8)),
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: R.colors.coinBoxColor),
                                 child: Center(
                                     child: getAssetImage(R.images.graphIcon,
                                         color: Colors.black,
@@ -123,10 +131,10 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
               children: [
                 getVerSpace(FetchPixels.getPixelHeight(20)),
                 InkWell(
-                  onDoubleTap: ()async{
-                    if(firebaseAuth.currentUser == null){
+                  onDoubleTap: () async {
+                    if (firebaseAuth.currentUser == null) {
                       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please login")));
-                    }else{
+                    } else {
                       DocumentSnapshot document = await fireStore
                           .collection('users')
                           .doc(firebaseAuth.currentUser!.uid)
@@ -160,8 +168,7 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                 Text(
                   widget.news.coinDescription!,
                   textAlign: TextAlign.justify,
-                  maxLines:widget.isDetailed
-                      ?10: 2,
+                  maxLines: widget.isDetailed ? 10 : 2,
                   overflow: TextOverflow.ellipsis,
                   style: R.textStyle.regularLato().copyWith(
                       wordSpacing: 2,
@@ -178,13 +185,17 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                           fontSize: FetchPixels.getPixelHeight(13),
                           color: R.colors.unSelectedIcon),
                     ),
-                    SizedBox(width: FetchPixels.getPixelWidth(10),),
+                    SizedBox(
+                      width: FetchPixels.getPixelWidth(10),
+                    ),
                     Icon(
                       Icons.circle,
                       color: R.colors.unSelectedIcon,
                       size: FetchPixels.getPixelHeight(8),
                     ),
-                    SizedBox(width: FetchPixels.getPixelWidth(10),),
+                    SizedBox(
+                      width: FetchPixels.getPixelWidth(10),
+                    ),
                     Text(
                       timeago.format(widget.news.createdAt!),
                       style: R.textStyle.regularLato().copyWith(
@@ -227,7 +238,7 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                             List<CommentModel> commentsList = snapshot
                                 .data!.docs
                                 .map((e) => CommentModel.fromJson(
-                                e.data() as Map<String, dynamic>))
+                                    e.data() as Map<String, dynamic>))
                                 .toList();
                             return Text(
                               '${commentsList.length}',
@@ -256,7 +267,7 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                         },
                         child: Container(
                           padding:
-                          EdgeInsets.all(FetchPixels.getPixelHeight(8)),
+                              EdgeInsets.all(FetchPixels.getPixelHeight(8)),
                           decoration: BoxDecoration(shape: BoxShape.circle),
                           child: Center(
                               child: getAssetImage(R.images.share,
@@ -283,18 +294,40 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                                     FetchPixels.getPixelHeight(35),
                                   ),
                                   color: R.colors.fill.withOpacity(0.3)),
-                              child: firebaseAuth.currentUser == null ?  Center(child: Text("#${widget.index+1} / ${snapshot1.data!.docs.length} unread",style: TextStyle(fontSize: FetchPixels.getPixelHeight(12)),))
+                              child: firebaseAuth.currentUser == null
+                                  ? Center(
+                                      child: Text(
+                                      "#${widget.index + 1} / ${snapshot1.data!.docs.length} unread",
+                                      style: TextStyle(
+                                          fontSize:
+                                              FetchPixels.getPixelHeight(12)),
+                                    ))
                                   : StreamBuilder(
-                                  stream: fireStore.collection('users').doc(firebaseAuth.currentUser!.uid).snapshots(),
-                                  builder: (context,snapshot){
-                                    if(snapshot.hasData){
-                                      UserModel userModel = UserModel.fromJson(snapshot.data!.data()!);
-                                      return Center(child: Text("#${widget.index+1} / ${snapshot1.data!.docs.length} ${userModel.totalRead!.contains(widget.news.newsId) ? '' : 'unread'}",style: TextStyle(fontSize: FetchPixels.getPixelHeight(12)),));
-                                    }else{
-                                      return Center(child: CircularProgressIndicator(color: R.colors.theme,),);
-                                    }
-                                  })
-                          );
+                                      stream: fireStore
+                                          .collection('users')
+                                          .doc(firebaseAuth.currentUser!.uid)
+                                          .snapshots(),
+                                      builder: (context, snapshot) {
+                                        if (snapshot.hasData) {
+                                          UserModel userModel =
+                                              UserModel.fromJson(
+                                                  snapshot.data!.data()!);
+                                          return Center(
+                                              child: Text(
+                                            "#${widget.index + 1} / ${snapshot1.data!.docs.length} ${userModel.totalRead!.contains(widget.news.newsId) ? '' : 'unread'}",
+                                            style: TextStyle(
+                                                fontSize:
+                                                    FetchPixels.getPixelHeight(
+                                                        12)),
+                                          ));
+                                        } else {
+                                          return Center(
+                                            child: CircularProgressIndicator(
+                                              color: R.colors.theme,
+                                            ),
+                                          );
+                                        }
+                                      }));
                         } else {
                           return SizedBox();
                         }
@@ -340,10 +373,9 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
         children: [
           InkWell(
             onTap: () async {
-
-              if(firebaseAuth.currentUser == null){
+              if (firebaseAuth.currentUser == null) {
                 // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please login')));
-              }else{
+              } else {
                 if (index == 0) {
                   DocumentSnapshot document = await fireStore
                       .collection('News')
@@ -458,19 +490,15 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
   }
 }
 
-
-
-
-
 class MyNewsFeedWidget extends StatefulWidget {
   final NewsModel news;
   int index;
   bool isDetailed = false;
   MyNewsFeedWidget(
       {Key? key,
-        required this.isDetailed,
-        required this.news,
-        required this.index})
+      required this.isDetailed,
+      required this.news,
+      required this.index})
       : super(key: key);
 
   @override
@@ -480,23 +508,20 @@ class MyNewsFeedWidget extends StatefulWidget {
 class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
   int currentLiked = -1;
 
-  FirebaseFirestore fireStore = FirebaseFirestore.instance;
-  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-
   @override
   Widget build(BuildContext context) {
-    AuthProvider authProvider = Provider.of(context,listen: false);
+    List<NewsModel> newsList = Provider.of<NewsProvider>(context).newsList;
     return Scaffold(
-      body:  Column(
+      body: Column(
         children: [
           Container(
-            height: FetchPixels.getPixelHeight(authProvider.isFeedView == true?320:260),
+            height: FetchPixels.getPixelHeight(260),
             child: Stack(
               children: [
                 Align(
                   alignment: Alignment.topCenter,
                   child: Container(
-                    height: FetchPixels.getPixelHeight(authProvider.isFeedView == true?300:250),
+                    height: FetchPixels.getPixelHeight(250),
                     decoration: BoxDecoration(
                         image: getDecorationNetworkImage(
                             context, widget.news.coinImage!,
@@ -507,7 +532,8 @@ class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Padding(
-                    padding: EdgeInsets.only(top: FetchPixels.getPixelHeight(230)),
+                    padding:
+                        EdgeInsets.only(top: FetchPixels.getPixelHeight(230)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -535,18 +561,22 @@ class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
                         getHorSpace(FetchPixels.getPixelWidth(1)),
                         getHorSpace(FetchPixels.getPixelWidth(1)),
                         Consumer<AuthProvider>(
-                          builder: (context,authProvider,child){
+                          builder: (context, authProvider, child) {
                             return InkWell(
-                              onTap: (){
+                              onTap: () {
                                 authProvider.page++;
-                                authProvider.pageController2.jumpToPage(authProvider.page,);
+                                authProvider.pageController2.jumpToPage(
+                                  authProvider.page,
+                                );
                                 authProvider.update();
                               },
                               child: Container(
                                 height: FetchPixels.getPixelHeight(40),
-                                padding:
-                                EdgeInsets.all(FetchPixels.getPixelHeight(8)),
-                                decoration: BoxDecoration(shape: BoxShape.circle,color: R.colors.coinBoxColor),
+                                padding: EdgeInsets.all(
+                                    FetchPixels.getPixelHeight(8)),
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: R.colors.coinBoxColor),
                                 child: Center(
                                     child: getAssetImage(R.images.graphIcon,
                                         color: Colors.black,
@@ -607,29 +637,8 @@ class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
               children: [
                 getVerSpace(FetchPixels.getPixelHeight(20)),
                 InkWell(
-                  onDoubleTap: ()async{
-                    if(firebaseAuth.currentUser == null){
-                      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please login")));
-                    }else{
-                      DocumentSnapshot document = await fireStore
-                          .collection('users')
-                          .doc(firebaseAuth.currentUser!.uid)
-                          .get();
-                      List<dynamic> isBookMark = document.get('bookMarks');
-
-                      if (isBookMark.contains(widget.news.newsId)) {
-                        isBookMark.remove(widget.news.newsId);
-                      } else {
-                        isBookMark.add(widget.news.newsId);
-                      }
-
-                      await fireStore
-                          .collection('users')
-                          .doc(firebaseAuth.currentUser!.uid)
-                          .update({"bookMarks": isBookMark});
-                      authProvider.userM.bookMarks = isBookMark;
-                      authProvider.update();
-                    }
+                  onDoubleTap: () {
+                    print("Hey");
                   },
                   child: Text(
                     widget.news.coinHeading!,
@@ -644,8 +653,7 @@ class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
                 Text(
                   widget.news.coinDescription!,
                   textAlign: TextAlign.justify,
-                  maxLines:widget.isDetailed
-                      ?10: 8,
+                  maxLines: widget.isDetailed ? 10 : 8,
                   overflow: TextOverflow.ellipsis,
                   style: R.textStyle.regularLato().copyWith(
                       wordSpacing: 2,
@@ -662,13 +670,17 @@ class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
                           fontSize: FetchPixels.getPixelHeight(13),
                           color: R.colors.unSelectedIcon),
                     ),
-                    SizedBox(width: FetchPixels.getPixelWidth(10),),
+                    SizedBox(
+                      width: FetchPixels.getPixelWidth(10),
+                    ),
                     Icon(
                       Icons.circle,
                       color: R.colors.unSelectedIcon,
                       size: FetchPixels.getPixelHeight(8),
                     ),
-                    SizedBox(width: FetchPixels.getPixelWidth(10),),
+                    SizedBox(
+                      width: FetchPixels.getPixelWidth(10),
+                    ),
                     Text(
                       timeago.format(widget.news.createdAt!),
                       style: R.textStyle.regularLato().copyWith(
@@ -740,7 +752,7 @@ class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
                         },
                         child: Container(
                           padding:
-                          EdgeInsets.all(FetchPixels.getPixelHeight(8)),
+                              EdgeInsets.all(FetchPixels.getPixelHeight(8)),
                           decoration: BoxDecoration(shape: BoxShape.circle),
                           child: Center(
                               child: getAssetImage(R.images.share,
@@ -754,36 +766,21 @@ class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
                 ),
                 getVerSpace(FetchPixels.getPixelHeight(10)),
                 Align(
-                  alignment: Alignment.center,
-                  child: StreamBuilder(
-                      stream: fireStore.collection("News").snapshots(),
-                      builder: (context, snapshot1) {
-                        if (snapshot1.hasData) {
-                          return Container(
-                              height: FetchPixels.getPixelHeight(30),
-                              width: FetchPixels.getPixelWidth(100),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                    FetchPixels.getPixelHeight(35),
-                                  ),
-                                  color: R.colors.fill.withOpacity(0.3)),
-                              child: firebaseAuth.currentUser == null ?  Center(child: Text("#${widget.index+1} / ${snapshot1.data!.docs.length} unread",style: TextStyle(fontSize: FetchPixels.getPixelHeight(12)),))
-                                  : StreamBuilder(
-                                  stream: fireStore.collection('users').doc(firebaseAuth.currentUser!.uid).snapshots(),
-                                  builder: (context,snapshot){
-                                    if(snapshot.hasData){
-                                      UserModel userModel = UserModel.fromJson(snapshot.data!.data()!);
-                                      return Center(child: Text("#${widget.index+1} / ${snapshot1.data!.docs.length} ${userModel.totalRead!.contains(widget.news.newsId) ? '' : 'unread'}",style: TextStyle(fontSize: FetchPixels.getPixelHeight(12)),));
-                                    }else{
-                                      return Center(child: CircularProgressIndicator(color: R.colors.theme,),);
-                                    }
-                                  })
-                          );
-                        } else {
-                          return SizedBox();
-                        }
-                      }),
-                ),
+                    alignment: Alignment.center,
+                    child: Container(
+                        height: FetchPixels.getPixelHeight(30),
+                        width: FetchPixels.getPixelWidth(100),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              FetchPixels.getPixelHeight(35),
+                            ),
+                            color: R.colors.fill.withOpacity(0.3)),
+                        child: Center(
+                            child: Text(
+                          "#${widget.index + 1} / ${newsList.length} unread",
+                          style: TextStyle(
+                              fontSize: FetchPixels.getPixelHeight(12)),
+                        )))),
                 getVerSpace(FetchPixels.getPixelHeight(10)),
               ],
             ),
@@ -818,127 +815,127 @@ class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
     );
   }
 
-  Widget likeWidget(index) {
-    return getPaddingWidget(
-      EdgeInsets.symmetric(horizontal: FetchPixels.getPixelWidth(10)),
-      Row(
-        children: [
-          InkWell(
-            onTap: () async {
+  // Widget likeWidget(index) {
+  //   return getPaddingWidget(
+  //     EdgeInsets.symmetric(horizontal: FetchPixels.getPixelWidth(10)),
+  //     Row(
+  //       children: [
+  //         InkWell(
+  //           onTap: () async {
+  //             if (firebaseAuth.currentUser == null) {
+  //               // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please login')));
+  //             } else {
+  //               if (index == 0) {
+  //                 DocumentSnapshot document = await fireStore
+  //                     .collection('News')
+  //                     .doc(widget.news.newsId)
+  //                     .get();
+  //                 List<dynamic> totalLikes = document.get('totalLikes');
+  //                 List<dynamic> totalDislikes = document.get('totalDislikes');
 
-              if(firebaseAuth.currentUser == null){
-                // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please login')));
-              }else{
-                if (index == 0) {
-                  DocumentSnapshot document = await fireStore
-                      .collection('News')
-                      .doc(widget.news.newsId)
-                      .get();
-                  List<dynamic> totalLikes = document.get('totalLikes');
-                  List<dynamic> totalDislikes = document.get('totalDislikes');
+  //                 if (totalLikes.contains(firebaseAuth.currentUser!.uid)) {
+  //                   totalLikes.remove(firebaseAuth.currentUser!.uid);
+  //                   await fireStore
+  //                       .collection('News')
+  //                       .doc(widget.news.newsId)
+  //                       .update({"totalLikes": totalLikes});
+  //                   widget.news.totalLikes!.length = totalLikes.length;
+  //                 } else {
+  //                   if (totalDislikes.contains(firebaseAuth.currentUser!.uid)) {
+  //                     totalDislikes.remove(firebaseAuth.currentUser!.uid);
+  //                     totalLikes.add(firebaseAuth.currentUser!.uid);
+  //                     await fireStore
+  //                         .collection('News')
+  //                         .doc(widget.news.newsId)
+  //                         .update({
+  //                       "totalLikes": totalLikes,
+  //                       "totalDislikes": totalDislikes
+  //                     });
+  //                     widget.news.totalLikes!.length = totalLikes.length;
+  //                     widget.news.totalDislikes!.length = totalDislikes.length;
+  //                   } else {
+  //                     totalLikes.add(firebaseAuth.currentUser!.uid);
+  //                     await fireStore
+  //                         .collection('News')
+  //                         .doc(widget.news.newsId)
+  //                         .update({"totalLikes": totalLikes});
+  //                     widget.news.totalLikes!.length = totalLikes.length;
+  //                   }
+  //                 }
 
-                  if (totalLikes.contains(firebaseAuth.currentUser!.uid)) {
-                    totalLikes.remove(firebaseAuth.currentUser!.uid);
-                    await fireStore
-                        .collection('News')
-                        .doc(widget.news.newsId)
-                        .update({"totalLikes": totalLikes});
-                    widget.news.totalLikes!.length = totalLikes.length;
-                  } else {
-                    if (totalDislikes.contains(firebaseAuth.currentUser!.uid)) {
-                      totalDislikes.remove(firebaseAuth.currentUser!.uid);
-                      totalLikes.add(firebaseAuth.currentUser!.uid);
-                      await fireStore
-                          .collection('News')
-                          .doc(widget.news.newsId)
-                          .update({
-                        "totalLikes": totalLikes,
-                        "totalDislikes": totalDislikes
-                      });
-                      widget.news.totalLikes!.length = totalLikes.length;
-                      widget.news.totalDislikes!.length = totalDislikes.length;
-                    } else {
-                      totalLikes.add(firebaseAuth.currentUser!.uid);
-                      await fireStore
-                          .collection('News')
-                          .doc(widget.news.newsId)
-                          .update({"totalLikes": totalLikes});
-                      widget.news.totalLikes!.length = totalLikes.length;
-                    }
-                  }
+  //                 setState(() {});
+  //               } else {
+  //                 DocumentSnapshot document = await fireStore
+  //                     .collection('News')
+  //                     .doc(widget.news.newsId)
+  //                     .get();
+  //                 List<dynamic> totalDisLikes = document.get('totalDislikes');
+  //                 List<dynamic> totalLikes = document.get('totalLikes');
 
-                  setState(() {});
-                } else {
-                  DocumentSnapshot document = await fireStore
-                      .collection('News')
-                      .doc(widget.news.newsId)
-                      .get();
-                  List<dynamic> totalDisLikes = document.get('totalDislikes');
-                  List<dynamic> totalLikes = document.get('totalLikes');
+  //                 if (totalDisLikes.contains(firebaseAuth.currentUser!.uid)) {
+  //                   totalDisLikes.remove(firebaseAuth.currentUser!.uid);
+  //                   await fireStore
+  //                       .collection('News')
+  //                       .doc(widget.news.newsId)
+  //                       .update({"totalDislikes": totalDisLikes});
+  //                   widget.news.totalDislikes!.length = totalDisLikes.length;
+  //                 } else {
+  //                   if (totalLikes.contains(firebaseAuth.currentUser!.uid)) {
+  //                     totalLikes.remove(firebaseAuth.currentUser!.uid);
+  //                     totalDisLikes.add(firebaseAuth.currentUser!.uid);
+  //                     await fireStore
+  //                         .collection('News')
+  //                         .doc(widget.news.newsId)
+  //                         .update({
+  //                       "totalLikes": totalLikes,
+  //                       "totalDislikes": totalDisLikes
+  //                     });
+  //                     widget.news.totalLikes!.length = totalLikes.length;
+  //                     widget.news.totalDislikes!.length = totalDisLikes.length;
+  //                   } else {
+  //                     totalDisLikes.add(firebaseAuth.currentUser!.uid);
+  //                     await fireStore
+  //                         .collection('News')
+  //                         .doc(widget.news.newsId)
+  //                         .update({"totalDislikes": totalDisLikes});
+  //                     widget.news.totalDislikes!.length = totalDisLikes.length;
+  //                   }
+  //                 }
 
-                  if (totalDisLikes.contains(firebaseAuth.currentUser!.uid)) {
-                    totalDisLikes.remove(firebaseAuth.currentUser!.uid);
-                    await fireStore
-                        .collection('News')
-                        .doc(widget.news.newsId)
-                        .update({"totalDislikes": totalDisLikes});
-                    widget.news.totalDislikes!.length = totalDisLikes.length;
-                  } else {
-                    if (totalLikes.contains(firebaseAuth.currentUser!.uid)) {
-                      totalLikes.remove(firebaseAuth.currentUser!.uid);
-                      totalDisLikes.add(firebaseAuth.currentUser!.uid);
-                      await fireStore
-                          .collection('News')
-                          .doc(widget.news.newsId)
-                          .update({
-                        "totalLikes": totalLikes,
-                        "totalDislikes": totalDisLikes
-                      });
-                      widget.news.totalLikes!.length = totalLikes.length;
-                      widget.news.totalDislikes!.length = totalDisLikes.length;
-                    } else {
-                      totalDisLikes.add(firebaseAuth.currentUser!.uid);
-                      await fireStore
-                          .collection('News')
-                          .doc(widget.news.newsId)
-                          .update({"totalDislikes": totalDisLikes});
-                      widget.news.totalDislikes!.length = totalDisLikes.length;
-                    }
-                  }
-
-                  setState(() {});
-                }
-              }
-            },
-            child: Icon(
-              index == 0
-                  ? firebaseAuth.currentUser == null
-                  ? Icons.thumb_up_off_alt_outlined
-                  : widget.news.totalLikes!
-                  .contains(firebaseAuth.currentUser!.uid)
-                  ? Icons.thumb_up
-                  : Icons.thumb_up_off_alt_outlined
-                  : firebaseAuth.currentUser == null
-                  ? Icons.thumb_down_off_alt_outlined
-                  : widget.news.totalDislikes!
-                  .contains(firebaseAuth.currentUser!.uid)
-                  ? Icons.thumb_down
-                  : Icons.thumb_down_off_alt_outlined,
-              color: R.colors.unSelectedIcon,
-              size: FetchPixels.getPixelHeight(20),
-            ),
-          ),
-          getHorSpace(FetchPixels.getPixelWidth(5)),
-          Text(
-            index == 0
-                ? '${widget.news.totalLikes!.length}'
-                : '${widget.news.totalDislikes!.length}',
-            style: R.textStyle.regularLato().copyWith(
-                fontSize: FetchPixels.getPixelHeight(16),
-                color: R.colors.unSelectedIcon),
-          ),
-        ],
-      ),
-    );
-  }
+  //                 setState(() {});
+  //               }
+  //             }
+  //           },
+  //           child: Icon(
+  //             index == 0
+  //                 ? firebaseAuth.currentUser == null
+  //                     ? Icons.thumb_up_off_alt_outlined
+  //                     : widget.news.totalLikes!
+  //                             .contains(firebaseAuth.currentUser!.uid)
+  //                         ? Icons.thumb_up
+  //                         : Icons.thumb_up_off_alt_outlined
+  //                 : firebaseAuth.currentUser == null
+  //                     ? Icons.thumb_down_off_alt_outlined
+  //                     : widget.news.totalDislikes!
+  //                             .contains(firebaseAuth.currentUser!.uid)
+  //                         ? Icons.thumb_down
+  //                         : Icons.thumb_down_off_alt_outlined,
+  //             color: R.colors.unSelectedIcon,
+  //             size: FetchPixels.getPixelHeight(20),
+  //           ),
+  //         ),
+  //         getHorSpace(FetchPixels.getPixelWidth(5)),
+  //         Text(
+  //           index == 0
+  //               ? '${widget.news.totalLikes!.length}'
+  //               : '${widget.news.totalDislikes!.length}',
+  //           style: R.textStyle.regularLato().copyWith(
+  //               fontSize: FetchPixels.getPixelHeight(16),
+  //               color: R.colors.unSelectedIcon),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+//   }
+// }
 }

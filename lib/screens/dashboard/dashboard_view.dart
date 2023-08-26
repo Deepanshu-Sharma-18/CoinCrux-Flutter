@@ -39,7 +39,6 @@ class _DashBoardPageState extends State<DashBoardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: R.colors.bgColor,
-      
       body: SafeArea(
         child: getPaddingWidget(
           EdgeInsets.symmetric(

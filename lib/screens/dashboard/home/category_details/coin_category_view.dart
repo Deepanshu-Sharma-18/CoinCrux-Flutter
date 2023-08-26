@@ -83,9 +83,7 @@ class _CoinCategoryViewState extends State<CoinCategoryView> {
                             ? news[index]
                             : userNews[index],
                         index: index,
-                        onTapCallback: (visible) {
-                          print(true);
-                        },
+                        
                       );
                     },
                     cardsCount: firebaseAuth.currentUser == null ||

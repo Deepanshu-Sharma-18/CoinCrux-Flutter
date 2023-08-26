@@ -70,7 +70,9 @@ class _HomeViewState extends State<HomeView> {
                 .copyWith(fontSize: FetchPixels.getPixelHeight(17)),
           ),
         ),
-      body:RefreshIndicator(
+      body:Container(
+        padding:EdgeInsets.all(15),
+        child:RefreshIndicator(
         onRefresh: _refreshData,
         child: Consumer2<AuthProvider, NewsProvider>(
           builder: (context, auth, newsProvider, child) {
@@ -342,6 +344,6 @@ class _HomeViewState extends State<HomeView> {
               getVerSpace(FetchPixels.getPixelHeight(10)),
             ]);
           },
-        )));
+        ))));
   }
 }

@@ -32,7 +32,7 @@ class LikedPosts extends StatelessWidget {
                   return ListView.builder(
                     itemCount: likedNews.length,
                     itemBuilder: (context, index) {
-                      return FeedView(news: likedNews[index],index: index,);
+                      // return FeedView(news: likedNews[index],index: index,);
                     },
                   );
                 }else{

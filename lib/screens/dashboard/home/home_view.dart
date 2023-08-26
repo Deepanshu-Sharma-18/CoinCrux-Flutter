@@ -54,7 +54,23 @@ class _HomeViewState extends State<HomeView> {
       await Provider.of<NewsProvider>(context, listen: false).listenToNews();
     }
 
-    return RefreshIndicator(
+    return Scaffold(
+      backgroundColor: R.colors.bgColor,
+        appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: R.colors.blackColor, //change your color here
+          ),
+          elevation: 0.0,
+          backgroundColor: R.colors.bgColor,
+          centerTitle: true,
+          title: Text(
+            "Home",
+            style: R.textStyle
+                .mediumLato()
+                .copyWith(fontSize: FetchPixels.getPixelHeight(17)),
+          ),
+        ),
+      body:RefreshIndicator(
         onRefresh: _refreshData,
         child: Consumer2<AuthProvider, NewsProvider>(
           builder: (context, auth, newsProvider, child) {
@@ -326,6 +342,6 @@ class _HomeViewState extends State<HomeView> {
               getVerSpace(FetchPixels.getPixelHeight(10)),
             ]);
           },
-        ));
+        )));
   }
 }

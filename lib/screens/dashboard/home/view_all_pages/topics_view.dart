@@ -15,6 +15,9 @@ class TopicsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FetchPixels(context);
+    void dummyFunction(bool isvisible){
+      print("Hello");
+    }
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
@@ -45,6 +48,7 @@ class TopicsView extends StatelessWidget {
                   return FeedView(
                     news: news[index],
                     index: index,
+                    onTapCallback:dummyFunction,
                   );
                 },
               );

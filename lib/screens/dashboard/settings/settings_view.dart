@@ -40,20 +40,20 @@ class _SettingsViewState extends State<SettingsView> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: R.colors.bgColor,
-        // appBar: AppBar(
-        //   iconTheme: IconThemeData(
-        //     color: R.colors.blackColor, //change your color here
-        //   ),
-        //   elevation: 0.0,
-        //   backgroundColor: R.colors.bgColor,
-        //   centerTitle: true,
-        //   title: Text(
-        //     "Settings",
-        //     style: R.textStyle
-        //         .mediumLato()
-        //         .copyWith(fontSize: FetchPixels.getPixelHeight(17)),
-        //   ),
-        // ),
+        appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: R.colors.blackColor, //change your color here
+          ),
+          elevation: 0.0,
+          backgroundColor: R.colors.bgColor,
+          centerTitle: true,
+          title: Text(
+            "Settings",
+            style: R.textStyle
+                .mediumLato()
+                .copyWith(fontSize: FetchPixels.getPixelHeight(17)),
+          ),
+        ),
         body: Container(
           child: Column(
             children: [

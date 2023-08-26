@@ -20,7 +20,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => NewsProvider()),
       ],
-      child: const MyApp(),
+      child: MyApp(),
     ),
   );
 }
@@ -51,7 +51,6 @@ class _MyAppState extends State<MyApp> {
       color: R.colors.whiteColor,
       debugShowCheckedModeBanner: false,
       locale: _locale,
-
       fallbackLocale: Locale('en', 'US'),
       supportedLocales: const [
         Locale('en', 'US'),

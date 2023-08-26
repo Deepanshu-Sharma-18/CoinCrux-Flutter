@@ -24,16 +24,12 @@ class DashBoardPage extends StatefulWidget {
 }
 
 class _DashBoardPageState extends State<DashBoardPage> {
-  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   int currentPage = 0;
   late PageController pageController;
 
   @override
   void initState() {
-    var c = Provider.of<AuthProvider>(context, listen: false);
-    Provider.of<NewsProvider>(context,listen:false).listenToNews();
-    c.isFeedView = false;
+    Provider.of<NewsProvider>(context, listen: false).listenToNews();
     currentPage = widget.index;
     pageController = PageController(initialPage: widget.index);
     super.initState();
@@ -41,91 +37,53 @@ class _DashBoardPageState extends State<DashBoardPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AuthProvider>(
-      builder: (context, auth, child) {
-        return Scaffold(
-          backgroundColor: R.colors.bgColor,
-          appBar: auth.isFeedView == true
-              ? null
-              : AppBar(
-                  elevation: 0.00,
-                  backgroundColor: R.colors.bgColor,
-                  automaticallyImplyLeading: false,
-                  title: Row(
-                    children: [
-                      Text(
-                        auth.dashCurrentPage == 0
-                            ? "Home"
-                            : auth.dashCurrentPage == 1
-                                ? "Feed"
-                                : auth.dashCurrentPage == 2
-                                    ? "Settings"
-                                    : "Profile",
-                        style: R.textStyle.mediumLato().copyWith(
-                              fontSize: FetchPixels.getPixelHeight(23),
-                              color: R.colors.blackColor,
-                            ),
-                      ),
-                      Spacer(),
-                      // ... your other AppBar content ...
-                    ],
-                  ),
-                ),
-          body: SafeArea(
-            child: getPaddingWidget(
-              EdgeInsets.symmetric(
-                horizontal: FetchPixels.getPixelWidth(
-                    auth.dashCurrentPage == 1 ? 0 : 20),
-              ),
-              PageView(
-                controller: pageController,
-                physics: NeverScrollableScrollPhysics(),
-                onPageChanged: (page) {
-                  auth.dashCurrentPage = page;
-                },
-                children: [
-                  HomeView(),
-                  NewsFeedView(),
-                  SettingsView(),
-                  if (firebaseAuth.currentUser != null) ProfileView(),
-                ],
-              ),
-            ),
+    return Scaffold(
+      backgroundColor: R.colors.bgColor,
+      
+      body: SafeArea(
+        child: getPaddingWidget(
+          EdgeInsets.symmetric(
+            horizontal:
+                FetchPixels.getPixelWidth(0),
           ),
-          bottomNavigationBar: auth.isFeedView == true
-              ? null
-              : CurvedNavigationBar(
-                  backgroundColor: R.colors.theme,
-                  items: [
-                    Icon(
-                      Icons.home,
-                      color: R.colors.theme,
-                      size: FetchPixels.getPixelHeight(25),
-                    ),
-                    Icon(
-                      Icons.newspaper,
-                      color: R.colors.theme,
-                      size: FetchPixels.getPixelHeight(25),
-                    ),
-                    Icon(
-                      Icons.settings,
-                      color: R.colors.theme,
-                      size: FetchPixels.getPixelHeight(25),
-                    ),
-                    if (firebaseAuth.currentUser != null)
-                      Icon(
-                        Icons.person,
-                        color: Colors.white,
-                        size: FetchPixels.getPixelHeight(25),
-                      ),
-                  ],
-                  onTap: (index) {
-                    auth.dashCurrentPage = index;
-                    pageController.jumpToPage(index);
-                  },
-                ),
-        );
-      },
+          PageView(
+            controller: pageController,
+            physics: NeverScrollableScrollPhysics(),
+            onPageChanged: (page) {
+              
+            },
+            children: [
+              HomeView(),
+              NewsFeedView(),
+              SettingsView(),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: R.colors.theme,
+        items: [
+          Icon(
+            Icons.home,
+            color: R.colors.theme,
+            size: FetchPixels.getPixelHeight(25),
+          ),
+          Icon(
+            Icons.newspaper,
+            color: R.colors.theme,
+            size: FetchPixels.getPixelHeight(25),
+          ),
+          Icon(
+            Icons.settings,
+            color: R.colors.theme,
+            size: FetchPixels.getPixelHeight(25),
+          ),
+        ],
+        onTap: (index) {
+          currentPage = index;
+          pageController.jumpToPage(index);
+        },
+      ),
     );
   }
 }

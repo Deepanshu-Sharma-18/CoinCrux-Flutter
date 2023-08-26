@@ -58,7 +58,7 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                     isLoop: true,
                     controller: cardSwiperController,
                     allowedSwipeDirection: AllowedSwipeDirection.only(
-                        right: false, left: false, down: false, up: true),
+                        right: false, left: false, down:true, up: true),
                     cardBuilder: (context, index) {
                       return FeedView(
                         news: newsList[index],
@@ -69,35 +69,6 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                     cardsCount: newsList.length,
                   ),
 
-                  CardSwiper(
-                    padding: EdgeInsets.only(left: 1),
-                    isLoop: true,
-                    controller: cardSwiperController,
-                    allowedSwipeDirection: AllowedSwipeDirection.only(
-                        right: false, left: false, down: false, up: true),
-                    cardBuilder: (context, index) {
-                      return FeedView(
-                        news: newsList[index],
-                        index: index,
-                      );
-                    },
-                    cardsCount: newsList.length,
-                  ),
-
-                  CardSwiper(
-                    padding: EdgeInsets.only(left: 0.5),
-                    isLoop: true,
-                    controller: cardSwiperController,
-                    allowedSwipeDirection: AllowedSwipeDirection.only(
-                        right: false, left: false, down: false, up: true),
-                    cardBuilder: (context, index) {
-                      return FeedView(
-                        news: newsList[index],
-                        index: index,
-                      );
-                    },
-                    cardsCount: newsList.length,
-                  ),
 
                 ],
               ),

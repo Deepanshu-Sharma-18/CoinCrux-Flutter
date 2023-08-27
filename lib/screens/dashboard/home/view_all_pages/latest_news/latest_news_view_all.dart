@@ -18,7 +18,6 @@ class LatestViewAll extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AuthProvider authProvider = Provider.of(context,listen: false);
     return  Column(
       children: [
         InkWell(
@@ -73,7 +72,7 @@ class LatestViewAll extends StatelessWidget {
                     getVerSpace(FetchPixels.getPixelHeight(5)),
                     Container(
                       child: Text(
-                        news.coinHeading!,
+                        news.assetName!,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: R.textStyle.regularLato().copyWith(
@@ -110,14 +109,6 @@ class LatestViewAll extends StatelessWidget {
                         getHorSpace(FetchPixels.getPixelWidth(1)),
                         Row(
                           children: [
-                            isNotification?SizedBox():Icon(
-                              authProvider.userM.bookMarks!.contains(news.newsId)
-                                  ? Icons.bookmark
-                                  : Icons.bookmark_outline_outlined,
-                              color: authProvider.userM.bookMarks!.contains(news.newsId) ? R.colors.theme : R.colors.unSelectedIcon,
-                              size: FetchPixels.getPixelHeight(25),
-                            ),
-                            getHorSpace(FetchPixels.getPixelWidth(1)),
                             isNotification?SizedBox():InkWell(
                               borderRadius: BorderRadius.circular(
                                   FetchPixels.getPixelHeight(50)),

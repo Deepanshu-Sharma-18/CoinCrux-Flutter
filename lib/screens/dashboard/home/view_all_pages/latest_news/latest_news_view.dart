@@ -24,8 +24,9 @@ class _LatestViewState extends State<LatestView> {
   int currentPage = 0;
   @override
   Widget build(BuildContext context) {
-    return Consumer<NewsProvider>(
-      builder: (context, newsProvider, child) {
+  
+        List<NewsModel> freshNews = Provider.of<NewsProvider>(context).newsList;
+        print(freshNews);
         return Scaffold(
           backgroundColor: R.colors.bgColor,
           appBar: AppBar(
@@ -70,53 +71,25 @@ class _LatestViewState extends State<LatestView> {
                   setState(() {});
                 },
                 children: [
-                  StreamBuilder(
-                      stream: firebaseFirestore.collection('News').snapshots(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          List<NewsModel> news = snapshot.data!.docs
-                              .map((e) => NewsModel.fromJson(e.data()))
-                              .toList();
-                          List<NewsModel> freshNews = news.where((element) {
-                            DateTime createdAt = element
-                                .createdAt!; // Convert Firestore Timestamp to DateTime
-                            DateTime currentTime = DateTime.now();
-                            Duration difference =
-                                currentTime.difference(createdAt);
-                            int minutesDifference = difference.inMinutes;
-                            return minutesDifference <=
-                                120; // Fetch news created within the last 5 minutes
-                          }).toList();
-                          return ListView.builder(
-                            itemCount: freshNews.length,
-                            itemBuilder: (context, index) {
-                              return getPaddingWidget(
-                                  EdgeInsets.symmetric(
-                                      horizontal:
-                                          FetchPixels.getPixelWidth(20)),
-                                  LatestViewAll(
-                                    isNotification: false,
-                                    news: freshNews[index],
-                                    index: index,
-                                  ));
-                            },
-                          );
-                        } else {
-                          return Center(
-                            child: CircularProgressIndicator(
-                              color: R.colors.theme,
-                            ),
-                          );
-                        }
-                      }),
+                  ListView.builder(
+                    itemCount: freshNews.length,
+                    itemBuilder: (context, index) {
+                      return getPaddingWidget(
+                          EdgeInsets.symmetric(
+                              horizontal: FetchPixels.getPixelWidth(20)),
+                          LatestViewAll(
+                            isNotification: false,
+                            news: freshNews[index],
+                            index: index,
+                          ));
+                    },
+                  ),
                   AssetsView(),
                 ],
               ),
             ),
           ]),
         );
-      },
-    );
   }
 
   Widget heading(index) {

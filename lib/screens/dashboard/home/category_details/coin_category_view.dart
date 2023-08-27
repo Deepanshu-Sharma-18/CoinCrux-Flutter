@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:async';
 import 'package:coincrux/screens/auth/provider/auth_provider.dart';
 import 'package:coincrux/screens/dashboard/news_feed/provider/news_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,91 +20,94 @@ class CoinCategoryView extends StatefulWidget {
 }
 
 class _CoinCategoryViewState extends State<CoinCategoryView> {
-  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-
-  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-
   CardSwiperController cardSwiperController = CardSwiperController();
+  bool _isAppBarVisible = true;
+  Timer? _appBarTimer;
+  void _startTimer() {
+    _appBarTimer = Timer(Duration(milliseconds: 1000), () {
+      setState(() {
+        _isAppBarVisible = false;
+      });
+    });
+  }
+
+  void _stopTimer() {
+    _appBarTimer?.cancel();
+  }
+
+  void _resetTimer() {
+    if (!_isAppBarVisible) {
+      setState(() {
+        _isAppBarVisible = true;
+      });
+      _stopTimer();
+      _startTimer();
+    }
+  }
 
   @override
   void initState() {
     print("${widget.coinName}");
     super.initState();
+    _startTimer();
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer2<NewsProvider, AuthProvider>(
       builder: (context, newsProvider, auth, child) {
+        List<NewsModel> newsList = Provider.of<NewsProvider>(context)
+            .newsList
+            .where((element) => element.assetName == widget.coinName)
+            .toList();
+
         return Scaffold(
-          backgroundColor: R.colors.bgColor,
-          appBar: AppBar(
-            automaticallyImplyLeading: true,
-            iconTheme: IconThemeData(
-              color: R.colors.blackColor, //change your color here
-            ),
-            elevation: 0.0,
             backgroundColor: R.colors.bgColor,
-            centerTitle: true,
-            title: Text(
-              widget.coinName,
-              style: R.textStyle
-                  .mediumLato()
-                  .copyWith(fontSize: FetchPixels.getPixelHeight(17)),
+            appBar: PreferredSize(
+              preferredSize:
+                  Size.fromHeight(_isAppBarVisible ? kToolbarHeight : 0),
+              child: AnimatedContainer(
+                duration: Duration(milliseconds: 20), // Animation duration
+                height: _isAppBarVisible ? kToolbarHeight : 0,
+                child: AppBar(
+                  iconTheme: IconThemeData(
+                    color: R.colors.blackColor, //change your color here
+                  ),
+                  elevation: 0.0,
+                  automaticallyImplyLeading: true,
+                  backgroundColor: R.colors.bgColor,
+                  centerTitle: true,
+                  title: Text(
+                    widget.coinName,
+                    style: R.textStyle
+                        .mediumLato()
+                        .copyWith(fontSize: FetchPixels.getPixelHeight(17)),
+                  ),
+                ),
+              ),
             ),
-          ),
-          body: StreamBuilder(
-              stream: firebaseFirestore
-                  .collection('News')
-                  .where('coinType', isEqualTo: widget.coinName)
-                  .snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  List<NewsModel> news = snapshot.data!.docs
-                      .map((e) =>
-                          NewsModel.fromJson(e.data() as Map<String, dynamic>))
-                      .toList();
-                  List<NewsModel> userNews = [];
-                  if (auth.userM.topics != null) {
-                    userNews = news
-                        .where((newsItem) => auth.userM.topics!
-                            .any((topic) => newsItem.assetName == topic.name))
-                        .toList();
-                  }
-                  return CardSwiper(
-                    padding: EdgeInsets.only(left: 1),
-                    isLoop: true,
-                    controller: cardSwiperController,
-                    allowedSwipeDirection: AllowedSwipeDirection.only(
-                        right: false, left: false, down: false, up: true),
-                    cardBuilder: (context, index) {
-                      return FeedView(
-                        news: firebaseAuth.currentUser == null ||
-                                auth.userM.topics!.isEmpty
-                            ? news[index]
-                            : userNews[index],
-                        index: index,
-                        
-                      );
-                    },
-                    cardsCount: firebaseAuth.currentUser == null ||
-                            auth.userM.topics!.isEmpty
-                        ? news.length
-                        : userNews.length,
+            body: CardSwiper(
+                padding: EdgeInsets.only(left: 1),
+                isLoop: true,
+                controller: cardSwiperController,
+                allowedSwipeDirection: AllowedSwipeDirection.only(
+                    right: false, left: false, down: true, up: true),
+                cardBuilder: (context, index) {
+                  return FeedView(
+                    news: newsList[index],
+                    index: index,
+                    newsList: newsList,
                   );
-                  //   ListView.builder(
-                  //   itemCount: firebaseAuth.currentUser == null || auth.userM.topics!.isEmpty ? news.length : userNews.length,
-                  //   itemBuilder: (context, index) {
-                  //     return FeedView(news: firebaseAuth.currentUser == null || auth.userM.topics!.isEmpty ? news[index] : userNews[index],index: index,);
-                  //   },
-                  // );
-                } else {
-                  return Center(
-                    child: SingleChildScrollView(),
-                  );
-                }
-              }),
-        );
+                },
+                cardsCount: newsList.length)
+            //   ListView.builder(
+            //   itemCount: firebaseAuth.currentUser == null || auth.userM.topics!.isEmpty ? news.length : userNews.length,
+            //   itemBuilder: (context, index) {
+            //     return FeedView(news: firebaseAuth.currentUser == null || auth.userM.topics!.isEmpty ? news[index] : userNews[index],index: index,);
+            //   },
+            // );
+
+            );
       },
     );
   }

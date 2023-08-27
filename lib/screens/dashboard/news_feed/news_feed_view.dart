@@ -25,7 +25,7 @@ class _NewsFeedViewState extends State<NewsFeedView> {
   Timer? _appBarTimer;
   CardSwiperController cardSwiperController = CardSwiperController();
   void _startTimer() {
-    _appBarTimer = Timer(Duration(seconds: 2), () {
+    _appBarTimer = Timer(Duration(milliseconds: 1000), () {
       setState(() {
         _isAppBarVisible = false;
       });
@@ -67,7 +67,7 @@ class _NewsFeedViewState extends State<NewsFeedView> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(_isAppBarVisible ? kToolbarHeight : 0),
         child: AnimatedContainer(
-          duration: Duration(milliseconds: 300), // Animation duration
+          duration: Duration(milliseconds: 20), // Animation duration
           height: _isAppBarVisible ? kToolbarHeight : 0,
           child:AppBar(
           iconTheme: IconThemeData(

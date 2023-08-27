@@ -17,13 +17,15 @@ import '../model/news_model.dart';
 
 class NewsFeedWidget extends StatefulWidget {
   final NewsModel news;
+  
   int index;
   bool isDetailed = false;
   NewsFeedWidget(
       {Key? key,
       required this.isDetailed,
       required this.news,
-      required this.index})
+      required this.index,
+      })
       : super(key: key);
 
   @override
@@ -492,13 +494,15 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
 
 class MyNewsFeedWidget extends StatefulWidget {
   final NewsModel news;
+  List<NewsModel>? newsList;
   int index;
   bool isDetailed = false;
   MyNewsFeedWidget(
       {Key? key,
       required this.isDetailed,
       required this.news,
-      required this.index})
+      required this.index,
+      this.newsList})
       : super(key: key);
 
   @override
@@ -507,21 +511,22 @@ class MyNewsFeedWidget extends StatefulWidget {
 
 class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
   int currentLiked = -1;
-
+  
   @override
   Widget build(BuildContext context) {
     List<NewsModel> newsList = Provider.of<NewsProvider>(context).newsList;
+    int? myLength = widget.newsList !=null ? widget.newsList!.length:newsList.length;
     return Scaffold(
       body: Column(
         children: [
           Container(
-            height: FetchPixels.getPixelHeight(260),
+            height: FetchPixels.getPixelHeight(400),
             child: Stack(
               children: [
                 Align(
                   alignment: Alignment.topCenter,
                   child: Container(
-                    height: FetchPixels.getPixelHeight(250),
+                    height: FetchPixels.getPixelHeight(330),
                     decoration: BoxDecoration(
                         image: getDecorationNetworkImage(
                             context, widget.news.coinImage!,
@@ -530,10 +535,9 @@ class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
                   ),
                 ),
                 Align(
-                  alignment: Alignment.bottomCenter,
                   child: Padding(
                     padding:
-                        EdgeInsets.only(top: FetchPixels.getPixelHeight(230)),
+                        EdgeInsets.only(top: FetchPixels.getPixelHeight(260)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -635,7 +639,7 @@ class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                getVerSpace(FetchPixels.getPixelHeight(20)),
+                // getVerSpace(FetchPixels.getPixelHeight(20)),
                 InkWell(
                   onDoubleTap: () {
                     print("Hey");
@@ -649,14 +653,14 @@ class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
                         color: R.colors.blackColor),
                   ),
                 ),
-                getVerSpace(FetchPixels.getPixelHeight(10)),
+                getVerSpace(FetchPixels.getPixelHeight(15)),
                 Text(
                   widget.news.coinDescription!,
                   textAlign: TextAlign.justify,
-                  maxLines: widget.isDetailed ? 10 : 8,
+                  maxLines: 8,
                   overflow: TextOverflow.ellipsis,
                   style: R.textStyle.regularLato().copyWith(
-                      wordSpacing: 2,
+                      wordSpacing: 5,
                       letterSpacing: 1,
                       fontSize: FetchPixels.getPixelHeight(15),
                       color: R.colors.blackColor),
@@ -777,7 +781,7 @@ class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
                             color: R.colors.fill.withOpacity(0.3)),
                         child: Center(
                             child: Text(
-                          "#${widget.index + 1} / ${newsList.length} unread",
+                          "#${widget.index + 1} / ${myLength} unread",
                           style: TextStyle(
                               fontSize: FetchPixels.getPixelHeight(12)),
                         )))),

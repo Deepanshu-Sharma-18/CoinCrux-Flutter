@@ -13,9 +13,10 @@ import 'graph_view.dart';
 
 class FeedView extends StatefulWidget {
   final NewsModel news;
+  List<NewsModel>? newsList;
   int? index;
   FeedView(
-      {Key? key, required this.news, this.index,})
+      {Key? key, required this.news, this.index,this.newsList})
       : super(key: key);
 
   @override
@@ -37,7 +38,6 @@ class _FeedViewState extends State<FeedView> {
   Widget build(BuildContext context) {
     // AuthProvider authProvider = Provider.of(context, listen: false);
     return Container(
-      height: FetchPixels.height * 0.8,
       width: FetchPixels.width,
       child: PageView(
         physics: 
@@ -72,7 +72,7 @@ class _FeedViewState extends State<FeedView> {
                   
               },
               child: MyNewsFeedWidget(
-                isDetailed: false, news: widget.news, index: widget.index!)),
+                isDetailed: false, news: widget.news, index: widget.index!,newsList: widget.newsList,)),
         ],
       ),
     );

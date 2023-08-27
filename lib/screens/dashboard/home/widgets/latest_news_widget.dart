@@ -174,7 +174,7 @@ class MyLatestNewsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AuthProvider authProvider = Provider.of(context,listen: false);
+  
     return InkWell(
       onTap: () {
         // Get.to(NewsDetailPage(
@@ -270,13 +270,7 @@ class MyLatestNewsWidget extends StatelessWidget {
                         SizedBox(width: FetchPixels.getPixelWidth(100),),
                         Row(
                           children: [
-                            Icon(
-                              firebaseAuth.currentUser == null ? Icons.bookmark_outline_outlined
-                                  : authProvider.userM.bookMarks!.contains(news.newsId)
-                                  ? Icons.bookmark
-                                  : Icons.bookmark_outline_outlined,
-                              color: firebaseAuth.currentUser == null ? Colors.black.withOpacity(0.5) : authProvider.userM.bookMarks == null ? R.colors.unSelectedIcon : authProvider.userM.bookMarks!.contains(news.newsId) ? R.colors.theme : Colors.black.withOpacity(0.5),
-                            ),
+                            
                             InkWell(
                               borderRadius: BorderRadius.circular(
                                   FetchPixels.getPixelHeight(50)),

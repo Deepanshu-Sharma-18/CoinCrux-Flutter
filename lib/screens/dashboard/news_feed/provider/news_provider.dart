@@ -18,8 +18,9 @@ class NewsProvider extends ChangeNotifier {
 
   Future<void> listenToNews() async{
     isLoading = true;
+    final DateTime twoDaysAgo = DateTime.now().subtract(Duration(days: 2));
     FirebaseFirestore.instance
-        .collection("News")
+        .collection("News").where('createdAt', isGreaterThanOrEqualTo: twoDaysAgo)
         .snapshots()
         .listen((querySnapshot) async {
       newsList.clear();

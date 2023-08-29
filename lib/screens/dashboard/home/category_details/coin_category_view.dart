@@ -60,7 +60,7 @@ class _CoinCategoryViewState extends State<CoinCategoryView> {
             .newsList
             .where((element) => element.assetName == widget.coinName)
             .toList();
-
+        print(newsList.length);
         return Scaffold(
             backgroundColor: R.colors.bgColor,
             appBar: PreferredSize(
@@ -86,7 +86,7 @@ class _CoinCategoryViewState extends State<CoinCategoryView> {
                 ),
               ),
             ),
-            body: CardSwiper(
+            body: newsList.length > 1?CardSwiper(
                 padding: EdgeInsets.only(left: 1),
                 isLoop: true,
                 controller: cardSwiperController,
@@ -99,7 +99,7 @@ class _CoinCategoryViewState extends State<CoinCategoryView> {
                     newsList: newsList,
                   );
                 },
-                cardsCount: newsList.length)
+                cardsCount: newsList.length):FeedView(news:newsList[0],index:0,newsList: newsList)
             //   ListView.builder(
             //   itemCount: firebaseAuth.currentUser == null || auth.userM.topics!.isEmpty ? news.length : userNews.length,
             //   itemBuilder: (context, index) {

@@ -107,31 +107,6 @@ class LatestViewAll extends StatelessWidget {
                           ],
                         ),
                         getHorSpace(FetchPixels.getPixelWidth(1)),
-                        Row(
-                          children: [
-                            isNotification?SizedBox():InkWell(
-                              borderRadius: BorderRadius.circular(
-                                  FetchPixels.getPixelHeight(50)),
-                              onTap: () {
-                                Share.share(
-                                    'check out my Application https://example.com',
-                                    subject: 'Look what I made!');
-                              },
-                              child: Container(
-                                padding:
-                                EdgeInsets.all(FetchPixels.getPixelHeight(6)),
-                                decoration: BoxDecoration(shape: BoxShape.circle),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.share,
-                                    color: R.colors.unSelectedIcon,
-                                    size: FetchPixels.getPixelHeight(20),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
                       ],
                     )
                   ],

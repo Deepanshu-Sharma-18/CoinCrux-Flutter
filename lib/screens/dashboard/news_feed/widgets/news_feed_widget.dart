@@ -182,7 +182,7 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                 Row(
                   children: [
                     Text(
-                      "Swipe Right for more at Economic Times",
+                      "Crux by ${widget.news.createdBy}",
                       style: R.textStyle.regularLato().copyWith(
                           fontSize: FetchPixels.getPixelHeight(13),
                           color: R.colors.unSelectedIcon),
@@ -210,135 +210,37 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
                   ],
                 ),
                 getVerSpace(FetchPixels.getPixelHeight(30)),
-                Row(
-                  children: [
-                    Row(
-                      children: List.generate(2, (index) {
-                        return likeWidget(index);
-                      }),
-                    ),
-                    getHorSpace(FetchPixels.getPixelWidth(20)),
-                    InkWell(
-                      onTap: () {
-                        Get.to(CommentsView(
-                          news: widget.news,
-                        ));
-                      },
-                      child: Icon(
-                        Icons.chat_outlined,
-                        color: R.colors.unSelectedIcon,
-                      ),
-                    ),
-                    getHorSpace(FetchPixels.getPixelWidth(5)),
-                    StreamBuilder(
-                        stream: fireStore
-                            .collection("comments")
-                            .where("newsId", isEqualTo: widget.news.newsId)
-                            .snapshots(),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            List<CommentModel> commentsList = snapshot
-                                .data!.docs
-                                .map((e) => CommentModel.fromJson(
-                                    e.data() as Map<String, dynamic>))
-                                .toList();
-                            return Text(
-                              '${commentsList.length}',
-                              style: R.textStyle.regularLato().copyWith(
-                                  fontSize: FetchPixels.getPixelHeight(15),
-                                  color: R.colors.unSelectedIcon),
-                            );
-                          } else {
-                            return SizedBox();
-                          }
-                        }),
-                    Spacer(),
-                    Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            FetchPixels.getPixelHeight(50)),
-                      ),
-                      elevation: 5,
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(
-                            FetchPixels.getPixelHeight(50)),
-                        onTap: () {
-                          Share.share(
-                              'check out my Application https://example.com',
-                              subject: 'Look what I made!');
-                        },
-                        child: Container(
-                          padding:
-                              EdgeInsets.all(FetchPixels.getPixelHeight(8)),
-                          decoration: BoxDecoration(shape: BoxShape.circle),
-                          child: Center(
-                              child: getAssetImage(R.images.share,
-                                  color: Colors.black,
-                                  height: FetchPixels.getPixelHeight(15),
-                                  width: FetchPixels.getPixelWidth(15))),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   children: [
+                //     Row(
+                //       children: List.generate(2, (index) {
+                //         return likeWidget(index);
+                //       }),
+                //     ),
+                //     getHorSpace(FetchPixels.getPixelWidth(20)),
+                //     // InkWell(
+                //     //   onTap: () {
+                //     //     Get.to(CommentsView(
+                //     //       news: widget.news,
+                //     //     ));
+                //     //   },
+                //     //   child: Icon(
+                //     //     Icons.chat_outlined,
+                //     //     color: R.colors.unSelectedIcon,
+                //     //   ),
+                //     // ),
+                //     getHorSpace(FetchPixels.getPixelWidth(5)),
+
+                //   ],
+                // ),
                 getVerSpace(FetchPixels.getPixelHeight(10)),
-                Align(
-                  alignment: Alignment.center,
-                  child: StreamBuilder(
-                      stream: fireStore.collection("News").snapshots(),
-                      builder: (context, snapshot1) {
-                        if (snapshot1.hasData) {
-                          return Container(
-                              height: FetchPixels.getPixelHeight(30),
-                              width: FetchPixels.getPixelWidth(100),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                    FetchPixels.getPixelHeight(35),
-                                  ),
-                                  color: R.colors.fill.withOpacity(0.3)),
-                              child: firebaseAuth.currentUser == null
-                                  ? Center(
-                                      child: Text(
-                                      "#${widget.index + 1} / ${snapshot1.data!.docs.length} unread",
-                                      style: TextStyle(
-                                          fontSize:
-                                              FetchPixels.getPixelHeight(12)),
-                                    ))
-                                  : StreamBuilder(
-                                      stream: fireStore
-                                          .collection('users')
-                                          .doc(firebaseAuth.currentUser!.uid)
-                                          .snapshots(),
-                                      builder: (context, snapshot) {
-                                        if (snapshot.hasData) {
-                                          UserModel userModel =
-                                              UserModel.fromJson(
-                                                  snapshot.data!.data()!);
-                                          return Center(
-                                              child: Text(
-                                            "#${widget.index + 1} / ${snapshot1.data!.docs.length} ${userModel.totalRead!.contains(widget.news.newsId) ? '' : 'unread'}",
-                                            style: TextStyle(
-                                                fontSize:
-                                                    FetchPixels.getPixelHeight(
-                                                        12)),
-                                          ));
-                                        } else {
-                                          return Center(
-                                            child: CircularProgressIndicator(
-                                              color: R.colors.theme,
-                                            ),
-                                          );
-                                        }
-                                      }));
-                        } else {
-                          return SizedBox();
-                        }
-                      }),
+                
+              ]      
                 ),
-                getVerSpace(FetchPixels.getPixelHeight(10)),
-              ],
-            ),
-          ),
+                
+    )]),
+    );
+          
           // authProvider.isFeedView == true? Container(
           //   padding: EdgeInsets.all(FetchPixels.getPixelHeight(20)),
           //   width: FetchPixels.width,
@@ -363,9 +265,7 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
           // ):SizedBox() ,
           // getDivider(R.colors.fill.withOpacity(0.5),
           //     FetchPixels.getPixelHeight(30), FetchPixels.getPixelHeight(1)),
-        ],
-      ),
-    );
+        
   }
 
   Widget likeWidget(index) {
@@ -660,7 +560,7 @@ class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
                   maxLines: 8,
                   overflow: TextOverflow.ellipsis,
                   style: R.textStyle.regularLato().copyWith(
-                      wordSpacing: 5,
+                      wordSpacing: 3,
                       letterSpacing: 1,
                       fontSize: FetchPixels.getPixelHeight(15),
                       color: R.colors.blackColor),
@@ -669,7 +569,7 @@ class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
                 Row(
                   children: [
                     Text(
-                      "Swipe Right for more at Economic Times",
+                      "Crux by ${widget.news.createdBy}",
                       style: R.textStyle.regularLato().copyWith(
                           fontSize: FetchPixels.getPixelHeight(13),
                           color: R.colors.unSelectedIcon),
@@ -739,53 +639,10 @@ class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
                     //         return SizedBox();
                     //       }
                     //     }),
-                    Spacer(),
-                    Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            FetchPixels.getPixelHeight(50)),
-                      ),
-                      elevation: 5,
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(
-                            FetchPixels.getPixelHeight(50)),
-                        onTap: () {
-                          Share.share(
-                              'check out my Application https://example.com',
-                              subject: 'Look what I made!');
-                        },
-                        child: Container(
-                          padding:
-                              EdgeInsets.all(FetchPixels.getPixelHeight(8)),
-                          decoration: BoxDecoration(shape: BoxShape.circle),
-                          child: Center(
-                              child: getAssetImage(R.images.share,
-                                  color: Colors.black,
-                                  height: FetchPixels.getPixelHeight(15),
-                                  width: FetchPixels.getPixelWidth(15))),
-                        ),
-                      ),
-                    ),
+                    
                   ],
                 ),
-                getVerSpace(FetchPixels.getPixelHeight(10)),
-                Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                        height: FetchPixels.getPixelHeight(30),
-                        width: FetchPixels.getPixelWidth(100),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                              FetchPixels.getPixelHeight(35),
-                            ),
-                            color: R.colors.fill.withOpacity(0.3)),
-                        child: Center(
-                            child: Text(
-                          "#${widget.index + 1} / ${myLength} unread",
-                          style: TextStyle(
-                              fontSize: FetchPixels.getPixelHeight(12)),
-                        )))),
-                getVerSpace(FetchPixels.getPixelHeight(10)),
+                
               ],
             ),
           ),

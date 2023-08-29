@@ -268,28 +268,28 @@ class MyLatestNewsWidget extends StatelessWidget {
                           ],
                         ),
                         SizedBox(width: FetchPixels.getPixelWidth(100),),
-                        Row(
-                          children: [
+                        // Row(
+                        //   children: [
                             
-                            InkWell(
-                              borderRadius: BorderRadius.circular(
-                                  FetchPixels.getPixelHeight(50)),
-                              onTap: () {
-                                Share.share(
-                                    'check out my Application https://example.com',
-                                    subject: 'Look what I made!');
-                              },
-                              child: Container(
-                                padding:
-                                EdgeInsets.all(FetchPixels.getPixelHeight(6)),
-                                decoration: BoxDecoration(shape: BoxShape.circle),
-                                child: Center(
-                                    child: getAssetImage(R.images.shareIcon,scale: 2.5)
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                        //     InkWell(
+                        //       borderRadius: BorderRadius.circular(
+                        //           FetchPixels.getPixelHeight(50)),
+                        //       onTap: () {
+                        //         Share.share(
+                        //             'check out my Application https://example.com',
+                        //             subject: 'Look what I made!');
+                        //       },
+                        //       child: Container(
+                        //         padding:
+                        //         EdgeInsets.all(FetchPixels.getPixelHeight(6)),
+                        //         decoration: BoxDecoration(shape: BoxShape.circle),
+                        //         child: Center(
+                        //             child: getAssetImage(R.images.shareIcon,scale: 2.5)
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
                         getHorSpace(FetchPixels.getPixelWidth(1)),
                       ],
                     )

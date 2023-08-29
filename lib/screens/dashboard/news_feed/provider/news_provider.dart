@@ -20,7 +20,7 @@ class NewsProvider extends ChangeNotifier {
     isLoading = true;
     final DateTime twoDaysAgo = DateTime.now().subtract(Duration(days: 2));
     FirebaseFirestore.instance
-        .collection("News").where('createdAt', isGreaterThanOrEqualTo: twoDaysAgo)
+        .collection("News").where('createdAt', isGreaterThanOrEqualTo: twoDaysAgo).orderBy('createdAt',descending: true)
         .snapshots()
         .listen((querySnapshot) async {
       newsList.clear();
@@ -34,7 +34,6 @@ class NewsProvider extends ChangeNotifier {
 
         newsList.add(newsModel);
       }
-      newsList.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
       isLoading = false;
       notifyListeners();
     });

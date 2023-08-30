@@ -35,6 +35,7 @@ class _NewsFeedViewState extends State<NewsFeedView> {
   void _stopTimer() {
     _appBarTimer?.cancel();
   }
+
   void _resetTimer() {
     if (!_isAppBarVisible) {
       setState(() {
@@ -44,6 +45,7 @@ class _NewsFeedViewState extends State<NewsFeedView> {
       _startTimer();
     }
   }
+
   @override
   void initState() {
     super.initState();
@@ -55,69 +57,66 @@ class _NewsFeedViewState extends State<NewsFeedView> {
     _stopTimer();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-    
     // String title = "Feed";
-
-    
 
     List<NewsModel> newsList = Provider.of<NewsProvider>(context).newsList;
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(_isAppBarVisible ? kToolbarHeight : 0),
-        child: AnimatedContainer(
-          duration: Duration(milliseconds: 20), // Animation duration
-          height: _isAppBarVisible ? kToolbarHeight : 0,
-          child:AppBar(
-          iconTheme: IconThemeData(
-            color: R.colors.blackColor, //change your color here
-          ),
-          elevation: 0.0,
-          backgroundColor: R.colors.bgColor,
-          centerTitle: true,
-          title: Text(
-            "My Feed",
-            style: R.textStyle
-                .mediumLato()
-                .copyWith(fontSize: FetchPixels.getPixelHeight(17)),
-          ),
-        ),
-        ),
-      ),
-      body:GestureDetector(
-        onTap:_resetTimer,
-        child:Container(
-        child: Column(
-      children: [
-        Expanded(
-          child: PageView(
-            controller: pageCT,
-            onPageChanged: (page) {
-              currentType = page;
-              setState(() {});
-            },
-            physics: NeverScrollableScrollPhysics(),
-            children: [
-              CardSwiper(
-                padding: EdgeInsets.only(left: 1),
-                isLoop: true,
-                controller: cardSwiperController,
-                allowedSwipeDirection: AllowedSwipeDirection.only(
-                    right: false, left: false, down: true, up: true),
-                cardBuilder: (context, index) {
-                  return FeedView(
-                    news: newsList[index],
-                    index: index,
-                  );
-                },
-                cardsCount: newsList.length,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(_isAppBarVisible ? kToolbarHeight : 0),
+          child: AnimatedContainer(
+            duration: Duration(milliseconds: 20), // Animation duration
+            height: _isAppBarVisible ? kToolbarHeight : 0,
+            child: AppBar(
+              iconTheme: IconThemeData(
+                color: R.colors.blackColor, //change your color here
               ),
-            ],
+              elevation: 0.0,
+              backgroundColor: R.colors.bgColor,
+              centerTitle: true,
+              title: Text(
+                "My Feed",
+                style: R.textStyle
+                    .mediumLato()
+                    .copyWith(fontSize: FetchPixels.getPixelHeight(17)),
+              ),
+            ),
           ),
         ),
-      ],
-    ))));
+        body: GestureDetector(
+            child: Container(
+                child: Column(
+          children: [
+            Expanded(
+              child: PageView(
+                controller: pageCT,
+                onPageChanged: (page) {
+                  currentType = page;
+                  setState(() {});
+                },
+                physics: NeverScrollableScrollPhysics(),
+                children: [
+                  CardSwiper(
+                    padding: EdgeInsets.only(left: 1),
+                    isLoop: true,
+                    controller: cardSwiperController,
+                    allowedSwipeDirection: AllowedSwipeDirection.only(
+                        right: false, left: false, down: true, up: true),
+                    cardBuilder: (context, index) {
+                      return FeedView(
+                        news: newsList[index],
+                        index: index,
+                      );
+                    },
+                    cardsCount: newsList.length,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ))));
   }
 
   Widget newsType(index) {

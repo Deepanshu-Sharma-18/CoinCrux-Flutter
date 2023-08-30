@@ -46,7 +46,7 @@ class CategoriesWidget extends StatelessWidget {
             child: Text(
               model.coinName!,
               style: R.textStyle.regularLato().copyWith(
-                  fontSize: FetchPixels.getPixelHeight(14),
+                  fontSize: FetchPixels.getPixelHeight(10),
                   color: R.colors.blackColor),
             ),
           )

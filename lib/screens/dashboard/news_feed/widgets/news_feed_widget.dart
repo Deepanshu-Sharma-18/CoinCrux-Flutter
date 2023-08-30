@@ -490,43 +490,6 @@ class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
                             );
                           },
                         ),
-                        // Consumer<AuthProvider>(
-                        //   builder: (context,authProvider,child){
-                        //     return InkWell(
-                        //       onTap: () async {
-                        //         if(firebaseAuth.currentUser == null){
-                        //           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please login")));
-                        //         }else{
-                        //           DocumentSnapshot document = await fireStore
-                        //               .collection('users')
-                        //               .doc(firebaseAuth.currentUser!.uid)
-                        //               .get();
-                        //           List<dynamic> isBookMark = document.get('bookMarks');
-                        //
-                        //           if (isBookMark.contains(widget.news.newsId)) {
-                        //             isBookMark.remove(widget.news.newsId);
-                        //           } else {
-                        //             isBookMark.add(widget.news.newsId);
-                        //           }
-                        //
-                        //           await fireStore
-                        //               .collection('users')
-                        //               .doc(firebaseAuth.currentUser!.uid)
-                        //               .update({"bookMarks": isBookMark});
-                        //           authProvider.userM.bookMarks = isBookMark;
-                        //           authProvider.update();
-                        //         }
-                        //
-                        //       },
-                        //       child: Icon(
-                        //         Icons.bookmark,
-                        //         size: FetchPixels.getPixelHeight(40),
-                        //         color: firebaseAuth.currentUser == null ? R.colors.unSelectedIcon
-                        //             : authProvider.userM.bookMarks == null ? R.colors.unSelectedIcon : authProvider.userM.bookMarks!.contains(widget.news.newsId) ? R.colors.theme : R.colors.unSelectedIcon,
-                        //       ),
-                        //     );
-                        //   },
-                        // ),
                       ],
                     ),
                   ),
@@ -557,7 +520,7 @@ class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
                 Text(
                   widget.news.coinDescription!,
                   textAlign: TextAlign.justify,
-                  maxLines: 8,
+                  maxLines: 12,
                   overflow: TextOverflow.ellipsis,
                   style: R.textStyle.regularLato().copyWith(
                       wordSpacing: 3,
@@ -599,46 +562,7 @@ class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
                 getVerSpace(FetchPixels.getPixelHeight(30)),
                 Row(
                   children: [
-                    // Row(
-                    //   children: List.generate(2, (index) {
-                    //     return likeWidget(index);
-                    //   }),
-                    // ),
-                    // getHorSpace(FetchPixels.getPixelWidth(20)),
-                    // InkWell(
-                    //   onTap: () {
-                    //     Get.to(CommentsView(
-                    //       news: widget.news,
-                    //     ));
-                    //   },
-                    //   child: Icon(
-                    //     Icons.chat_outlined,
-                    //     color: R.colors.unSelectedIcon,
-                    //   ),
-                    // ),
-                    // getHorSpace(FetchPixels.getPixelWidth(5)),
-                    // StreamBuilder(
-                    //     stream: fireStore
-                    //         .collection("comments")
-                    //         .where("newsId", isEqualTo: widget.news.newsId)
-                    //         .snapshots(),
-                    //     builder: (context, snapshot) {
-                    //       if (snapshot.hasData) {
-                    //         List<CommentModel> commentsList = snapshot
-                    //             .data!.docs
-                    //             .map((e) => CommentModel.fromJson(
-                    //             e.data() as Map<String, dynamic>))
-                    //             .toList();
-                    //         return Text(
-                    //           '${commentsList.length}',
-                    //           style: R.textStyle.regularLato().copyWith(
-                    //               fontSize: FetchPixels.getPixelHeight(15),
-                    //               color: R.colors.unSelectedIcon),
-                    //         );
-                    //       } else {
-                    //         return SizedBox();
-                    //       }
-                    //     }),
+                    
                     
                   ],
                 ),
@@ -646,31 +570,7 @@ class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
               ],
             ),
           ),
-          // authProvider.isFeedView == true?Container(
-          //   padding: EdgeInsets.all(FetchPixels.getPixelHeight(20)),
-          //   width: FetchPixels.width,
-          //   color: R.colors.bgContainer2.withOpacity(0.2),
-          //   child: Column(
-          //     crossAxisAlignment: CrossAxisAlignment.start,
-          //     children: [
-          //       Text(
-          //         "Hash Key will charge \$15.00 per month.",
-          //         style: R.textStyle.mediumLato().copyWith(
-          //             fontSize: FetchPixels.getPixelHeight(17),
-          //             color: R.colors.blackColor),
-          //       ),
-          //       Text(
-          //         "Tap to read more.",
-          //         style: R.textStyle.mediumLato().copyWith(
-          //             fontSize: FetchPixels.getPixelHeight(15),
-          //             color: R.colors.fill),
-          //       ),
-          //     ],
-          //   ),
-          // ):SizedBox() ,
-
-          // getDivider(R.colors.fill.withOpacity(0.5),
-          //     FetchPixels.getPixelHeight(30), FetchPixels.getPixelHeight(1)),
+          
         ],
       ),
     );

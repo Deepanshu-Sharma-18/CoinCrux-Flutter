@@ -60,7 +60,7 @@ class _CoinCategoryViewState extends State<CoinCategoryView> {
             .newsList
             .where((element) => element.assetName == widget.coinName)
             .toList();
-        print(newsList.length);
+
         return Scaffold(
             backgroundColor: R.colors.bgColor,
             appBar: PreferredSize(
@@ -68,7 +68,6 @@ class _CoinCategoryViewState extends State<CoinCategoryView> {
                   Size.fromHeight(_isAppBarVisible ? kToolbarHeight : 0),
               child: AnimatedContainer(
                 duration: Duration(milliseconds: 20), // Animation duration
-                height: _isAppBarVisible ? kToolbarHeight : 0,
                 child: AppBar(
                   iconTheme: IconThemeData(
                     color: R.colors.blackColor, //change your color here
@@ -86,28 +85,30 @@ class _CoinCategoryViewState extends State<CoinCategoryView> {
                 ),
               ),
             ),
-            body: newsList.length > 1?CardSwiper(
-                padding: EdgeInsets.only(left: 1),
-                isLoop: true,
-                controller: cardSwiperController,
-                allowedSwipeDirection: AllowedSwipeDirection.only(
-                    right: false, left: false, down: true, up: true),
-                cardBuilder: (context, index) {
-                  return FeedView(
-                    news: newsList[index],
-                    index: index,
-                    newsList: newsList,
-                  );
-                },
-                cardsCount: newsList.length):FeedView(news:newsList[0],index:0,newsList: newsList)
-            //   ListView.builder(
-            //   itemCount: firebaseAuth.currentUser == null || auth.userM.topics!.isEmpty ? news.length : userNews.length,
-            //   itemBuilder: (context, index) {
-            //     return FeedView(news: firebaseAuth.currentUser == null || auth.userM.topics!.isEmpty ? news[index] : userNews[index],index: index,);
-            //   },
-            // );
-
-            );
+            body: newsList.length > 1
+                ? CardSwiper(
+                    padding: EdgeInsets.only(left: 1),
+                    isLoop: true,
+                    controller: cardSwiperController,
+                    allowedSwipeDirection: AllowedSwipeDirection.only(
+                        right: false, left: false, down: true, up: true),
+                    cardBuilder: (context, index) {
+                      return FeedView(
+                        news: newsList[index],
+                        index: index,
+                        newsList: newsList,
+                      );
+                    },
+                    cardsCount: newsList.length)
+                : (newsList.length != 0
+                    ? FeedView(news: newsList[0], index: 0, newsList: newsList)
+                    : Center(child:Text("No News Found on ${widget.coinName}"))));
+        //   ListView.builder(
+        //   itemCount: firebaseAuth.currentUser == null || auth.userM.topics!.isEmpty ? news.length : userNews.length,
+        //   itemBuilder: (context, index) {
+        //     return FeedView(news: firebaseAuth.currentUser == null || auth.userM.topics!.isEmpty ? news[index] : userNews[index],index: index,);
+        //   },
+        // );
       },
     );
   }

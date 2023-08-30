@@ -1,5 +1,6 @@
 import 'package:coincrux/screens/LatestLandingScreen.dart';
 import 'package:coincrux/screens/dashboard/dashboard_view.dart';
+import 'package:coincrux/screens/dashboard/news_feed/news_feed_view.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
 import '../screens/auth/login_page.dart';
@@ -17,7 +18,7 @@ abstract class AppPages {
       GetPage(name: Routes.bookmark, page: () =>   Bookmark()),
 
       GetPage(name: Routes.loginView, page: () =>   LoginView()),
-    // GetPage(name: Routes.landing, page: () =>   LatestLandingScreen()),
+      GetPage(name: Routes.landing, page: () =>   NewsFeedView()),
 
   ];
 }

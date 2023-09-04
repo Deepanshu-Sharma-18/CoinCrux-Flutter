@@ -1,3 +1,4 @@
+import "dart:io";
 import 'package:coincrux/firebase_options.dart';
 import 'package:coincrux/resources/resources.dart';
 import 'package:coincrux/routes/app_pages.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,7 +49,32 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    
+    return Platform.isIOS
+    ? CupertinoApp(
+            color: R.colors.whiteColor,
+            debugShowCheckedModeBanner: false,
+            locale: _locale,
+            supportedLocales: const [
+              Locale('en', 'US'),
+              Locale('ar', 'SA'),
+              Locale('fr', 'FR'),
+            ],
+            localeResolutionCallback:
+                (Locale? deviceLocale, Iterable<Locale> supportedLocales) {
+              for (var locale in supportedLocales) {
+                if (locale.languageCode == deviceLocale?.languageCode &&
+                    locale.countryCode == deviceLocale?.countryCode) {
+                  return deviceLocale;
+                }
+              }
+              return supportedLocales.first;
+            },
+            initialRoute: Routes.splash,
+            title: "CoinCrux",
+            
+          )
+    :GetMaterialApp(
       color: R.colors.whiteColor,
       debugShowCheckedModeBanner: false,
       locale: _locale,
@@ -68,6 +95,7 @@ class _MyAppState extends State<MyApp> {
         return supportedLocales.first;
       },
       getPages: AppPages.pages,
+
       initialRoute: Routes.splash,
       title: "CoinCrux",
     );

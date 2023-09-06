@@ -11,7 +11,7 @@ import '../../../resources/resources.dart';
 class NewsDetailPage extends StatefulWidget {
   final NewsModel news;
   int? index;
-  NewsDetailPage({Key? key, required this.news,this.index}) : super(key: key);
+  NewsDetailPage({Key? key, required this.news, this.index}) : super(key: key);
 
   @override
   State<NewsDetailPage> createState() => _NewsDetailPageState();
@@ -28,7 +28,10 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
         automaticallyImplyLeading: false,
         leading: InkWell(
             onTap: () {
-              currentPage==1?pageController.animateToPage(currentPage-1, duration: Duration(milliseconds: 500), curve: Curves.ease):Get.back();
+              currentPage == 1
+                  ? pageController.animateToPage(currentPage - 1,
+                      duration: Duration(milliseconds: 500), curve: Curves.ease)
+                  : Get.back();
             },
             child: Icon(Icons.arrow_back)),
         iconTheme: IconThemeData(
@@ -50,8 +53,14 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
           currentPage = page;
         },
         children: [
-          NewsFeedWidget(isDetailed: true, news: widget.news,index: widget.index!,),
-          GraphView(news: widget.news,),
+          NewsFeedWidget(
+            isDetailed: true,
+            news: widget.news,
+            index: widget.index!,
+          ),
+          GraphView(
+            news: widget.news,
+          ),
         ],
       ),
     );

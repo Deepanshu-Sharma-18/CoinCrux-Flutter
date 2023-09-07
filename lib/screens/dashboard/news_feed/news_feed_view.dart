@@ -143,7 +143,7 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                         //   ),
                         // )),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
                           child: Text(
                             newsList[index - index ~/ 5].coinHeading!,
                             maxLines: 3,
@@ -164,7 +164,7 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                         // },),)
                         // ),
                         Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(20.0),
                           child: Text(
                             newsList[index - index ~/ 5].coinDescription!,
                             textAlign: TextAlign.justify,
@@ -173,14 +173,14 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                             style: R.textStyle.regularLato().copyWith(
                                 wordSpacing: 3,
                                 letterSpacing: 1,
-                                fontSize: FetchPixels.getPixelHeight(15),
+                                fontSize: FetchPixels.getPixelHeight(16),
                                 color: R.colors.blackColor),
                           ),
                         ),
                         getVerSpace(FetchPixels.getPixelHeight(15)),
                         
                             Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: const EdgeInsets.symmetric(horizontal: 20.0),
                               child:Row(
                               children: [
                                 Text(

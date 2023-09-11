@@ -13,7 +13,6 @@ import '../auth/provider/auth_provider.dart';
 import 'home/home_view.dart';
 import 'news_feed/news_feed_view.dart';
 import 'settings/settings_view.dart';
-import 'profile/profile_view.dart';
 
 class DashBoardPage extends StatefulWidget {
   final int index;
@@ -29,7 +28,6 @@ class _DashBoardPageState extends State<DashBoardPage> {
 
   @override
   void initState() {
-    Provider.of<NewsProvider>(context, listen: false).listenToNews();
     currentPage = widget.index;
     pageController = PageController(initialPage: widget.index);
     super.initState();
@@ -42,14 +40,15 @@ class _DashBoardPageState extends State<DashBoardPage> {
       body: SafeArea(
         child: getPaddingWidget(
           EdgeInsets.symmetric(
-            horizontal:
-                FetchPixels.getPixelWidth(0),
+            horizontal: FetchPixels.getPixelWidth(0),
           ),
           PageView(
             controller: pageController,
-            physics: NeverScrollableScrollPhysics(),
+            physics: BouncingScrollPhysics(), // Allow swiping
             onPageChanged: (page) {
-              
+              setState(() {
+                currentPage = page;
+              });
             },
             children: [
               HomeView(),
@@ -61,6 +60,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
       ),
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: R.colors.theme,
+        index: currentPage, // Set the initial page
         items: [
           Icon(
             Icons.home,
@@ -79,10 +79,17 @@ class _DashBoardPageState extends State<DashBoardPage> {
           ),
         ],
         onTap: (index) {
-          currentPage = index;
-          pageController.jumpToPage(index);
+          setState(() {
+            currentPage = index;
+          });
+          pageController.animateToPage(
+            index,
+            duration: Duration(milliseconds: 400),
+            curve: Curves.easeInOut,
+          );
         },
       ),
     );
   }
 }
+

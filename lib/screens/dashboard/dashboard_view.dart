@@ -28,6 +28,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
 
   @override
   void initState() {
+    Provider.of<NewsProvider>(context, listen: false).listenToNews();
     currentPage = widget.index;
     pageController = PageController(initialPage: widget.index);
     super.initState();

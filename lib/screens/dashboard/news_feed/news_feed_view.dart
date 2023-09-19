@@ -75,20 +75,20 @@ class _NewsFeedViewState extends State<NewsFeedView> {
               color: R.colors.blackColor, //change your color here
             ),
             elevation: 0.0,
-            backgroundColor: Colors.white.withOpacity(0.7),
+            backgroundColor: Colors.transparent,
             centerTitle: true,
             actions: [
               IconButton(
                   onPressed: () {
                     _refreshData();
                   },
-                  icon: Icon(Icons.refresh))
+                  icon: Icon(Icons.refresh,color:Colors.white))
             ],
             title: Text(
               "My Feed",
               style: R.textStyle
                   .mediumLato()
-                  .copyWith(fontSize: FetchPixels.getPixelHeight(17)),
+                  .copyWith(fontSize: FetchPixels.getPixelHeight(17),color: Colors.white),
             ),
           ),
         ),

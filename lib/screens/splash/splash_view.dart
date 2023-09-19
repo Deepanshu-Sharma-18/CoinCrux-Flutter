@@ -18,21 +18,20 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   void initState() {
-    AuthProvider auth = Provider.of(context,listen: false);
+    AuthProvider auth = Provider.of(context, listen: false);
     super.initState();
 // auth.getDataFromAPI("BTC");
     Timer(const Duration(seconds: 2), () {
-      if(firebaseAuth.currentUser == null){
+      if (firebaseAuth.currentUser == null) {
         auth.isLogin = false;
         Get.offAllNamed(Routes.dashBoardPage);
-      }else{
-          auth.isLogin = true;
-          Get.offAllNamed(Routes.dashBoardPage);
+      } else {
+        auth.isLogin = true;
+        Get.offAllNamed(Routes.dashBoardPage);
       }
     });
   }

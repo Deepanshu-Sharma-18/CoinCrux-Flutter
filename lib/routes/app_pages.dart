@@ -12,13 +12,11 @@ import 'app_routes.dart';
 
 abstract class AppPages {
   static List<GetPage> pages = [
-      GetPage(name: Routes.splash, page: () =>  const SplashScreen()),
-      GetPage(name: Routes.dashBoardPage, page: () =>   DashBoardPage()),
-      GetPage(name: Routes.oTPView, page: () =>   OTPView()),
-      GetPage(name: Routes.bookmark, page: () =>   Bookmark()),
-
-      GetPage(name: Routes.loginView, page: () =>   LoginView()),
-      GetPage(name: Routes.landing, page: () =>   NewsFeedView()),
-
+    GetPage(name: Routes.splash, page: () => const SplashScreen()),
+    GetPage(name: Routes.dashBoardPage, page: () => DashBoardPage()),
+    GetPage(name: Routes.oTPView, page: () => OTPView()),
+    GetPage(name: Routes.bookmark, page: () => Bookmark()),
+    GetPage(name: Routes.loginView, page: () => LoginView()),
+    GetPage(name: Routes.landing, page: () => NewsFeedView()),
   ];
 }

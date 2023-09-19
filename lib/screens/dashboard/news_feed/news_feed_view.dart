@@ -63,17 +63,19 @@ class _NewsFeedViewState extends State<NewsFeedView> {
     }
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(_isAppBarVisible ? kToolbarHeight : 0),
         child: AnimatedContainer(
           duration: Duration(milliseconds: 200), // Adjust animation duration
           height: _isAppBarVisible ? kToolbarHeight : 0,
           child: AppBar(
+            
             iconTheme: IconThemeData(
               color: R.colors.blackColor, //change your color here
             ),
             elevation: 0.0,
-            backgroundColor: R.colors.bgColor,
+            backgroundColor: Colors.white.withOpacity(0.7),
             centerTitle: true,
             actions: [
               IconButton(
@@ -91,7 +93,7 @@ class _NewsFeedViewState extends State<NewsFeedView> {
           ),
         ),
       ),
-      body: isLoading
+      body: Stack(children: [Positioned.fill(child: isLoading
           ? Center(child: CircularProgressIndicator())
           : GestureDetector(
               onTap: () {
@@ -268,7 +270,7 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                       }
                     }),
               )),
-    );
+    )]));
   }
 
   Widget newsType(index) {

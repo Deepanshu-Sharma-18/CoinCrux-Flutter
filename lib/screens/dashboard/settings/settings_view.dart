@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:coincrux/base/resizer/fetch_pixels.dart';
+import 'package:coincrux/repository/signin_firebase.dart';
 import 'package:coincrux/screens/dashboard/news_feed/news_feed_view.dart';
 import 'package:coincrux/screens/dashboard/settings/pages/about_us.dart';
 import 'package:coincrux/screens/dashboard/settings/pages/book_marks_view.dart';

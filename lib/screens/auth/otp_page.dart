@@ -24,7 +24,6 @@ class OTPView extends StatefulWidget {
 }
 
 class _OTPViewState extends State<OTPView> {
-
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
@@ -59,12 +58,11 @@ class _OTPViewState extends State<OTPView> {
                       ),
                       getVerSpace(FetchPixels.getPixelHeight(10)),
                       Text(
-                        "We sent a code to the number +91 92 ****** 90",
+                        "We sent a code to the number ${auth.phoneNumber}",
                         style: R.textStyle
                             .mediumLato()
                             .copyWith(fontSize: 12, color: R.colors.blackColor),
                       ),
-
                       getVerSpace(FetchPixels.getPixelHeight(30)),
                       PinCodeTextField(
                         controller: phoneCtr,
@@ -84,29 +82,36 @@ class _OTPViewState extends State<OTPView> {
                       getVerSpace(FetchPixels.getPixelHeight(50)),
                       MyButton(
                         color: R.colors.theme,
-                        onTap: () async{
+                        onTap: () async {
                           if (formKey.currentState!.validate()) {
-                           try{
-                             showDialog(context: context, builder: (context){
-                               return Center(child: CircularProgressIndicator(color: R.colors.theme,));
-                             });
-                             var phone = await SignInFirebase.verifySmsCode(context: context, smsCode: phoneCtr.text);
-                             bool isNewUser = phone.additionalUserInfo!.isNewUser;
-                             Navigator.pop(context);
-                             if(isNewUser){
-                               auth.isLogin = true;
-                               Get.dialog(NameDialog());
-                               auth.update();
-                             }else{
-                                 auth.isLogin = true;
-                                 Get.offAll(DashBoardPage());
-                             }
-                           }catch(exception){
-                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                               content: Text('Incorrect pin'),
-                             ));
-                           }
-
+                            try {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return Center(
+                                        child: CircularProgressIndicator(
+                                      color: R.colors.theme,
+                                    ));
+                                  });
+                              var phone = await SignInFirebase.verifySmsCode(
+                                  context: context, smsCode: phoneCtr.text);
+                              bool isNewUser =
+                                  phone.additionalUserInfo!.isNewUser;
+                              Navigator.pop(context);
+                              if (isNewUser) {
+                                auth.isLogin = true;
+                                Get.dialog(NameDialog());
+                                auth.update();
+                              } else {
+                                auth.isLogin = true;
+                                Get.offAll(DashBoardPage());
+                              }
+                            } catch (exception) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text('Incorrect pin'),
+                              ));
+                            }
                           }
                         },
                         buttonText: "Submit",
@@ -118,7 +123,6 @@ class _OTPViewState extends State<OTPView> {
                             .mediumLato()
                             .copyWith(fontSize: 12, color: R.colors.blackColor),
                       ),
-
                     ]),
               ),
             ),

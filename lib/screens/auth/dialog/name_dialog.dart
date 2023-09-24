@@ -1,3 +1,4 @@
+import 'package:coincrux/screens/dashboard/dashboard_view.dart';
 import 'package:coincrux/utils/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -46,7 +47,7 @@ class _NameDialogState extends State<NameDialog>
   @override
   Widget build(BuildContext context) {
     FetchPixels(context);
-    AuthProvider auth = Provider.of<AuthProvider>(context,listen: false);
+    AuthProvider auth = Provider.of<AuthProvider>(context, listen: false);
     return ScaleTransition(
       alignment: Alignment.center,
       scale: scaleAnimation,

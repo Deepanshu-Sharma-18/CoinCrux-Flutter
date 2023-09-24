@@ -102,10 +102,11 @@ class _LoginViewState extends State<LoginView> {
                       ),
                       getVerSpace(FetchPixels.getPixelHeight(50)),
                       MyButton(
-                        color:R.colors.theme,
+                        color: R.colors.theme,
                         onTap: () {
                           if (formKey.currentState!.validate()) {
-                            SignInFirebase.signInWithPhone(auth.phoneNumber, context);
+                            SignInFirebase.signInWithPhone(
+                                auth.phoneNumber, context);
                             // auth.isLogin = true;
                             Get.toNamed(Routes.oTPView);
                             // auth.update();
@@ -158,22 +159,31 @@ class _LoginViewState extends State<LoginView> {
                                 ]),
                           ),
                           InkWell(
-                            onTap: ()async{
-                              showDialog(context: context, builder: (context){
-                                return Center(child: CircularProgressIndicator(color: R.colors.theme,));
-                              });
-                              UserCredential userCredential = await SignInFirebase.signInWithGoogle();
-                              bool isNewUser = userCredential.additionalUserInfo!.isNewUser;
+                            onTap: () async {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return Center(
+                                        child: CircularProgressIndicator(
+                                      color: R.colors.theme,
+                                    ));
+                                  });
+                              UserCredential userCredential =
+                                  await SignInFirebase.signInWithGoogle();
+                              bool isNewUser =
+                                  userCredential.additionalUserInfo!.isNewUser;
                               Navigator.pop(context);
-                              if(isNewUser){
+                              if (isNewUser) {
                                 auth.email = userCredential.user!.email ?? '';
-                                auth.phoneNumber = userCredential.user!.phoneNumber ?? '';
-                                auth.name = userCredential.user!.displayName ?? '';
+                                auth.phoneNumber =
+                                    userCredential.user!.phoneNumber ?? '';
+                                auth.name =
+                                    userCredential.user!.displayName ?? '';
                                 Get.to(PersonaliseFeed());
-                              }else {
-                                  auth.isLogin = true;
-                                  auth.dashCurrentPage = 0;
-                                  Get.offAll(LatestLandingScreen());
+                              } else {
+                                auth.isLogin = true;
+                                auth.dashCurrentPage = 0;
+                                Get.offAll(DashBoardPage());
                               }
                             },
                             child: Container(
@@ -193,27 +203,33 @@ class _LoginViewState extends State<LoginView> {
                                   ]),
                             ),
                           ),
-                         Platform.isIOS ? Container(
-                            height: FetchPixels.getPixelHeight(50),
-                            width: FetchPixels.getPixelWidth(110),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                    FetchPixels.getPixelHeight(5)),
-                                border: Border.all(color: R.colors.theme)),
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  getAssetImage(R.images.apple,
-                                      scale: FetchPixels.getPixelHeight(25)),
-                                  Text(
-                                    "Apple",
-                                    style: R.textStyle.regularLato().copyWith(
-                                        fontSize: 12,
-                                        color: R.colors.blackColor),
-                                  )
-                                ]),
-                          ) : SizedBox()
+                          Platform.isIOS
+                              ? Container(
+                                  height: FetchPixels.getPixelHeight(50),
+                                  width: FetchPixels.getPixelWidth(110),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                          FetchPixels.getPixelHeight(5)),
+                                      border:
+                                          Border.all(color: R.colors.theme)),
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        getAssetImage(R.images.apple,
+                                            scale:
+                                                FetchPixels.getPixelHeight(25)),
+                                        Text(
+                                          "Apple",
+                                          style: R.textStyle
+                                              .regularLato()
+                                              .copyWith(
+                                                  fontSize: 12,
+                                                  color: R.colors.blackColor),
+                                        )
+                                      ]),
+                                )
+                              : SizedBox()
                         ],
                       )
                     ]),

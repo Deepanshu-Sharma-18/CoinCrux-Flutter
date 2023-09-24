@@ -1,5 +1,5 @@
 import "dart:io";
-import 'package:coincrux/firebase_options.dart';
+// import 'package:coincrux/firebase_options.dart';
 import 'package:coincrux/resources/resources.dart';
 import 'package:coincrux/routes/app_pages.dart';
 import 'package:coincrux/routes/app_routes.dart';
@@ -13,9 +13,7 @@ import 'package:flutter/cupertino.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp();
   runApp(
     MultiProvider(
       providers: [
@@ -49,9 +47,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Platform.isIOS
-    ? CupertinoApp(
+        ? CupertinoApp(
             color: R.colors.whiteColor,
             debugShowCheckedModeBanner: false,
             locale: _locale,
@@ -72,32 +69,30 @@ class _MyAppState extends State<MyApp> {
             },
             initialRoute: Routes.splash,
             title: "CoinCrux",
-            
           )
-    :GetMaterialApp(
-      color: R.colors.whiteColor,
-      debugShowCheckedModeBanner: false,
-      locale: _locale,
-      fallbackLocale: Locale('en', 'US'),
-      supportedLocales: const [
-        Locale('en', 'US'),
-        Locale('ar', 'SA'),
-        Locale('fr', 'FR'),
-      ],
-      localeResolutionCallback:
-          (Locale? deviceLocale, Iterable<Locale> supportedLocales) {
-        for (var locale in supportedLocales) {
-          if (locale.languageCode == deviceLocale?.languageCode &&
-              locale.countryCode == deviceLocale?.countryCode) {
-            return deviceLocale;
-          }
-        }
-        return supportedLocales.first;
-      },
-      getPages: AppPages.pages,
-
-      initialRoute: Routes.splash,
-      title: "CoinCrux",
-    );
+        : GetMaterialApp(
+            color: R.colors.whiteColor,
+            debugShowCheckedModeBanner: false,
+            locale: _locale,
+            fallbackLocale: Locale('en', 'US'),
+            supportedLocales: const [
+              Locale('en', 'US'),
+              Locale('ar', 'SA'),
+              Locale('fr', 'FR'),
+            ],
+            localeResolutionCallback:
+                (Locale? deviceLocale, Iterable<Locale> supportedLocales) {
+              for (var locale in supportedLocales) {
+                if (locale.languageCode == deviceLocale?.languageCode &&
+                    locale.countryCode == deviceLocale?.countryCode) {
+                  return deviceLocale;
+                }
+              }
+              return supportedLocales.first;
+            },
+            getPages: AppPages.pages,
+            initialRoute: Routes.splash,
+            title: "CoinCrux",
+          );
   }
 }

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class SignInFirebase {
-
   static String? _phoneAuthVerificationCode;
 
   static Future<UserCredential> signInWithGoogle() async {
@@ -13,8 +12,8 @@ class SignInFirebase {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
     // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth = await googleUser
-        ?.authentication;
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
 
     // Create a new credential
     final credential = GoogleAuthProvider.credential(
@@ -25,7 +24,6 @@ class SignInFirebase {
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
-
 
   static Future signInWithPhone(String phone, BuildContext context) async {
     final completer = Completer<bool>();
@@ -56,14 +54,13 @@ class SignInFirebase {
   }) async {
     final authCredential = PhoneAuthProvider.credential(
         verificationId: _phoneAuthVerificationCode!, smsCode: smsCode);
-    final uc =  await FirebaseAuth.instance.signInWithCredential(authCredential);
+    final uc = await FirebaseAuth.instance.signInWithCredential(authCredential);
     // final uc = await FirebaseAuth.instance.currentUser
     //     ?.linkWithCredential(authCredential);
     return uc;
   }
 
-
-
+  static void GoogleSignOut() {
+    GoogleSignIn().signOut();
+  }
 }
-
-

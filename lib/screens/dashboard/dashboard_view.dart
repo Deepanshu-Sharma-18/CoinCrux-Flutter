@@ -5,7 +5,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import './settings/themeprovider.dart';
 import '../../base/resizer/fetch_pixels.dart';
 import '../../base/widget_utils.dart';
 import '../../resources/resources.dart';
@@ -36,61 +36,64 @@ class _DashBoardPageState extends State<DashBoardPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: R.colors.bgColor,
-      body: SafeArea(
-        child: getPaddingWidget(
-          EdgeInsets.symmetric(
-            horizontal: FetchPixels.getPixelWidth(0),
-          ),
-          PageView(
-            controller: pageController,
-            physics: BouncingScrollPhysics(), // Allow swiping
-            onPageChanged: (page) {
-              setState(() {
-                currentPage = page;
-              });
-            },
-            children: [
-              HomeView(),
-              NewsFeedView(),
-              SettingsView(),
-            ],
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    return Consumer<ThemeProvider>(builder: (context, auth, child) {
+      return Scaffold(
+        backgroundColor: R.colors.bgColor,
+        body: SafeArea(
+          child: getPaddingWidget(
+            EdgeInsets.symmetric(
+              horizontal: FetchPixels.getPixelWidth(0),
+            ),
+            PageView(
+              controller: pageController,
+              physics: BouncingScrollPhysics(), // Allow swiping
+              onPageChanged: (page) {
+                setState(() {
+                  currentPage = page;
+                });
+              },
+              children: [
+                HomeView(),
+                NewsFeedView(),
+                SettingsView(),
+              ],
+            ),
           ),
         ),
-      ),
-      bottomNavigationBar: CurvedNavigationBar(
-        color: R.colors.bgColor,
-        backgroundColor: R.colors.theme,
-        index: currentPage, // Set the initial page
-        items: [
-          Icon(
-            Icons.home,
-            color: R.colors.theme,
-            size: FetchPixels.getPixelHeight(25),
-          ),
-          Icon(
-            Icons.newspaper,
-            color: R.colors.theme,
-            size: FetchPixels.getPixelHeight(25),
-          ),
-          Icon(
-            Icons.settings,
-            color: R.colors.theme,
-            size: FetchPixels.getPixelHeight(25),
-          ),
-        ],
-        onTap: (index) {
-          setState(() {
-            currentPage = index;
-          });
-          pageController.animateToPage(
-            index,
-            duration: Duration(milliseconds: 400),
-            curve: Curves.easeInOut,
-          );
-        },
-      ),
-    );
+        bottomNavigationBar: CurvedNavigationBar(
+          color: R.colors.bgColor,
+          backgroundColor: R.colors.theme,
+          index: currentPage,
+          items: [
+            Icon(
+              Icons.home,
+              color: R.colors.navButtonColor,
+              size: FetchPixels.getPixelHeight(25),
+            ),
+            Icon(
+              Icons.newspaper,
+              color: R.colors.navButtonColor,
+              size: FetchPixels.getPixelHeight(25),
+            ),
+            Icon(
+              Icons.settings,
+              color: R.colors.navButtonColor,
+              size: FetchPixels.getPixelHeight(25),
+            ),
+          ],
+          onTap: (index) {
+            setState(() {
+              currentPage = index;
+            });
+            pageController.animateToPage(
+              index,
+              duration: Duration(milliseconds: 400),
+              curve: Curves.easeInOut,
+            );
+          },
+        ),
+      );
+    });
   }
 }

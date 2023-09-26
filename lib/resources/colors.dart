@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart';
 
 class AppColors {
   final bool isDarkTheme;
@@ -49,4 +48,5 @@ class AppColors {
   Color get transparent => Colors.transparent;
   Color get unSelectedIcon => const Color(0xFF989898);
   Color get whiteColor => isDarkTheme ? Colors.white : Colors.black;
+  Color get navButtonColor => isDarkTheme ? Colors.white : const Color(0xFF4941F2);
 }

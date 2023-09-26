@@ -60,6 +60,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
         ),
       ),
       bottomNavigationBar: CurvedNavigationBar(
+        color: R.colors.bgColor,
         backgroundColor: R.colors.theme,
         index: currentPage, // Set the initial page
         items: [
@@ -93,4 +94,3 @@ class _DashBoardPageState extends State<DashBoardPage> {
     );
   }
 }
-

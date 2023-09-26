@@ -16,11 +16,14 @@ class NewsProvider extends ChangeNotifier {
     return ""; // Return a default value if imagePath is empty
   }
 
-  Future<void> listenToNews() async{
+  Future<void> listenToNews() async {
     isLoading = true;
     final DateTime twoDaysAgo = DateTime.now().subtract(Duration(days: 2));
+
     FirebaseFirestore.instance
-        .collection("News").where('createdAt', isGreaterThanOrEqualTo: twoDaysAgo).orderBy('createdAt',descending: true)
+        .collection("News")
+        .where('createdAt', isGreaterThanOrEqualTo: twoDaysAgo)
+        .orderBy('createdAt', descending: true)
         .snapshots()
         .listen((querySnapshot) async {
       newsList.clear();

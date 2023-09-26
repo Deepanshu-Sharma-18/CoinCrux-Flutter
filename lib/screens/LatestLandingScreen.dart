@@ -50,39 +50,39 @@ class _LatestLandingScreenState extends State<LatestLandingScreen> {
         return true;
       },
       child: Scaffold(
-          appBar: AppBar(
-            elevation: 0.0,
-            leading: InkWell(
-                onTap: () {
-                  Get.offAll(DashBoardPage());
-                },
-                child: Icon(
-                  Icons.arrow_back_ios_new,
-                  color: Colors.black,
-                )),
-            backgroundColor: Colors.white,
-            title: Text(
-              "Latest News",
-              style: R.textStyle
-                  .mediumLato()
-                  .copyWith(fontSize: 18, color: Colors.black),
-            ),
-          ),
-          body: Container(
-              height: FetchPixels.height,
-              width: FetchPixels.width,
-              child: CardSwiper(
-                padding: EdgeInsets.only(left: 1),
-                isLoop: true,
-                controller: cardSwiperController,
-                allowedSwipeDirection: AllowedSwipeDirection.only(
-                    right: false, left: false, down: false, up: true),
-                cardBuilder: (context, index) {
-                  // return FeedView(news: newsList[index], index: index);
-                },
-                cardsCount: newsList.length,
+        appBar: AppBar(
+          elevation: 0.0,
+          leading: InkWell(
+              onTap: () {
+                Get.offAll(DashBoardPage());
+              },
+              child: Icon(
+                Icons.arrow_back_ios_new,
+                color: Colors.black,
               )),
+          backgroundColor: Colors.white,
+          title: Text(
+            "Latest News",
+            style: R.textStyle
+                .mediumLato()
+                .copyWith(fontSize: 18, color: Colors.black),
           ),
+        ),
+        body: Container(
+            height: FetchPixels.height,
+            width: FetchPixels.width,
+            child: CardSwiper(
+              padding: EdgeInsets.only(left: 1),
+              isLoop: true,
+              controller: cardSwiperController,
+              allowedSwipeDirection: AllowedSwipeDirection.only(
+                  right: false, left: false, down: false, up: true),
+              cardBuilder: (context, index) {
+                return FeedView(news: newsList[index], index: index);
+              },
+              cardsCount: newsList.length,
+            )),
+      ),
     );
   }
 }

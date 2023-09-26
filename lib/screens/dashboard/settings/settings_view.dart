@@ -8,9 +8,11 @@ import 'package:coincrux/screens/dashboard/settings/pages/book_marks_view.dart';
 import 'package:coincrux/screens/dashboard/settings/pages/feedback_view.dart';
 import 'package:coincrux/screens/dashboard/settings/pages/privacy_policy.dart';
 import 'package:coincrux/screens/dashboard/settings/pages/terms_condition.dart';
+import 'package:coincrux/screens/dashboard/settings/themeprovider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
 import '../../../base/widget_utils.dart';
 import '../../../resources/resources.dart';
@@ -39,6 +41,7 @@ class _SettingsViewState extends State<SettingsView> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
         backgroundColor: R.colors.bgColor,
         appBar: AppBar(
@@ -80,6 +83,31 @@ class _SettingsViewState extends State<SettingsView> {
                         setState(() {
                           isNotifications = value;
                         });
+                      },
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: FetchPixels.getPixelHeight(15),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Dark Mode',
+                    style: R.textStyle.regularLato().copyWith(
+                          fontSize: FetchPixels.getPixelHeight(17),
+                        ),
+                  ),
+                  SizedBox(
+                    height: FetchPixels.getPixelHeight(20),
+                    child: Switch(
+                      activeColor: R.colors.theme,
+                      value: themeProvider.themeMode == ThemeModeType.Dark,
+                      onChanged: (bool value) {
+                        themeProvider.toggleTheme();
+                        setState(() {});
                       },
                     ),
                   )

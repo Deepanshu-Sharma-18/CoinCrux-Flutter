@@ -1,10 +1,12 @@
 import "dart:io";
 // import 'package:coincrux/firebase_options.dart';
+import 'package:coincrux/resources/colors.dart';
 import 'package:coincrux/resources/resources.dart';
 import 'package:coincrux/routes/app_pages.dart';
 import 'package:coincrux/routes/app_routes.dart';
 import 'package:coincrux/screens/auth/provider/auth_provider.dart';
 import 'package:coincrux/screens/dashboard/news_feed/provider/news_provider.dart';
+import 'package:coincrux/screens/dashboard/settings/themeprovider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +21,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => NewsProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider())
       ],
       child: MyApp(),
     ),
@@ -47,9 +50,20 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    () async {
+      await themeProvider.getTheme();
+    }();
+
+    if (themeProvider.themeMode == ThemeModeType.Dark) {
+      R.colors = AppColors(isDarkTheme: true);
+    } else {
+      R.colors = AppColors();
+    }
+
     return Platform.isIOS
         ? CupertinoApp(
-            color: R.colors.whiteColor,
+            color: R.colors.bgColor,
             debugShowCheckedModeBanner: false,
             locale: _locale,
             supportedLocales: const [
@@ -71,7 +85,7 @@ class _MyAppState extends State<MyApp> {
             title: "CoinCrux",
           )
         : GetMaterialApp(
-            color: R.colors.whiteColor,
+            color: R.colors.bgColor,
             debugShowCheckedModeBanner: false,
             locale: _locale,
             fallbackLocale: Locale('en', 'US'),

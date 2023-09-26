@@ -1,5 +1,8 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coincrux/screens/LatestLandingScreen.dart';
+import 'package:coincrux/screens/dashboard/dashboard_view.dart';
+import 'package:coincrux/screens/dashboard/settings/themeprovider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,20 +31,21 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(seconds: 2), () {
       if (firebaseAuth.currentUser == null) {
         auth.isLogin = false;
-        Get.offAllNamed(Routes.loginView);
+        Get.offAll(DashBoardPage());
       } else {
         auth.isLogin = true;
-        Get.offAllNamed(Routes.dashBoardPage);
+        Get.offAll(LatestLandingScreen());
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AuthProvider>(
+    return Consumer<ThemeProvider>(
       builder: (context, auth, child) {
         FetchPixels(context);
         return Scaffold(
+          backgroundColor: R.colors.bgColor,
           body: SizedBox(
             width: FetchPixels.width,
             child:

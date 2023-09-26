@@ -36,7 +36,7 @@ class _HomeViewState extends State<HomeView> {
   void startLoadingTimer() {
     const loadingDuration =
         Duration(seconds: 2); // Adjust the duration as needed
-    
+
     Timer(loadingDuration, () {
       setState(() {
         isLoading = false;
@@ -59,7 +59,7 @@ class _HomeViewState extends State<HomeView> {
       startLoadingTimer();
       await Provider.of<NewsProvider>(context, listen: false).listenToNews();
     }
-    
+
     return Scaffold(
         backgroundColor: R.colors.bgColor,
         appBar: AppBar(
@@ -252,7 +252,7 @@ class _HomeViewState extends State<HomeView> {
                               child: Container(
                                   margin: EdgeInsets.only(
                                       top: FetchPixels.getPixelHeight(10)),
-                                  color: Color(0xffF8F8FC),
+                                  color: R.colors.tilesColor,
                                   width: FetchPixels.width,
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,

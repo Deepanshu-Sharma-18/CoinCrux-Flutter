@@ -18,6 +18,7 @@ class ThemeProvider with ChangeNotifier {
     } else {
       _themeMode = isDarkTheme ? ThemeModeType.Dark : ThemeModeType.Light;
     }
+
     notifyListeners();
   }
 

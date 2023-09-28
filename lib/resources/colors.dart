@@ -7,7 +7,7 @@ class AppColors {
 
   AppColors({this.isDarkTheme = false});
 
-  Color get bgColor => isDarkTheme ? Colors.black : Colors.white;
+  Color get bgColor => isDarkTheme ? Color(0xff111111) : Color(0xffF1F1F1);
   Color get bgContainer => isDarkTheme
       ? Color.fromARGB(255, 71, 60, 47).withOpacity(0.3)
       : const Color(0xFFFCD8AC).withOpacity(0.3);
@@ -18,7 +18,7 @@ class AppColors {
   Color get bgContainer3 =>
       isDarkTheme ? Color.fromARGB(255, 30, 70, 127) : const Color(0xFFDAE2ED);
   Color get bitcoinColor => const Color(0xFFF7931A);
-  Color get blackColor => isDarkTheme ? Colors.white : Colors.black;
+  Color get blackColor => isDarkTheme ? Color(0xffF1F1F1) : Color(0xff111111);
   Color get boldText => isDarkTheme
       ? Color.fromARGB(255, 255, 255, 255)
       : const Color(0xFF6E6E6E);
@@ -36,7 +36,7 @@ class AppColors {
       ? Color.fromARGB(255, 255, 254, 254)
       : const Color(0xFFD4D4D4);
   Color get fill => const Color(0xFF919191);
-  Color get headings => isDarkTheme ? Colors.black : Colors.black;
+  Color get headings => isDarkTheme ? Color(0xffF1F1F1) : Color(0xff111111);
   Color get imageBgColor =>
       isDarkTheme ? Color.fromARGB(255, 17, 17, 17) : const Color(0xffE3E3E3);
   Color get selectedBox =>
@@ -48,5 +48,5 @@ class AppColors {
       : Color.fromARGB(255, 201, 200, 200);
   Color get transparent => Colors.transparent;
   Color get unSelectedIcon => const Color(0xFF989898);
-  Color get whiteColor => isDarkTheme ? Colors.white : Colors.black;
+  Color get whiteColor => isDarkTheme ? Color(0xffF1F1F1) : Color(0xff111111);
 }

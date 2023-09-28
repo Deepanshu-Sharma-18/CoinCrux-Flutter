@@ -26,11 +26,9 @@ class SettingsView extends StatefulWidget {
 }
 
 class _SettingsViewState extends State<SettingsView> {
-  bool isNotifications = false;
-  bool isDark = false;
-
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-
+  bool isDark = false;
+  bool isNotifications = false;
   List<String> pagesNames = [
     "Terms & Conditions",
     "Privacy Policy",
@@ -38,6 +36,51 @@ class _SettingsViewState extends State<SettingsView> {
     "Share App",
     "Rate App",
   ];
+
+  Widget pagesName(index) {
+    return GestureDetector(
+      onTap: () {
+        index == 0
+            ? Get.to(TermsConditions())
+            : index == 1
+                ? Get.to(PrivacyPolicy())
+                : index == 2
+                    ? Get.to(AboutUs())
+                    : null;
+      },
+      child: Column(
+        children: [
+          Row(
+            children: [
+              index == 0
+                  ? getAssetImage(R.images.terms,
+                      scale: 25, color: R.colors.blackColor)
+                  : index == 1
+                      ? getAssetImage(R.images.privacy,
+                          scale: 25, color: R.colors.blackColor)
+                      : index == 2
+                          ? getAssetImage(R.images.info,
+                              scale: 25, color: R.colors.blackColor)
+                          : index == 3
+                              ? getAssetImage(R.images.share,
+                                  scale: 4, color: R.colors.blackColor)
+                              : getAssetImage(R.images.star,
+                                  scale: 25, color: R.colors.blackColor),
+              SizedBox(
+                width: FetchPixels.getPixelWidth(10),
+              ),
+              Text(
+                pagesNames[index],
+                style: R.textStyle.regularLato().copyWith(
+                      fontSize: FetchPixels.getPixelHeight(18),
+                    ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,8 +149,10 @@ class _SettingsViewState extends State<SettingsView> {
                       activeColor: R.colors.theme,
                       value: themeProvider.themeMode == ThemeModeType.Dark,
                       onChanged: (bool value) {
-                        themeProvider.toggleTheme();
-                        setState(() {});
+                        //themeProvider.toggleTheme();
+                        setState(() {
+                          themeProvider.toggleTheme();
+                        });
                       },
                     ),
                   )
@@ -145,45 +190,5 @@ class _SettingsViewState extends State<SettingsView> {
             ],
           ),
         ));
-  }
-
-  Widget pagesName(index) {
-    return GestureDetector(
-      onTap: () {
-        index == 0
-            ? Get.to(TermsConditions())
-            : index == 1
-                ? Get.to(PrivacyPolicy())
-                : index == 2
-                    ? Get.to(AboutUs())
-                    : null;
-      },
-      child: Column(
-        children: [
-          Row(
-            children: [
-              index == 0
-                  ? getAssetImage(R.images.terms, scale: 25)
-                  : index == 1
-                      ? getAssetImage(R.images.privacy, scale: 25)
-                      : index == 2
-                          ? getAssetImage(R.images.info, scale: 25)
-                          : index == 3
-                              ? getAssetImage(R.images.share, scale: 4)
-                              : getAssetImage(R.images.star, scale: 25),
-              SizedBox(
-                width: FetchPixels.getPixelWidth(10),
-              ),
-              Text(
-                pagesNames[index],
-                style: R.textStyle.regularLato().copyWith(
-                      fontSize: FetchPixels.getPixelHeight(18),
-                    ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
   }
 }

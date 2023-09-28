@@ -415,7 +415,6 @@ class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
   @override
   Widget build(BuildContext context) {
     List<NewsModel> newsList = Provider.of<NewsProvider>(context).newsList;
-    int? myLength = widget.newsList !=null ? widget.newsList!.length:newsList.length;
     return Scaffold(
       body: Column(
         children: [

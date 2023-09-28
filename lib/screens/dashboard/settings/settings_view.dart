@@ -149,7 +149,6 @@ class _SettingsViewState extends State<SettingsView> {
                       activeColor: R.colors.theme,
                       value: themeProvider.themeMode == ThemeModeType.Dark,
                       onChanged: (bool value) {
-                        //themeProvider.toggleTheme();
                         setState(() {
                           themeProvider.toggleTheme();
                         });

@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Get.offAll(DashBoardPage());
       } else {
         auth.isLogin = true;
-        Get.offAll(LatestLandingScreen());
+        Get.offAll(DashBoardPage());
       }
     });
   }

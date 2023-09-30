@@ -1,11 +1,9 @@
 import 'dart:io';
 
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:coincrux/base/resizer/fetch_pixels.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 
 import '../resources/resources.dart';
 import 'constant.dart';
@@ -15,11 +13,12 @@ Widget getVerSpace(double verSpace) {
     height: verSpace,
   );
 }
+
 Widget getAssetImage(String image,
     {double? width,
     double? height,
     Color? color,
-      double? scale,
+    double? scale,
     BoxFit boxFit = BoxFit.contain}) {
   return Image.asset(
     "${Constant.assetImagePath}$image",
@@ -43,6 +42,20 @@ Widget getNetworkImage(String image,
       image,
     ),
   );
+}
+
+Widget getNetworkImageFeed(String image,
+    {double? width,
+    double? height,
+    Color? color,
+    BoxFit boxFit = BoxFit.contain}) {
+  return Container(
+      height: height,
+      width: width,
+      child: Image(
+        image: NetworkImage(image),
+        fit: boxFit,
+      ));
 }
 
 Widget getFileImage(File image,
@@ -109,15 +122,12 @@ DecorationImage getDecorationAssetImage(BuildContext buildContext, String image,
       scale: FetchPixels.getScale());
 }
 
-DecorationImage getDecorationNetworkImage(BuildContext buildContext, String image,
+DecorationImage getDecorationNetworkImage(
+    BuildContext buildContext, String image,
     {BoxFit fit = BoxFit.contain}) {
   return DecorationImage(
-      image: NetworkImage(image),
-      fit: fit,
-      scale: FetchPixels.getScale());
+      image: NetworkImage(image), fit: fit, scale: FetchPixels.getScale());
 }
-
-
 
 Widget getMultilineCustomFont(String text, double fontSize, Color fontColor,
     {String fontFamily = Constant.fontsFamily,
@@ -154,7 +164,6 @@ BoxDecoration getButtonDecoration(
       boxShadow: shadow,
       image: image);
 }
-
 
 Widget getDefaultTextFiledWithLabel(
     BuildContext context, String s, TextEditingController textEditingController,
@@ -437,7 +446,6 @@ Widget getDefaultTextFiledWithSuffixPrefix(
   );
 }
 
-
 Widget getRichText(
     String firstText,
     Color firstColor,
@@ -589,13 +597,6 @@ class CardNumberFormatter extends TextInputFormatter {
     );
   }
 }
-
-
-
-
-
-
-
 
 Widget getHorSpace(double verSpace) {
   return SizedBox(

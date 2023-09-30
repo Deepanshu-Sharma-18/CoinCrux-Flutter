@@ -3,6 +3,8 @@ import 'package:coincrux/base/resizer/fetch_pixels.dart';
 import 'package:coincrux/base/widget_utils.dart';
 import 'package:coincrux/screens/dashboard/news_feed/model/news_model.dart';
 import 'package:coincrux/screens/dashboard/news_feed/pages/feed_view.dart';
+import 'package:coincrux/screens/dashboard/news_feed/widgets/full_screen_image.dart';
+import 'package:get/get.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:coincrux/screens/dashboard/news_feed/provider/news_provider.dart';
 import 'package:flutter/material.dart';
@@ -153,15 +155,32 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                                                 height:
                                                     FetchPixels.getPixelHeight(
                                                         330),
-                                                decoration: BoxDecoration(
-                                                    image:
-                                                        getDecorationNetworkImage(
-                                                            context,
-                                                            newsList[index -
-                                                                    index ~/ 5]
-                                                                .coinImage!,
-                                                            fit: BoxFit.fill)),
+                                                // decoration: BoxDecoration(
+                                                //     image:
+                                                //         getDecorationNetworkImage(
+                                                //             context,
+                                                //             newsList[index -
+                                                //                     index ~/ 5]
+                                                //                 .coinImage!,
+                                                //             fit: BoxFit.fill)),
                                                 width: FetchPixels.width,
+                                                child: InkWell(
+                                                  onTap: () => Get.to(
+                                                    FullScreenImage(
+                                                        imageurl: newsList[
+                                                                index -
+                                                                    index ~/ 5]
+                                                            .coinImage!),
+                                                  ),
+                                                  child: getNetworkImageFeed(
+                                                      newsList[index -
+                                                              index ~/ 5]
+                                                          .coinImage!,
+                                                      height: FetchPixels
+                                                          .getPixelHeight(330),
+                                                      width: FetchPixels.width,
+                                                      boxFit: BoxFit.fill),
+                                                ),
                                               ),
                                             ),
                                             getVerSpace(

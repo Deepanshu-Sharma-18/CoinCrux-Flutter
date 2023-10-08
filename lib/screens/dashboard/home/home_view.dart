@@ -107,6 +107,7 @@ class _HomeViewState extends State<HomeView> {
                       getVerSpace(FetchPixels.getPixelHeight(10)),
                       TextFormField(
                         textInputAction: TextInputAction.search,
+                        style: TextStyle(color: R.colors.blackColor),
                         onFieldSubmitted: (v) {
                           if (v.isNotEmpty) {
                             Get.to(SearchScreen(), arguments: v.toString());

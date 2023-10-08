@@ -37,7 +37,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     FetchPixels(context);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: R.colors.bgColor,
       appBar: AppBar(
         centerTitle: true,
         elevation: 0.0,
@@ -47,14 +47,16 @@ class _SearchScreenState extends State<SearchScreen> {
             },
             child: Icon(
               Icons.arrow_back_ios_new,
-              color: Colors.black,
+              color: R.colors.blackColor,
             )),
-        backgroundColor: Colors.white,
+
         title: Text(
           "Search",
           style: R.textStyle
               .mediumLato()
-              .copyWith(fontSize: 18, color: Colors.black),
+
+              .copyWith(fontSize: 18, color: R.colors.blackColor),
+
         ),
       ),
       body: SingleChildScrollView(
@@ -68,6 +70,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   horizontal: FetchPixels.getPixelWidth(30)),
               child: TextFormField(
                 controller: searchCtr,
+                style: TextStyle(color: R.colors.blackColor),
                 decoration: R.decorations
                     .textFormFieldDecoration(null, "Search")
                     .copyWith(

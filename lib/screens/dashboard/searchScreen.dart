@@ -49,11 +49,14 @@ class _SearchScreenState extends State<SearchScreen> {
               Icons.arrow_back_ios_new,
               color: R.colors.blackColor,
             )),
+
         title: Text(
           "Search",
           style: R.textStyle
               .mediumLato()
+
               .copyWith(fontSize: 18, color: R.colors.blackColor),
+
         ),
       ),
       body: SingleChildScrollView(

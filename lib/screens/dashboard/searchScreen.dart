@@ -37,83 +37,90 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     FetchPixels(context);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: R.colors.bgColor,
       appBar: AppBar(
         centerTitle: true,
         elevation: 0.0,
         leading: InkWell(
-            onTap: (){
-             Get.back();
+            onTap: () {
+              Get.back();
             },
-            child: Icon(Icons.arrow_back_ios_new,color: Colors.black,)),
-        backgroundColor: Colors.white,
+            child: Icon(
+              Icons.arrow_back_ios_new,
+              color: R.colors.blackColor,
+            )),
         title: Text(
           "Search",
-          style: R.textStyle.mediumLato().copyWith(
-              fontSize: 18,
-              color: Colors.black
-          ),
+          style: R.textStyle
+              .mediumLato()
+              .copyWith(fontSize: 18, color: R.colors.blackColor),
         ),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: FetchPixels.getPixelHeight(30),),
+            SizedBox(
+              height: FetchPixels.getPixelHeight(30),
+            ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: FetchPixels.getPixelWidth(30)),
+              padding: EdgeInsets.symmetric(
+                  horizontal: FetchPixels.getPixelWidth(30)),
               child: TextFormField(
                 controller: searchCtr,
+                style: TextStyle(color: R.colors.blackColor),
                 decoration: R.decorations
                     .textFormFieldDecoration(null, "Search")
                     .copyWith(
-                    prefixIcon: Container(
-                        height: 10,
-                        width: 10,
-                        margin: EdgeInsets.all(15),
-                        child: getAssetImage(R.images.searchIcon))
-                ),
-                onChanged: (v){
+                        prefixIcon: Container(
+                            height: 10,
+                            width: 10,
+                            margin: EdgeInsets.all(15),
+                            child: getAssetImage(R.images.searchIcon))),
+                onChanged: (v) {
                   setState(() {
                     query = v;
                   });
                 },
               ),
             ),
-            SizedBox(height: FetchPixels.getPixelHeight(30),),
-            SizedBox(height: FetchPixels.height/1.4,width: FetchPixels.width,
-            child: StreamBuilder(
-                stream: firebaseFirestore
-                    .collection('News')
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    List<NewsModel> news = snapshot.data!.docs
-                        .map((e) => NewsModel.fromJson(
-                        e.data() as Map<String, dynamic>))
-                        .toList();
+            SizedBox(
+              height: FetchPixels.getPixelHeight(30),
+            ),
+            SizedBox(
+              height: FetchPixels.height / 1.4,
+              width: FetchPixels.width,
+              child: StreamBuilder(
+                  stream: firebaseFirestore.collection('News').snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      List<NewsModel> news = snapshot.data!.docs
+                          .map((e) => NewsModel.fromJson(
+                              e.data() as Map<String, dynamic>))
+                          .toList();
 
-                   List<NewsModel> searchedNews = news.where((element) {
-                      String coinName = element.assetName!.toLowerCase();
-                      return coinName.contains(query.toLowerCase());
-                    }).toList();
+                      List<NewsModel> searchedNews = news.where((element) {
+                        String coinName = element.assetName!.toLowerCase();
+                        return coinName.contains(query.toLowerCase());
+                      }).toList();
 
-                    return  ListView.builder(
-                      padding: EdgeInsets.symmetric(horizontal: FetchPixels.getPixelWidth(20)),
-                      itemCount:  searchedNews.length,
-                      itemBuilder: (context, index) {
-                        return LatestViewAll(
-                            isNotification: false,
-                            news: searchedNews[index],
-                            index: index
-                        );
-                      },
-                    );
-                  } else {
-                    return Center(
-                      child: SingleChildScrollView(),
-                    );
-                  }
-                }),)
+                      return ListView.builder(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: FetchPixels.getPixelWidth(20)),
+                        itemCount: searchedNews.length,
+                        itemBuilder: (context, index) {
+                          return LatestViewAll(
+                              isNotification: false,
+                              news: searchedNews[index],
+                              index: index);
+                        },
+                      );
+                    } else {
+                      return Center(
+                        child: SingleChildScrollView(),
+                      );
+                    }
+                  }),
+            )
           ],
         ),
       ),

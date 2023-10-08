@@ -1,6 +1,7 @@
 import 'package:coincrux/screens/auth/provider/auth_provider.dart';
 import 'package:coincrux/screens/dashboard/news_feed/model/news_model.dart';
 import 'package:coincrux/screens/dashboard/news_feed/news_detail_page.dart';
+import 'package:coincrux/screens/dashboard/news_feed/provider/news_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -14,29 +15,54 @@ class LatestViewAll extends StatelessWidget {
   final NewsModel news;
   bool isNotification = true;
   int index;
-  LatestViewAll({Key? key,required this.news,required this.isNotification,required this.index}) : super(key: key);
+  LatestViewAll(
+      {Key? key,
+      required this.news,
+      required this.isNotification,
+      required this.index})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return  Column(
+    return Column(
       children: [
         InkWell(
           onTap: () {
-            Get.to(NewsDetailPage(news: news,index: index,));
+            Get.to(NewsDetailPage(
+              news: news,
+              index: index,
+            ));
           },
           child: Row(
             children: [
-               ClipRRect(
+              ClipRRect(
                 borderRadius: BorderRadius.circular(5),
-                child: Container(
-                  height: FetchPixels.getPixelHeight(90),
-                  width: FetchPixels.getPixelWidth(80),
-                  margin: EdgeInsets.only(left: 5),
-                  decoration: BoxDecoration(
-                    image: isNotification
-                        ? getDecorationAssetImage(context, news.coinImage!, fit: BoxFit.fill)
-                        : getDecorationNetworkImage(context, news.coinImage!, fit: BoxFit.fill),
-                  ),
+                child: FutureBuilder(
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      if (snapshot.data == null) {
+                        return Container(
+                          height: FetchPixels.getPixelHeight(70),
+                          width: FetchPixels.getPixelWidth(70),
+                          child: Image.asset(
+                            R.images.logo,
+                            fit: BoxFit.cover,
+                          ),
+                        );
+                      }
+                      return Container(
+                        height: FetchPixels.getPixelHeight(90),
+                        width: FetchPixels.getPixelWidth(80),
+                        child: Image.network(
+                          snapshot.data.toString(),
+                          fit: BoxFit.cover,
+                        ),
+                      );
+                    } else {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                  },
+                  future: NewsProvider.getImageUrl(news.coinImage!),
                 ),
               ),
               getHorSpace(FetchPixels.getPixelWidth(10)),
@@ -46,42 +72,59 @@ class LatestViewAll extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     getVerSpace(FetchPixels.getPixelHeight(10)),
-                   Padding(
-                     padding: EdgeInsets.only(right: 10),
-                     child: Row(
-                       children: [
-                         Container(
-                           decoration: BoxDecoration(
-                               color: R.colors.theme.withOpacity(0.3),
-                               borderRadius: BorderRadius.circular(
-                                   FetchPixels.getPixelHeight(3))),
-                           padding: EdgeInsets.symmetric(
-                             horizontal: FetchPixels.getPixelWidth(8),
-                             vertical: FetchPixels.getPixelHeight(3),
-                           ),
-                           child: Text(
-                             news.assetName!,
-                             style: R.textStyle.regularLato().copyWith(
-                                 fontSize: FetchPixels.getPixelHeight(10),
-                                 color: R.colors.theme),
-                           ),
-                         ),
-                       ],
-                     ),
-                   ),
+                    Padding(
+                      padding: EdgeInsets.only(right: 10),
+                      child: Row(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                color: R.colors.theme.withOpacity(0.3),
+                                borderRadius: BorderRadius.circular(
+                                    FetchPixels.getPixelHeight(3))),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: FetchPixels.getPixelWidth(8),
+                              vertical: FetchPixels.getPixelHeight(3),
+                            ),
+                            child: Text(
+                              news.assetName!,
+                              style: R.textStyle.regularLato().copyWith(
+                                  fontSize: FetchPixels.getPixelHeight(10),
+                                  color: R.colors.theme),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     getVerSpace(FetchPixels.getPixelHeight(5)),
                     Container(
+                      width: FetchPixels.width - FetchPixels.getPixelWidth(110),
                       child: Text(
                         news.assetName!,
-                        maxLines: 2,
+                        maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: R.textStyle.regularLato().copyWith(
                             fontSize: FetchPixels.getPixelHeight(16),
                             color: R.colors.blackColor),
                       ),
                     ),
-                    isNotification ? SizedBox(height: FetchPixels.getPixelHeight(10),) : SizedBox(),
-                    isNotification ? Row(children: [getAssetImage(R.images.save,scale: 30,color: Colors.grey),SizedBox(width: FetchPixels.getPixelWidth(15),),getAssetImage(R.images.share,scale: 5,color: Colors.grey)],) : SizedBox(),
+                    isNotification
+                        ? SizedBox(
+                            height: FetchPixels.getPixelHeight(10),
+                          )
+                        : SizedBox(),
+                    isNotification
+                        ? Row(
+                            children: [
+                              getAssetImage(R.images.save,
+                                  scale: 30, color: Colors.grey),
+                              SizedBox(
+                                width: FetchPixels.getPixelWidth(15),
+                              ),
+                              getAssetImage(R.images.share,
+                                  scale: 5, color: Colors.grey)
+                            ],
+                          )
+                        : SizedBox(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -93,11 +136,15 @@ class LatestViewAll extends StatelessWidget {
                                   fontSize: FetchPixels.getPixelHeight(10),
                                   color: Color(0xff909090)),
                             ),
-                            SizedBox(width: FetchPixels.getPixelWidth(5),),
+                            SizedBox(
+                              width: FetchPixels.getPixelWidth(5),
+                            ),
                             Icon(Icons.circle,
                                 size: FetchPixels.getPixelHeight(6),
                                 color: Color(0xff909090)),
-                            SizedBox(width: FetchPixels.getPixelWidth(5),),
+                            SizedBox(
+                              width: FetchPixels.getPixelWidth(5),
+                            ),
                             Text(
                               timeAgo.format(news.createdAt!),
                               style: R.textStyle.regularLato().copyWith(
@@ -115,10 +162,14 @@ class LatestViewAll extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: FetchPixels.getPixelHeight(3),),
+        SizedBox(
+          height: FetchPixels.getPixelHeight(3),
+        ),
         getDivider(R.colors.fill.withOpacity(0.5),
             FetchPixels.getPixelHeight(15), FetchPixels.getPixelHeight(1)),
-        SizedBox(height: FetchPixels.getPixelHeight(3),),
+        SizedBox(
+          height: FetchPixels.getPixelHeight(3),
+        ),
       ],
     );
   }

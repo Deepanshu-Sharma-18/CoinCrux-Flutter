@@ -7,7 +7,7 @@ class NewsProvider extends ChangeNotifier {
   List<NewsModel> newsList = [];
   bool isLoading = true;
 
-  Future<String> getImageUrl(String imagePath) async {
+  static Future<String> getImageUrl(String imagePath) async {
     if (imagePath.isNotEmpty) {
       Reference ref = FirebaseStorage.instance.ref().child(imagePath);
       String imageUrl = await ref.getDownloadURL();

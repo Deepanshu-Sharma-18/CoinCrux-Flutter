@@ -99,7 +99,7 @@ class LatestViewAll extends StatelessWidget {
                     Container(
                       width: FetchPixels.width - FetchPixels.getPixelWidth(110),
                       child: Text(
-                        news.assetName!,
+                        news.coinHeading!,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: R.textStyle.regularLato().copyWith(

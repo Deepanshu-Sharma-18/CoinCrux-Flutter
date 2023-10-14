@@ -17,16 +17,15 @@ import '../model/news_model.dart';
 
 class NewsFeedWidget extends StatefulWidget {
   final NewsModel news;
-  
+
   int index;
   bool isDetailed = false;
-  NewsFeedWidget(
-      {Key? key,
-      required this.isDetailed,
-      required this.news,
-      required this.index,
-      })
-      : super(key: key);
+  NewsFeedWidget({
+    Key? key,
+    required this.isDetailed,
+    required this.news,
+    required this.index,
+  }) : super(key: key);
 
   @override
   State<NewsFeedWidget> createState() => _NewsFeedWidgetState();
@@ -42,230 +41,225 @@ class _NewsFeedWidgetState extends State<NewsFeedWidget> {
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of(context, listen: false);
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            height: FetchPixels.getPixelHeight(
-                authProvider.isFeedView == true ? 300 : 290),
-            child: Stack(
-              children: [
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    height: FetchPixels.getPixelHeight(
-                        authProvider.isFeedView == true ? 300 : 240),
-                    decoration: BoxDecoration(
-                        image: getDecorationNetworkImage(
-                            context, widget.news.coinImage!,
-                            fit: BoxFit.fill)),
-                    width: FetchPixels.width,
+      backgroundColor: R.colors.bgColor,
+      body: Column(children: [
+        Container(
+          height: FetchPixels.getPixelHeight(
+              authProvider.isFeedView == true ? 300 : 290),
+          child: Stack(
+            children: [
+              Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  height: FetchPixels.getPixelHeight(
+                      authProvider.isFeedView == true ? 300 : 240),
+                  decoration: BoxDecoration(
+                      image: getDecorationNetworkImage(
+                          context, widget.news.coinImage!,
+                          fit: BoxFit.fill)),
+                  width: FetchPixels.width,
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding:
+                      EdgeInsets.only(top: FetchPixels.getPixelHeight(230)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: FetchPixels.getPixelWidth(17),
+                            vertical: FetchPixels.getPixelHeight(6)),
+                        decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                  color: R.colors.fill.withOpacity(0.5),
+                                  spreadRadius: 2,
+                                  blurRadius: 2)
+                            ],
+                            color: R.colors.coinBoxColor,
+                            borderRadius: BorderRadius.circular(
+                                FetchPixels.getPixelHeight(5))),
+                        child: Text(
+                          widget.news.assetName!,
+                          style: R.textStyle.regularLato().copyWith(
+                              fontSize: FetchPixels.getPixelHeight(13),
+                              color: R.colors.unSelectedIcon),
+                        ),
+                      ),
+                      getHorSpace(FetchPixels.getPixelWidth(1)),
+                      getHorSpace(FetchPixels.getPixelWidth(1)),
+                      Consumer<AuthProvider>(
+                        builder: (context, authProvider, child) {
+                          return InkWell(
+                            onTap: () {
+                              authProvider.page++;
+                              authProvider.pageController2.jumpToPage(
+                                authProvider.page,
+                              );
+                              authProvider.update();
+                            },
+                            child: Container(
+                              height: FetchPixels.getPixelHeight(40),
+                              padding:
+                                  EdgeInsets.all(FetchPixels.getPixelHeight(8)),
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: R.colors.coinBoxColor),
+                              child: Center(
+                                  child: getAssetImage(R.images.graphIcon,
+                                      color: Colors.black,
+                                      height: FetchPixels.getPixelHeight(15),
+                                      width: FetchPixels.getPixelWidth(15))),
+                            ),
+                          );
+                        },
+                      ),
+                      // ),
+                    ],
                   ),
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding:
-                        EdgeInsets.only(top: FetchPixels.getPixelHeight(230)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: FetchPixels.getPixelWidth(17),
-                              vertical: FetchPixels.getPixelHeight(6)),
-                          decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                    color: R.colors.fill.withOpacity(0.5),
-                                    spreadRadius: 2,
-                                    blurRadius: 2)
-                              ],
-                              color: R.colors.coinBoxColor,
-                              borderRadius: BorderRadius.circular(
-                                  FetchPixels.getPixelHeight(5))),
-                          child: Text(
-                            widget.news.assetName!,
-                            style: R.textStyle.regularLato().copyWith(
-                                fontSize: FetchPixels.getPixelHeight(13),
-                                color: R.colors.unSelectedIcon),
-                          ),
-                        ),
-                        getHorSpace(FetchPixels.getPixelWidth(1)),
-                        getHorSpace(FetchPixels.getPixelWidth(1)),
-                        Consumer<AuthProvider>(
-                          builder: (context, authProvider, child) {
-                            return InkWell(
-                              onTap: () {
-                                authProvider.page++;
-                                authProvider.pageController2.jumpToPage(
-                                  authProvider.page,
-                                );
-                                authProvider.update();
-                              },
-                              child: Container(
-                                height: FetchPixels.getPixelHeight(40),
-                                padding: EdgeInsets.all(
-                                    FetchPixels.getPixelHeight(8)),
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: R.colors.coinBoxColor),
-                                child: Center(
-                                    child: getAssetImage(R.images.graphIcon,
-                                        color: Colors.black,
-                                        height: FetchPixels.getPixelHeight(15),
-                                        width: FetchPixels.getPixelWidth(15))),
-                              ),
-                            );
-                          },
-                        ),
-                        // ),
-                      ],
-                    ),
-                  ),
-                )
+              )
+            ],
+          ),
+        ),
+        getPaddingWidget(
+          EdgeInsets.symmetric(horizontal: FetchPixels.getPixelWidth(20)),
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            getVerSpace(FetchPixels.getPixelHeight(20)),
+            InkWell(
+              onDoubleTap: () async {
+                if (firebaseAuth.currentUser == null) {
+                  // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please login")));
+                } else {
+                  DocumentSnapshot document = await fireStore
+                      .collection('users')
+                      .doc(firebaseAuth.currentUser!.uid)
+                      .get();
+                  List<dynamic> isBookMark = document.get('bookMarks');
+
+                  if (isBookMark.contains(widget.news.newsId)) {
+                    isBookMark.remove(widget.news.newsId);
+                  } else {
+                    isBookMark.add(widget.news.newsId);
+                  }
+
+                  await fireStore
+                      .collection('users')
+                      .doc(firebaseAuth.currentUser!.uid)
+                      .update({"bookMarks": isBookMark});
+                  authProvider.userM.bookMarks = isBookMark;
+                  authProvider.update();
+                }
+              },
+              child: Text(
+                widget.news.coinHeading!,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: R.textStyle.mediumLato().copyWith(
+                    fontSize: FetchPixels.getPixelHeight(20),
+                    color: R.colors.blackColor),
+              ),
+            ),
+            getVerSpace(FetchPixels.getPixelHeight(10)),
+            Text(
+              widget.news.coinDescription!,
+              textAlign: TextAlign.justify,
+              maxLines: widget.isDetailed ? 10 : 2,
+              overflow: TextOverflow.ellipsis,
+              style: R.textStyle.regularLato().copyWith(
+                  wordSpacing: 2,
+                  letterSpacing: 1,
+                  fontSize: FetchPixels.getPixelHeight(15),
+                  color: R.colors.blackColor),
+            ),
+            getVerSpace(FetchPixels.getPixelHeight(10)),
+            Row(
+              children: [
+                Text(
+                  "Crux by ${widget.news.createdBy}",
+                  style: R.textStyle.regularLato().copyWith(
+                      fontSize: FetchPixels.getPixelHeight(13),
+                      color: R.colors.unSelectedIcon),
+                ),
+                SizedBox(
+                  width: FetchPixels.getPixelWidth(10),
+                ),
+                Icon(
+                  Icons.circle,
+                  color: R.colors.unSelectedIcon,
+                  size: FetchPixels.getPixelHeight(8),
+                ),
+                SizedBox(
+                  width: FetchPixels.getPixelWidth(10),
+                ),
+                Text(
+                  timeago.format(widget.news.createdAt!),
+                  style: R.textStyle.regularLato().copyWith(
+                      fontSize: FetchPixels.getPixelHeight(11),
+                      color: R.colors.unSelectedIcon),
+                ),
+                getHorSpace(FetchPixels.getPixelWidth(1)),
+                getHorSpace(FetchPixels.getPixelWidth(1)),
+                getHorSpace(FetchPixels.getPixelWidth(1)),
               ],
             ),
-          ),
-          getPaddingWidget(
-            EdgeInsets.symmetric(horizontal: FetchPixels.getPixelWidth(20)),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                getVerSpace(FetchPixels.getPixelHeight(20)),
-                InkWell(
-                  onDoubleTap: () async {
-                    if (firebaseAuth.currentUser == null) {
-                      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please login")));
-                    } else {
-                      DocumentSnapshot document = await fireStore
-                          .collection('users')
-                          .doc(firebaseAuth.currentUser!.uid)
-                          .get();
-                      List<dynamic> isBookMark = document.get('bookMarks');
+            getVerSpace(FetchPixels.getPixelHeight(30)),
+            // Row(
+            //   children: [
+            //     Row(
+            //       children: List.generate(2, (index) {
+            //         return likeWidget(index);
+            //       }),
+            //     ),
+            //     getHorSpace(FetchPixels.getPixelWidth(20)),
+            //     // InkWell(
+            //     //   onTap: () {
+            //     //     Get.to(CommentsView(
+            //     //       news: widget.news,
+            //     //     ));
+            //     //   },
+            //     //   child: Icon(
+            //     //     Icons.chat_outlined,
+            //     //     color: R.colors.unSelectedIcon,
+            //     //   ),
+            //     // ),
+            //     getHorSpace(FetchPixels.getPixelWidth(5)),
 
-                      if (isBookMark.contains(widget.news.newsId)) {
-                        isBookMark.remove(widget.news.newsId);
-                      } else {
-                        isBookMark.add(widget.news.newsId);
-                      }
-
-                      await fireStore
-                          .collection('users')
-                          .doc(firebaseAuth.currentUser!.uid)
-                          .update({"bookMarks": isBookMark});
-                      authProvider.userM.bookMarks = isBookMark;
-                      authProvider.update();
-                    }
-                  },
-                  child: Text(
-                    widget.news.coinHeading!,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    style: R.textStyle.mediumLato().copyWith(
-                        fontSize: FetchPixels.getPixelHeight(20),
-                        color: R.colors.blackColor),
-                  ),
-                ),
-                getVerSpace(FetchPixels.getPixelHeight(10)),
-                Text(
-                  widget.news.coinDescription!,
-                  textAlign: TextAlign.justify,
-                  maxLines: widget.isDetailed ? 10 : 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: R.textStyle.regularLato().copyWith(
-                      wordSpacing: 2,
-                      letterSpacing: 1,
-                      fontSize: FetchPixels.getPixelHeight(15),
-                      color: R.colors.blackColor),
-                ),
-                getVerSpace(FetchPixels.getPixelHeight(10)),
-                Row(
-                  children: [
-                    Text(
-                      "Crux by ${widget.news.createdBy}",
-                      style: R.textStyle.regularLato().copyWith(
-                          fontSize: FetchPixels.getPixelHeight(13),
-                          color: R.colors.unSelectedIcon),
-                    ),
-                    SizedBox(
-                      width: FetchPixels.getPixelWidth(10),
-                    ),
-                    Icon(
-                      Icons.circle,
-                      color: R.colors.unSelectedIcon,
-                      size: FetchPixels.getPixelHeight(8),
-                    ),
-                    SizedBox(
-                      width: FetchPixels.getPixelWidth(10),
-                    ),
-                    Text(
-                      timeago.format(widget.news.createdAt!),
-                      style: R.textStyle.regularLato().copyWith(
-                          fontSize: FetchPixels.getPixelHeight(11),
-                          color: R.colors.unSelectedIcon),
-                    ),
-                    getHorSpace(FetchPixels.getPixelWidth(1)),
-                    getHorSpace(FetchPixels.getPixelWidth(1)),
-                    getHorSpace(FetchPixels.getPixelWidth(1)),
-                  ],
-                ),
-                getVerSpace(FetchPixels.getPixelHeight(30)),
-                // Row(
-                //   children: [
-                //     Row(
-                //       children: List.generate(2, (index) {
-                //         return likeWidget(index);
-                //       }),
-                //     ),
-                //     getHorSpace(FetchPixels.getPixelWidth(20)),
-                //     // InkWell(
-                //     //   onTap: () {
-                //     //     Get.to(CommentsView(
-                //     //       news: widget.news,
-                //     //     ));
-                //     //   },
-                //     //   child: Icon(
-                //     //     Icons.chat_outlined,
-                //     //     color: R.colors.unSelectedIcon,
-                //     //   ),
-                //     // ),
-                //     getHorSpace(FetchPixels.getPixelWidth(5)),
-
-                //   ],
-                // ),
-                getVerSpace(FetchPixels.getPixelHeight(10)),
-                
-              ]      
-                ),
-                
-    )]),
+            //   ],
+            // ),
+            getVerSpace(FetchPixels.getPixelHeight(10)),
+          ]),
+        )
+      ]),
     );
-          
-          // authProvider.isFeedView == true? Container(
-          //   padding: EdgeInsets.all(FetchPixels.getPixelHeight(20)),
-          //   width: FetchPixels.width,
-          //   color: R.colors.bgContainer2.withOpacity(0.2),
-          //   child: Column(
-          //     crossAxisAlignment: CrossAxisAlignment.start,
-          //     children: [
-          //       Text(
-          //         "Hash Key will charge \$15.00 per month.",
-          //         style: R.textStyle.mediumLato().copyWith(
-          //             fontSize: FetchPixels.getPixelHeight(17),
-          //             color: R.colors.blackColor),
-          //       ),
-          //       Text(
-          //         "Tap to read more.",
-          //         style: R.textStyle.mediumLato().copyWith(
-          //             fontSize: FetchPixels.getPixelHeight(15),
-          //             color: R.colors.fill),
-          //       ),
-          //     ],
-          //   ),
-          // ):SizedBox() ,
-          // getDivider(R.colors.fill.withOpacity(0.5),
-          //     FetchPixels.getPixelHeight(30), FetchPixels.getPixelHeight(1)),
-        
+
+    // authProvider.isFeedView == true? Container(
+    //   padding: EdgeInsets.all(FetchPixels.getPixelHeight(20)),
+    //   width: FetchPixels.width,
+    //   color: R.colors.bgContainer2.withOpacity(0.2),
+    //   child: Column(
+    //     crossAxisAlignment: CrossAxisAlignment.start,
+    //     children: [
+    //       Text(
+    //         "Hash Key will charge \$15.00 per month.",
+    //         style: R.textStyle.mediumLato().copyWith(
+    //             fontSize: FetchPixels.getPixelHeight(17),
+    //             color: R.colors.blackColor),
+    //       ),
+    //       Text(
+    //         "Tap to read more.",
+    //         style: R.textStyle.mediumLato().copyWith(
+    //             fontSize: FetchPixels.getPixelHeight(15),
+    //             color: R.colors.fill),
+    //       ),
+    //     ],
+    //   ),
+    // ):SizedBox() ,
+    // getDivider(R.colors.fill.withOpacity(0.5),
+    //     FetchPixels.getPixelHeight(30), FetchPixels.getPixelHeight(1)),
   }
 
   Widget likeWidget(index) {
@@ -411,11 +405,12 @@ class MyNewsFeedWidget extends StatefulWidget {
 
 class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
   int currentLiked = -1;
-  
+
   @override
   Widget build(BuildContext context) {
     List<NewsModel> newsList = Provider.of<NewsProvider>(context).newsList;
     return Scaffold(
+      backgroundColor: R.colors.bgColor,
       body: Column(
         children: [
           Container(
@@ -560,16 +555,11 @@ class _MyNewsFeedWidgetState extends State<MyNewsFeedWidget> {
                 ),
                 getVerSpace(FetchPixels.getPixelHeight(30)),
                 Row(
-                  children: [
-                    
-                    
-                  ],
+                  children: [],
                 ),
-                
               ],
             ),
           ),
-          
         ],
       ),
     );

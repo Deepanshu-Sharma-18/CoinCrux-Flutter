@@ -246,8 +246,9 @@ class _HomeViewState extends State<HomeView> {
                             ),
                             InkWell(
                               onTap: () {
-                                isViewAll = !isViewAll;
-                                setState(() {});
+                                setState(() {
+                                  isViewAll = !isViewAll;
+                                });
                                 print(isViewAll);
                               },
                               child: Container(

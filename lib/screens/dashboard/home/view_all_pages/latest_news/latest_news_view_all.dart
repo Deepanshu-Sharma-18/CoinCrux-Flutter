@@ -24,6 +24,10 @@ class LatestViewAll extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<String> loadImage(String image) async {
+      return await image;
+    }
+
     return Column(
       children: [
         InkWell(
@@ -54,7 +58,7 @@ class LatestViewAll extends StatelessWidget {
                         height: FetchPixels.getPixelHeight(90),
                         width: FetchPixels.getPixelWidth(80),
                         child: Image.network(
-                          snapshot.data.toString(),
+                          news.coinImage!,
                           fit: BoxFit.cover,
                         ),
                       );
@@ -62,7 +66,7 @@ class LatestViewAll extends StatelessWidget {
                       return Center(child: CircularProgressIndicator());
                     }
                   },
-                  future: NewsProvider.getImageUrl(news.coinImage!),
+                  future: loadImage(news.coinImage!),
                 ),
               ),
               getHorSpace(FetchPixels.getPixelWidth(10)),

@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(seconds: 2), () {
       if (firebaseAuth.currentUser == null) {
         auth.isLogin = false;
-        Get.offAll(DashBoardPage());
+        Get.offAllNamed(Routes.loginView);
       } else {
         auth.isLogin = true;
         Get.offAll(DashBoardPage());

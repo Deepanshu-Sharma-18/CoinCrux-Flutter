@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -5,6 +7,7 @@ import '../model/news_model.dart';
 
 class NewsProvider extends ChangeNotifier {
   List<NewsModel> newsList = [];
+  List<String> refId = [];
   bool isLoading = true;
 
   static Future<String> getImageUrl(String imagePath) async {
@@ -27,12 +30,14 @@ class NewsProvider extends ChangeNotifier {
         .snapshots()
         .listen((querySnapshot) async {
       newsList.clear();
+      refId.clear();
 
       for (final element in querySnapshot.docs) {
         final newsData = element.data();
         final imageUrl = await getImageUrl(newsData['coinImage']);
 
         newsData['coinImage'] = imageUrl;
+        refId.add(element.reference.id);
         final newsModel = NewsModel.fromMap(newsData);
 
         newsList.add(newsModel);

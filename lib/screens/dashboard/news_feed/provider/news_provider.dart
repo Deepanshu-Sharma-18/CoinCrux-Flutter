@@ -10,13 +10,13 @@ class NewsProvider extends ChangeNotifier {
   List<String> refId = [];
   bool isLoading = true;
 
-  static Future<String> getImageUrl(String imagePath) async {
-    if (imagePath.isNotEmpty) {
+  static Future<String> getImageUrl(String? imagePath) async {
+    if (imagePath != null) {
       Reference ref = FirebaseStorage.instance.ref().child(imagePath);
       String imageUrl = await ref.getDownloadURL();
       return imageUrl;
     }
-    return ""; // Return a default value if imagePath is empty
+    return "https://www.instron.com/-/media/images/instron/catalog/products/testing-systems/legacy/noimageavailable_instronsearch_white.png?sc_lang=en&hash=32CC6ED83B816AF812362C80B8367DC0"; // Return a default value if imagePath is empty
   }
 
   Future<void> listenToNews() async {
@@ -27,15 +27,14 @@ class NewsProvider extends ChangeNotifier {
         .collection("News")
         .where('createdAt', isGreaterThanOrEqualTo: twoDaysAgo)
         .orderBy('createdAt', descending: true)
-        .snapshots()
-        .listen((querySnapshot) async {
+        .get()
+        .then((querySnapshot) async {
       newsList.clear();
       refId.clear();
 
       for (final element in querySnapshot.docs) {
         final newsData = element.data();
         final imageUrl = await getImageUrl(newsData['coinImage']);
-
         newsData['coinImage'] = imageUrl;
         refId.add(element.reference.id);
         final newsModel = NewsModel.fromMap(newsData);

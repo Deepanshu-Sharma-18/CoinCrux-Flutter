@@ -84,6 +84,8 @@ class _NewsFeedViewState extends State<NewsFeedView> {
 
     var auth = FirebaseAuth.instance;
     var firestore = FirebaseFirestore.instance;
+
+    var controller = PageController(initialPage: 0);
     final customImagesCount = (newsList.length / 5).floor;
     Future<void> _refreshData() async {
       setState(() {
@@ -138,6 +140,7 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                       child: Padding(
                         padding: const EdgeInsets.all(1.0),
                         child: PageView.builder(
+                            controller: controller,
                             scrollDirection: Axis.vertical,
                             itemCount: newsList.length > 5
                                 ? newsList.length + customImagesCount()
@@ -145,6 +148,7 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                             itemBuilder: (ctx, index) {
                               if (newsList.isNotEmpty) {
                                 return Container(
+                                    // key: UniqueKey(),
                                     color: R.colors.bgColor,
                                     child: Stack(children: [
                                       Center(
@@ -163,14 +167,6 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                                                 height:
                                                     FetchPixels.getPixelHeight(
                                                         330),
-                                                // decoration: BoxDecoration(
-                                                //     image:
-                                                //         getDecorationNetworkImage(
-                                                //             context,
-                                                //             newsList[index -
-                                                //                     index ~/ 5]
-                                                //                 .coinImage!,
-                                                //             fit: BoxFit.fill)),
                                                 width: FetchPixels.width,
                                                 child: InkWell(
                                                   onTap: () => Get.to(
@@ -193,29 +189,6 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                                             ),
                                             getVerSpace(
                                                 FetchPixels.getPixelHeight(15)),
-                                            // Padding(
-                                            //   padding: const EdgeInsets.all(8),
-                                            // child:Container(
-                                            //   padding: EdgeInsets.symmetric(
-                                            //       horizontal: FetchPixels.getPixelWidth(17),
-                                            //       vertical: FetchPixels.getPixelHeight(6)),
-                                            //   decoration: BoxDecoration(
-                                            //       boxShadow: [
-                                            //         BoxShadow(
-                                            //             color: R.colors.fill.withOpacity(0.5),
-                                            //             spreadRadius: 2,
-                                            //             blurRadius: 2)
-                                            //       ],
-                                            //       color: R.colors.coinBoxColor,
-                                            //       borderRadius: BorderRadius.circular(
-                                            //           FetchPixels.getPixelHeight(5))),
-                                            //   child: Text(
-                                            //     newsList[index - index ~/ 5].assetName!,
-                                            //     style: R.textStyle.regularLato().copyWith(
-                                            //         fontSize: FetchPixels.getPixelHeight(13),
-                                            //         color: R.colors.unSelectedIcon),
-                                            //   ),
-                                            // )),
                                             Padding(
                                               padding:
                                                   const EdgeInsets.symmetric(
@@ -234,16 +207,6 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                                                             .colors.blackColor),
                                               ),
                                             ),
-                                            //SizedBox(height: 5,),
-                                            // Flexible(
-                                            //   fit: FlexFit.loose,
-                                            //   child:Padding(
-                                            //     padding: EdgeInsets.symmetric(horizontal: 5),
-                                            //     child:
-                                            // Html(data: _newsList[index].articleDetails! ,style: {
-                                            //   "p" : Style(fontSize: FontSize.larger, maxLines: 10),
-                                            // },),)
-                                            // ),
                                             Padding(
                                               padding:
                                                   const EdgeInsets.all(20.0),
@@ -265,8 +228,7 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                                               ),
                                             ),
                                             getVerSpace(
-                                                FetchPixels.getPixelHeight(15)),
-
+                                                FetchPixels.getPixelHeight(10)),
                                             Padding(
                                                 padding:
                                                     const EdgeInsets.symmetric(

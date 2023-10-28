@@ -39,6 +39,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return Scaffold(
       backgroundColor: R.colors.bgColor,
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         centerTitle: true,
         elevation: 0.0,
         leading: InkWell(
@@ -54,7 +55,6 @@ class _SearchScreenState extends State<SearchScreen> {
           "Search",
           style: R.textStyle
               .mediumLato()
-
               .copyWith(fontSize: 18, color: R.colors.blackColor),
 
         ),
@@ -93,12 +93,12 @@ class _SearchScreenState extends State<SearchScreen> {
               height: FetchPixels.height / 1.4,
               width: FetchPixels.width,
               child: StreamBuilder(
-                  stream: firebaseFirestore.collection('News').snapshots(),
+                  stream: firebaseFirestore.collection('News').where('createdAt', isGreaterThan: Timestamp.fromDate(DateTime.now().subtract(Duration(days: 2)))).snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       List<NewsModel> news = snapshot.data!.docs
                           .map((e) => NewsModel.fromJson(
-                              e.data() as Map<String, dynamic>))
+                              e.data()))
                           .toList();
 
                       List<NewsModel> searchedNews = news.where((element) {
@@ -119,7 +119,9 @@ class _SearchScreenState extends State<SearchScreen> {
                       );
                     } else {
                       return Center(
-                        child: SingleChildScrollView(),
+                        child: SingleChildScrollView(
+                          child: Center(child:Text("No Results Found")),
+                        ),
                       );
                     }
                   }),

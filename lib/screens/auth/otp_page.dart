@@ -34,6 +34,7 @@ class _OTPViewState extends State<OTPView> {
     return Consumer<AuthProvider>(
       builder: (context, auth, child) {
         return Scaffold(
+          backgroundColor: R.colors.bgColor,
           body: getPaddingWidget(
             EdgeInsets.symmetric(horizontal: FetchPixels.getPixelWidth(20)),
             SingleChildScrollView(

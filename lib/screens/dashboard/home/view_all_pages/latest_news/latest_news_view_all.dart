@@ -2,6 +2,7 @@ import 'package:coincrux/screens/auth/provider/auth_provider.dart';
 import 'package:coincrux/screens/dashboard/news_feed/model/news_model.dart';
 import 'package:coincrux/screens/dashboard/news_feed/news_detail_page.dart';
 import 'package:coincrux/screens/dashboard/news_feed/provider/news_provider.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +26,12 @@ class LatestViewAll extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future<String> loadImage(String image) async {
-      return await image;
+      if (image.isNotEmpty) {
+        Reference ref = FirebaseStorage.instance.ref().child(image);
+        String imageUrl = await ref.getDownloadURL();
+        return imageUrl;
+      }
+      return ""; // Return a default value if imagePath is empty
     }
 
     return Column(
@@ -55,10 +61,10 @@ class LatestViewAll extends StatelessWidget {
                         );
                       }
                       return Container(
-                        height: FetchPixels.getPixelHeight(90),
-                        width: FetchPixels.getPixelWidth(80),
+                        height: FetchPixels.getPixelHeight(70),
+                        width: FetchPixels.getPixelWidth(70),
                         child: Image.network(
-                          news.coinImage!,
+                          snapshot.data.toString(),
                           fit: BoxFit.cover,
                         ),
                       );

@@ -70,11 +70,11 @@ class _CoinCategoryViewState extends State<CoinCategoryView> {
             height: _isAppBarVisible ? 100 : 0, // Animation duration
             child: AppBar(
               iconTheme: IconThemeData(
-                color: Colors.black, //change your color here
+                color: R.colors.blackColor, //change your color here
               ),
               elevation: 0.0,
               automaticallyImplyLeading: true,
-              backgroundColor: Colors.white,
+              backgroundColor: R.colors.bgColor,
               centerTitle: true,
               title: Text(
                 widget.coinName,

@@ -1,4 +1,8 @@
 class AppImages {
+  String chat = "chat.png";
+  String like = "like.png";
+  String comment = "comment.png";
+  String dislike = "dislike.png";
   String logo = "logo.png";
   String home = "home.png";
   String news = "news.png";
@@ -66,5 +70,4 @@ class AppImages {
   String graphIcon = "graphIcon.png";
   String searchIcon = "searchIcon.png";
   String shareIcon = 'shareIcon.png';
-
 }

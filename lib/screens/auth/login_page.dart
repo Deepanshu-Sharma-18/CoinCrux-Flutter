@@ -44,6 +44,7 @@ class _LoginViewState extends State<LoginView> {
     return Consumer<AuthProvider>(
       builder: (context, auth, child) {
         return Scaffold(
+          backgroundColor: R.colors.bgColor,
           body: getPaddingWidget(
             EdgeInsets.symmetric(horizontal: FetchPixels.getPixelWidth(20)),
             SingleChildScrollView(
@@ -55,9 +56,11 @@ class _LoginViewState extends State<LoginView> {
                       getVerSpace(FetchPixels.getPixelHeight(50)),
                       Align(
                         alignment: Alignment.center,
-                        child: getAssetImage(R.images.logo,
-                            height: FetchPixels.getPixelHeight(150),
-                            width: FetchPixels.getPixelWidth(200)),
+                        child: getAssetImage(
+                          R.images.logo,
+                          height: FetchPixels.getPixelHeight(150),
+                          width: FetchPixels.getPixelWidth(200),
+                        ),
                       ),
                       getVerSpace(FetchPixels.getPixelHeight(50)),
                       Text(
@@ -87,7 +90,8 @@ class _LoginViewState extends State<LoginView> {
                         ignoreBlank: false,
                         // validator: (value)=> FieldValidator.validatePhoneNumber(value!),
                         autoValidateMode: AutovalidateMode.onUserInteraction,
-                        selectorTextStyle: TextStyle(color: Colors.black),
+                        selectorTextStyle:
+                            TextStyle(color: R.colors.whiteColor),
                         inputDecoration: R.decorations
                             .textFormFieldDecoration(null, "phone number"),
                         initialValue: number,
@@ -99,6 +103,9 @@ class _LoginViewState extends State<LoginView> {
                         onSaved: (PhoneNumber number) {
                           print('On Saved: $number');
                         },
+                        textStyle: TextStyle(
+                          color: R.colors.whiteColor,
+                        ),
                       ),
                       getVerSpace(FetchPixels.getPixelHeight(50)),
                       MyButton(
@@ -155,7 +162,11 @@ class _LoginViewState extends State<LoginView> {
                                 children: [
                                   getAssetImage(R.images.facebook,
                                       scale: FetchPixels.getPixelHeight(26)),
-                                  Text("Facebook")
+                                  Text(
+                                    "Facebook",
+                                    style:
+                                        TextStyle(color: R.colors.whiteColor),
+                                  )
                                 ]),
                           ),
                           InkWell(
@@ -199,7 +210,11 @@ class _LoginViewState extends State<LoginView> {
                                   children: [
                                     getAssetImage(R.images.mails,
                                         scale: FetchPixels.getPixelHeight(30)),
-                                    Text("Gmail")
+                                    Text(
+                                      "Gmail",
+                                      style:
+                                          TextStyle(color: R.colors.whiteColor),
+                                    )
                                   ]),
                             ),
                           ),

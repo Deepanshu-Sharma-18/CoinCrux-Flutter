@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../base/resizer/fetch_pixels.dart';
 
-
 class AppDecorations {
   // InputDecoration textFormFieldLogin(
   //   Widget? suffix,
@@ -59,40 +58,48 @@ class AppDecorations {
     String hintText,
   ) {
     return InputDecoration(
-      contentPadding: EdgeInsets.symmetric(vertical: FetchPixels.getPixelHeight(16),
-      horizontal: FetchPixels.getPixelWidth(20)
-      ),
-      suffixIcon: suffix,
-      isDense: true,
-      floatingLabelBehavior: FloatingLabelBehavior.never,
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(FetchPixels.getPixelHeight(5)),
-        borderSide: BorderSide(
-          width: 0.4,
-          color: R.colors.theme,
+        contentPadding: EdgeInsets.symmetric(
+            vertical: FetchPixels.getPixelHeight(16),
+            horizontal: FetchPixels.getPixelWidth(20)),
+        suffixIcon: suffix,
+        isDense: true,
+        floatingLabelBehavior: FloatingLabelBehavior.never,
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(FetchPixels.getPixelHeight(5)),
+          borderSide: BorderSide(
+            width: 0.4,
+            color: R.colors.theme,
+          ),
         ),
-      ),
-      disabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(FetchPixels.getPixelHeight(5)),
-        borderSide: BorderSide(width: 0.4, color: Colors.grey.withOpacity(0.4),),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(FetchPixels.getPixelHeight(5)),
-        borderSide: BorderSide(width: 0.4, color: Colors.grey.withOpacity(0.4),),
-      ),
-      border: OutlineInputBorder(
-        borderSide: BorderSide(width: 0.4,color: Colors.grey.withOpacity(0.4),),
-        borderRadius: BorderRadius.circular(FetchPixels.getPixelHeight(5)),
-      ),
-      filled: true,
-      fillColor: R.colors.transparent,
-      focusColor: R.colors.fill,
-      hintText: hintText,
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(FetchPixels.getPixelHeight(5)),
+          borderSide: BorderSide(
+            width: 0.4,
+            color: Colors.grey.withOpacity(0.4),
+          ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(FetchPixels.getPixelHeight(5)),
+          borderSide: BorderSide(
+            width: 0.4,
+            color: Colors.grey.withOpacity(0.4),
+          ),
+        ),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(
+            width: 0.4,
+            color: Colors.grey.withOpacity(0.4),
+          ),
+          borderRadius: BorderRadius.circular(FetchPixels.getPixelHeight(5)),
+        ),
+        filled: true,
+        fillColor: R.colors.transparent,
+        focusColor: R.colors.fill,
+        hintText: hintText,
+        hintStyle: R.textStyle.regularLato().copyWith(
+            fontSize: FetchPixels.getPixelHeight(15), color: R.colors.fill)
 
-      hintStyle: R.textStyle
-          .regularLato().copyWith(fontSize: FetchPixels.getPixelHeight(15),color: R.colors.fill)
-
-      //  border: OutlineInputBorder()
-    );
+        //  border: OutlineInputBorder()
+        );
   }
 }

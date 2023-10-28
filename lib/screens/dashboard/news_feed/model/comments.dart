@@ -6,8 +6,17 @@ class CommentModel {
   String? commentId;
   List<dynamic>? commentLikes = [];
   List<dynamic>? commentDisLikes = [];
+  List<dynamic>? replies = [];
 
-  CommentModel({this.userId, this.newsId, this.comment, this.userName,this.commentLikes,this.commentDisLikes,this.commentId});
+  CommentModel(
+      {this.userId,
+      this.newsId,
+      this.comment,
+      this.userName,
+      this.commentLikes,
+      this.commentDisLikes,
+      this.commentId,
+      this.replies});
 
   CommentModel.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
@@ -17,6 +26,7 @@ class CommentModel {
     commentLikes = json['commentLikes'];
     commentDisLikes = json['commentDisLikes'];
     commentId = json['commentId'];
+    replies = json['replies'];
   }
 
   Map<String, dynamic> toJson() {
@@ -28,6 +38,7 @@ class CommentModel {
     data['commentLikes'] = this.commentLikes;
     data['commentDisLikes'] = this.commentDisLikes;
     data['commentId'] = this.commentId;
+    data['replies'] = this.replies;
     return data;
   }
 }

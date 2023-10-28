@@ -1,10 +1,14 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coincrux/base/resizer/fetch_pixels.dart';
 import 'package:coincrux/base/widget_utils.dart';
+import 'package:coincrux/screens/dashboard/news_feed/comments_view.dart';
 import 'package:coincrux/screens/dashboard/news_feed/model/news_model.dart';
 import 'package:coincrux/screens/dashboard/news_feed/pages/feed_view.dart';
 import 'package:coincrux/screens/dashboard/news_feed/widgets/full_screen_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:coincrux/screens/dashboard/news_feed/provider/news_provider.dart';
 import 'package:flutter/material.dart';
@@ -76,6 +80,12 @@ class _NewsFeedViewState extends State<NewsFeedView> {
   Widget build(BuildContext context) {
     // String title = "Feed";
     List<NewsModel> newsList = Provider.of<NewsProvider>(context).newsList;
+    List<String> refId = Provider.of<NewsProvider>(context).refId;
+
+    var auth = FirebaseAuth.instance;
+    var firestore = FirebaseFirestore.instance;
+
+    var controller = PageController(initialPage: 0);
     final customImagesCount = (newsList.length / 5).floor;
     Future<void> _refreshData() async {
       setState(() {
@@ -130,6 +140,7 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                       child: Padding(
                         padding: const EdgeInsets.all(1.0),
                         child: PageView.builder(
+                            controller: controller,
                             scrollDirection: Axis.vertical,
                             itemCount: newsList.length > 5
                                 ? newsList.length + customImagesCount()
@@ -137,6 +148,7 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                             itemBuilder: (ctx, index) {
                               if (newsList.isNotEmpty) {
                                 return Container(
+                                    // key: UniqueKey(),
                                     color: R.colors.bgColor,
                                     child: Stack(children: [
                                       Center(
@@ -155,14 +167,6 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                                                 height:
                                                     FetchPixels.getPixelHeight(
                                                         330),
-                                                // decoration: BoxDecoration(
-                                                //     image:
-                                                //         getDecorationNetworkImage(
-                                                //             context,
-                                                //             newsList[index -
-                                                //                     index ~/ 5]
-                                                //                 .coinImage!,
-                                                //             fit: BoxFit.fill)),
                                                 width: FetchPixels.width,
                                                 child: InkWell(
                                                   onTap: () => Get.to(
@@ -185,29 +189,6 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                                             ),
                                             getVerSpace(
                                                 FetchPixels.getPixelHeight(15)),
-                                            // Padding(
-                                            //   padding: const EdgeInsets.all(8),
-                                            // child:Container(
-                                            //   padding: EdgeInsets.symmetric(
-                                            //       horizontal: FetchPixels.getPixelWidth(17),
-                                            //       vertical: FetchPixels.getPixelHeight(6)),
-                                            //   decoration: BoxDecoration(
-                                            //       boxShadow: [
-                                            //         BoxShadow(
-                                            //             color: R.colors.fill.withOpacity(0.5),
-                                            //             spreadRadius: 2,
-                                            //             blurRadius: 2)
-                                            //       ],
-                                            //       color: R.colors.coinBoxColor,
-                                            //       borderRadius: BorderRadius.circular(
-                                            //           FetchPixels.getPixelHeight(5))),
-                                            //   child: Text(
-                                            //     newsList[index - index ~/ 5].assetName!,
-                                            //     style: R.textStyle.regularLato().copyWith(
-                                            //         fontSize: FetchPixels.getPixelHeight(13),
-                                            //         color: R.colors.unSelectedIcon),
-                                            //   ),
-                                            // )),
                                             Padding(
                                               padding:
                                                   const EdgeInsets.symmetric(
@@ -226,16 +207,6 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                                                             .colors.blackColor),
                                               ),
                                             ),
-                                            //SizedBox(height: 5,),
-                                            // Flexible(
-                                            //   fit: FlexFit.loose,
-                                            //   child:Padding(
-                                            //     padding: EdgeInsets.symmetric(horizontal: 5),
-                                            //     child:
-                                            // Html(data: _newsList[index].articleDetails! ,style: {
-                                            //   "p" : Style(fontSize: FontSize.larger, maxLines: 10),
-                                            // },),)
-                                            // ),
                                             Padding(
                                               padding:
                                                   const EdgeInsets.all(20.0),
@@ -257,8 +228,7 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                                               ),
                                             ),
                                             getVerSpace(
-                                                FetchPixels.getPixelHeight(15)),
-
+                                                FetchPixels.getPixelHeight(10)),
                                             Padding(
                                                 padding:
                                                     const EdgeInsets.symmetric(
@@ -313,6 +283,277 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                                                         .getPixelWidth(1)),
                                                   ],
                                                 )),
+                                            getVerSpace(
+                                                FetchPixels.getPixelWidth(2)),
+                                            Padding(
+                                              padding: EdgeInsets.only(
+                                                  left:
+                                                      FetchPixels.getPixelWidth(
+                                                          8)),
+                                              child: Container(
+                                                height:
+                                                    FetchPixels.getPixelHeight(
+                                                        30),
+                                                child: StreamBuilder(
+                                                    stream: firestore
+                                                        .collection("News")
+                                                        .doc(refId[
+                                                            index - index ~/ 5])
+                                                        .snapshots(),
+                                                    builder:
+                                                        (context, snapshot) {
+                                                      void likeFeed(int index) {
+                                                        if (snapshot.data!
+                                                            .data()![
+                                                                "totalDislikes"]
+                                                            .contains(auth
+                                                                .currentUser!
+                                                                .uid)) {
+                                                          firestore
+                                                              .collection(
+                                                                  "News")
+                                                              .doc(refId[index])
+                                                              .update({
+                                                            "totalDislikes":
+                                                                FieldValue
+                                                                    .arrayRemove([
+                                                              auth.currentUser!
+                                                                  .uid
+                                                            ])
+                                                          });
+                                                        }
+
+                                                        if (snapshot.data!
+                                                            .data()![
+                                                                "totalLikes"]
+                                                            .contains(auth
+                                                                .currentUser!
+                                                                .uid)) {
+                                                          firestore
+                                                              .collection(
+                                                                  "News")
+                                                              .doc(refId[index])
+                                                              .update({
+                                                            "totalLikes":
+                                                                FieldValue
+                                                                    .arrayRemove([
+                                                              auth.currentUser!
+                                                                  .uid
+                                                            ])
+                                                          });
+                                                        } else {
+                                                          firestore
+                                                              .collection(
+                                                                  "News")
+                                                              .doc(refId[index])
+                                                              .update({
+                                                            "totalLikes":
+                                                                FieldValue
+                                                                    .arrayUnion([
+                                                              auth.currentUser!
+                                                                  .uid
+                                                            ])
+                                                          });
+                                                        }
+                                                      }
+
+                                                      void dislikeFeed(
+                                                          int index) {
+                                                        if (snapshot.data!
+                                                            .data()![
+                                                                "totalLikes"]
+                                                            .contains(auth
+                                                                .currentUser!
+                                                                .uid)) {
+                                                          firestore
+                                                              .collection(
+                                                                  "News")
+                                                              .doc(refId[index])
+                                                              .update({
+                                                            "totalLikes":
+                                                                FieldValue
+                                                                    .arrayRemove([
+                                                              auth.currentUser!
+                                                                  .uid
+                                                            ])
+                                                          });
+                                                        }
+
+                                                        if (snapshot.data!
+                                                            .data()![
+                                                                "totalDislikes"]
+                                                            .contains(auth
+                                                                .currentUser!
+                                                                .uid)) {
+                                                          firestore
+                                                              .collection(
+                                                                  "News")
+                                                              .doc(refId[index])
+                                                              .update({
+                                                            "totalDislikes":
+                                                                FieldValue
+                                                                    .arrayRemove([
+                                                              auth.currentUser!
+                                                                  .uid
+                                                            ])
+                                                          });
+                                                        } else {
+                                                          firestore
+                                                              .collection(
+                                                                  "News")
+                                                              .doc(refId[index])
+                                                              .update({
+                                                            "totalDislikes":
+                                                                FieldValue
+                                                                    .arrayUnion([
+                                                              auth.currentUser!
+                                                                  .uid
+                                                            ])
+                                                          });
+                                                        }
+                                                      }
+
+                                                      if (snapshot.hasData) {
+                                                        return Row(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            getHorSpace(15),
+                                                            InkWell(
+                                                              onTap: () {
+                                                                likeFeed(index -
+                                                                    index ~/ 5);
+                                                              },
+                                                              child: Icon(
+                                                                Icons
+                                                                    .thumb_up_off_alt_outlined,
+                                                                color: snapshot
+                                                                        .data!
+                                                                        .data()![
+                                                                            "totalLikes"]
+                                                                        .contains(auth
+                                                                            .currentUser!
+                                                                            .uid)
+                                                                    ? Colors.red
+                                                                    : R.colors
+                                                                        .unSelectedIcon,
+                                                                size: FetchPixels
+                                                                    .getPixelHeight(
+                                                                        24),
+                                                              ),
+                                                            ),
+                                                            getHorSpace(FetchPixels
+                                                                .getPixelWidth(
+                                                                    8)),
+                                                            Text(
+                                                              snapshot.data!
+                                                                  .data()![
+                                                                      "totalLikes"]
+                                                                  .length
+                                                                  .toString(),
+                                                              style: R.textStyle
+                                                                  .regularLato()
+                                                                  .copyWith(
+                                                                    fontSize: FetchPixels
+                                                                        .getPixelHeight(
+                                                                            18),
+                                                                    color: R
+                                                                        .colors
+                                                                        .unSelectedIcon,
+                                                                  ),
+                                                            ),
+                                                            getHorSpace(FetchPixels
+                                                                .getPixelWidth(
+                                                                    18)),
+                                                            InkWell(
+                                                              onTap: () {
+                                                                dislikeFeed(
+                                                                    index -
+                                                                        index ~/
+                                                                            5);
+                                                              },
+                                                              child: Icon(
+                                                                Icons
+                                                                    .thumb_down_off_alt_outlined,
+                                                                color: snapshot
+                                                                        .data!
+                                                                        .data()![
+                                                                            "totalDislikes"]
+                                                                        .contains(auth
+                                                                            .currentUser!
+                                                                            .uid)
+                                                                    ? Colors.red
+                                                                    : R.colors
+                                                                        .unSelectedIcon,
+                                                                size: FetchPixels
+                                                                    .getPixelHeight(
+                                                                        24),
+                                                              ),
+                                                            ),
+                                                            getHorSpace(FetchPixels
+                                                                .getPixelWidth(
+                                                                    8)),
+                                                            Text(
+                                                              snapshot.data!
+                                                                  .data()![
+                                                                      "totalDislikes"]
+                                                                  .length
+                                                                  .toString(),
+                                                              style: R.textStyle
+                                                                  .regularLato()
+                                                                  .copyWith(
+                                                                    fontSize: FetchPixels
+                                                                        .getPixelHeight(
+                                                                            18),
+                                                                    color: R
+                                                                        .colors
+                                                                        .unSelectedIcon,
+                                                                  ),
+                                                            ),
+                                                            getHorSpace(FetchPixels
+                                                                .getPixelWidth(
+                                                                    18)),
+                                                            InkWell(
+                                                              onTap: () {
+                                                                Get.to(
+                                                                    CommentsView(
+                                                                  news: newsList[
+                                                                      index -
+                                                                          index ~/
+                                                                              5],
+                                                                  docId: refId[
+                                                                      index -
+                                                                          index ~/
+                                                                              5],
+                                                                ));
+                                                              },
+                                                              child: Container(
+                                                                child:
+                                                                    getAssetImage(
+                                                                  R.images.chat,
+                                                                  color: R
+                                                                      .colors
+                                                                      .unSelectedIcon,
+                                                                  boxFit: BoxFit
+                                                                      .fill,
+                                                                  height: FetchPixels
+                                                                      .getPixelHeight(
+                                                                          25),
+                                                                  width: FetchPixels
+                                                                      .getPixelWidth(
+                                                                          25),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        );
+                                                      } else {
+                                                        return Container();
+                                                      }
+                                                    }),
+                                              ),
+                                            )
                                           ],
                                         ),
                                       )),

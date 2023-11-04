@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:coincrux/base/resizer/fetch_pixels.dart';
 import 'package:coincrux/base/widget_utils.dart';
+import 'package:coincrux/screens/dashboard/home/bookmarks/bookmarks.dart';
 import 'package:coincrux/screens/dashboard/home/model/category_model.dart';
 import 'package:coincrux/screens/dashboard/home/view_all_pages/categories_view_all.dart';
 import 'package:coincrux/screens/dashboard/home/view_all_pages/latest_news/latest_news_view.dart';
@@ -12,6 +13,7 @@ import 'package:coincrux/screens/dashboard/home/widgets/topics_widget.dart';
 import 'package:coincrux/screens/dashboard/news_feed/model/news_model.dart';
 import 'package:coincrux/screens/dashboard/news_feed/provider/news_provider.dart';
 import 'package:coincrux/screens/dashboard/searchScreen.dart';
+import 'package:coincrux/screens/dashboard/settings/pages/book_marks_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
@@ -75,6 +77,13 @@ class _HomeViewState extends State<HomeView> {
                 .mediumLato()
                 .copyWith(fontSize: FetchPixels.getPixelHeight(17)),
           ),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Get.to(Bookmark());
+                },
+                icon: Icon(Icons.bookmark))
+          ],
         ),
         body: Container(
             padding: EdgeInsets.all(15),

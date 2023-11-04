@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coincrux/base/resizer/fetch_pixels.dart';
 import 'package:coincrux/base/widget_utils.dart';
+import 'package:coincrux/screens/auth/provider/auth_provider.dart';
 import 'package:coincrux/screens/dashboard/news_feed/comments_view.dart';
 import 'package:coincrux/screens/dashboard/news_feed/model/news_model.dart';
 import 'package:coincrux/screens/dashboard/news_feed/pages/feed_view.dart';
@@ -285,274 +286,371 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                                                 )),
                                             getVerSpace(
                                                 FetchPixels.getPixelWidth(2)),
-                                            Padding(
-                                              padding: EdgeInsets.only(
-                                                  left:
-                                                      FetchPixels.getPixelWidth(
-                                                          8)),
-                                              child: Container(
-                                                height:
-                                                    FetchPixels.getPixelHeight(
-                                                        30),
-                                                child: StreamBuilder(
-                                                    stream: firestore
-                                                        .collection("News")
-                                                        .doc(refId[
-                                                            index - index ~/ 5])
-                                                        .snapshots(),
-                                                    builder:
-                                                        (context, snapshot) {
-                                                      void likeFeed(int index) {
-                                                        if (snapshot.data!
-                                                            .data()![
-                                                                "totalDislikes"]
-                                                            .contains(auth
-                                                                .currentUser!
-                                                                .uid)) {
-                                                          firestore
-                                                              .collection(
-                                                                  "News")
-                                                              .doc(refId[index])
-                                                              .update({
-                                                            "totalDislikes":
-                                                                FieldValue
-                                                                    .arrayRemove([
-                                                              auth.currentUser!
-                                                                  .uid
-                                                            ])
-                                                          });
-                                                        }
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: FetchPixels
+                                                          .getPixelWidth(20)),
+                                                  child: Container(
+                                                    width: FetchPixels
+                                                        .getPixelWidth(200),
+                                                    height: FetchPixels
+                                                        .getPixelHeight(30),
+                                                    child: StreamBuilder(
+                                                        stream: firestore
+                                                            .collection("News")
+                                                            .doc(refId[index -
+                                                                index ~/ 5])
+                                                            .snapshots(),
+                                                        builder: (context,
+                                                            snapshot) {
+                                                          void likeFeed(
+                                                              int index) {
+                                                            if (snapshot.data!
+                                                                .data()![
+                                                                    "totalDislikes"]
+                                                                .contains(auth
+                                                                    .currentUser!
+                                                                    .uid)) {
+                                                              firestore
+                                                                  .collection(
+                                                                      "News")
+                                                                  .doc(refId[
+                                                                      index])
+                                                                  .update({
+                                                                "totalDislikes":
+                                                                    FieldValue
+                                                                        .arrayRemove([
+                                                                  auth.currentUser!
+                                                                      .uid
+                                                                ])
+                                                              });
+                                                            }
 
-                                                        if (snapshot.data!
-                                                            .data()![
-                                                                "totalLikes"]
-                                                            .contains(auth
-                                                                .currentUser!
-                                                                .uid)) {
-                                                          firestore
-                                                              .collection(
-                                                                  "News")
-                                                              .doc(refId[index])
-                                                              .update({
-                                                            "totalLikes":
-                                                                FieldValue
-                                                                    .arrayRemove([
-                                                              auth.currentUser!
-                                                                  .uid
-                                                            ])
-                                                          });
-                                                        } else {
-                                                          firestore
-                                                              .collection(
-                                                                  "News")
-                                                              .doc(refId[index])
-                                                              .update({
-                                                            "totalLikes":
-                                                                FieldValue
-                                                                    .arrayUnion([
-                                                              auth.currentUser!
-                                                                  .uid
-                                                            ])
-                                                          });
-                                                        }
-                                                      }
+                                                            if (snapshot.data!
+                                                                .data()![
+                                                                    "totalLikes"]
+                                                                .contains(auth
+                                                                    .currentUser!
+                                                                    .uid)) {
+                                                              firestore
+                                                                  .collection(
+                                                                      "News")
+                                                                  .doc(refId[
+                                                                      index])
+                                                                  .update({
+                                                                "totalLikes":
+                                                                    FieldValue
+                                                                        .arrayRemove([
+                                                                  auth.currentUser!
+                                                                      .uid
+                                                                ])
+                                                              });
+                                                            } else {
+                                                              firestore
+                                                                  .collection(
+                                                                      "News")
+                                                                  .doc(refId[
+                                                                      index])
+                                                                  .update({
+                                                                "totalLikes":
+                                                                    FieldValue
+                                                                        .arrayUnion([
+                                                                  auth.currentUser!
+                                                                      .uid
+                                                                ])
+                                                              });
+                                                            }
+                                                          }
 
-                                                      void dislikeFeed(
-                                                          int index) {
-                                                        if (snapshot.data!
-                                                            .data()![
-                                                                "totalLikes"]
-                                                            .contains(auth
-                                                                .currentUser!
-                                                                .uid)) {
-                                                          firestore
-                                                              .collection(
-                                                                  "News")
-                                                              .doc(refId[index])
-                                                              .update({
-                                                            "totalLikes":
-                                                                FieldValue
-                                                                    .arrayRemove([
-                                                              auth.currentUser!
-                                                                  .uid
-                                                            ])
-                                                          });
-                                                        }
+                                                          void dislikeFeed(
+                                                              int index) {
+                                                            if (snapshot.data!
+                                                                .data()![
+                                                                    "totalLikes"]
+                                                                .contains(auth
+                                                                    .currentUser!
+                                                                    .uid)) {
+                                                              firestore
+                                                                  .collection(
+                                                                      "News")
+                                                                  .doc(refId[
+                                                                      index])
+                                                                  .update({
+                                                                "totalLikes":
+                                                                    FieldValue
+                                                                        .arrayRemove([
+                                                                  auth.currentUser!
+                                                                      .uid
+                                                                ])
+                                                              });
+                                                            }
 
-                                                        if (snapshot.data!
-                                                            .data()![
-                                                                "totalDislikes"]
-                                                            .contains(auth
-                                                                .currentUser!
-                                                                .uid)) {
-                                                          firestore
-                                                              .collection(
-                                                                  "News")
-                                                              .doc(refId[index])
-                                                              .update({
-                                                            "totalDislikes":
-                                                                FieldValue
-                                                                    .arrayRemove([
-                                                              auth.currentUser!
-                                                                  .uid
-                                                            ])
-                                                          });
-                                                        } else {
-                                                          firestore
-                                                              .collection(
-                                                                  "News")
-                                                              .doc(refId[index])
-                                                              .update({
-                                                            "totalDislikes":
-                                                                FieldValue
-                                                                    .arrayUnion([
-                                                              auth.currentUser!
-                                                                  .uid
-                                                            ])
-                                                          });
-                                                        }
-                                                      }
+                                                            if (snapshot.data!
+                                                                .data()![
+                                                                    "totalDislikes"]
+                                                                .contains(auth
+                                                                    .currentUser!
+                                                                    .uid)) {
+                                                              firestore
+                                                                  .collection(
+                                                                      "News")
+                                                                  .doc(refId[
+                                                                      index])
+                                                                  .update({
+                                                                "totalDislikes":
+                                                                    FieldValue
+                                                                        .arrayRemove([
+                                                                  auth.currentUser!
+                                                                      .uid
+                                                                ])
+                                                              });
+                                                            } else {
+                                                              firestore
+                                                                  .collection(
+                                                                      "News")
+                                                                  .doc(refId[
+                                                                      index])
+                                                                  .update({
+                                                                "totalDislikes":
+                                                                    FieldValue
+                                                                        .arrayUnion([
+                                                                  auth.currentUser!
+                                                                      .uid
+                                                                ])
+                                                              });
+                                                            }
+                                                          }
 
-                                                      if (snapshot.hasData) {
-                                                        return Row(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            getHorSpace(15),
-                                                            InkWell(
-                                                              onTap: () {
-                                                                likeFeed(index -
-                                                                    index ~/ 5);
-                                                              },
-                                                              child: Icon(
-                                                                Icons
-                                                                    .thumb_up_off_alt_outlined,
-                                                                color: snapshot
-                                                                        .data!
-                                                                        .data()![
-                                                                            "totalLikes"]
-                                                                        .contains(auth
-                                                                            .currentUser!
-                                                                            .uid)
-                                                                    ? Colors.red
-                                                                    : R.colors
-                                                                        .unSelectedIcon,
-                                                                size: FetchPixels
-                                                                    .getPixelHeight(
-                                                                        24),
-                                                              ),
-                                                            ),
-                                                            getHorSpace(FetchPixels
-                                                                .getPixelWidth(
-                                                                    8)),
-                                                            Text(
-                                                              snapshot.data!
-                                                                  .data()![
-                                                                      "totalLikes"]
-                                                                  .length
-                                                                  .toString(),
-                                                              style: R.textStyle
-                                                                  .regularLato()
-                                                                  .copyWith(
-                                                                    fontSize: FetchPixels
+                                                          if (snapshot
+                                                              .hasData) {
+                                                            return Container(
+                                                              decoration: BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              5),
+                                                                  border: Border.all(
+                                                                      color: R
+                                                                          .colors
+                                                                          .unSelectedIcon)),
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .start,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  InkWell(
+                                                                    onTap: () {
+                                                                      likeFeed(index -
+                                                                          index ~/
+                                                                              5);
+                                                                    },
+                                                                    child:
+                                                                        Container(
+                                                                      height: FetchPixels
+                                                                          .getPixelHeight(
+                                                                              30),
+                                                                      child:
+                                                                          Row(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.center,
+                                                                        children: [
+                                                                          getHorSpace(
+                                                                              FetchPixels.getPixelWidth(15)),
+                                                                          getAssetImage(
+                                                                            R.images.like,
+                                                                            color: snapshot.data!.data()!["totalLikes"].contains(auth.currentUser!.uid)
+                                                                                ? Colors.red
+                                                                                : R.colors.unSelectedIcon,
+                                                                            height:
+                                                                                FetchPixels.getPixelHeight(20),
+                                                                          ),
+                                                                          getHorSpace(
+                                                                              FetchPixels.getPixelWidth(10)),
+                                                                          Text(
+                                                                            snapshot.data!.data()!["totalLikes"].length.toString(),
+                                                                            style: R.textStyle.regularLato().copyWith(
+                                                                                  fontSize: FetchPixels.getPixelHeight(15),
+                                                                                  color: R.colors.unSelectedIcon,
+                                                                                ),
+                                                                          ),
+                                                                          getHorSpace(
+                                                                              FetchPixels.getPixelWidth(15)),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Container(
+                                                                    height: FetchPixels
                                                                         .getPixelHeight(
-                                                                            18),
+                                                                            20),
+                                                                    width: FetchPixels
+                                                                        .getPixelWidth(
+                                                                            1.5),
                                                                     color: R
                                                                         .colors
                                                                         .unSelectedIcon,
                                                                   ),
-                                                            ),
-                                                            getHorSpace(FetchPixels
-                                                                .getPixelWidth(
-                                                                    18)),
-                                                            InkWell(
-                                                              onTap: () {
-                                                                dislikeFeed(
-                                                                    index -
-                                                                        index ~/
-                                                                            5);
-                                                              },
-                                                              child: Icon(
-                                                                Icons
-                                                                    .thumb_down_off_alt_outlined,
-                                                                color: snapshot
-                                                                        .data!
-                                                                        .data()![
-                                                                            "totalDislikes"]
-                                                                        .contains(auth
-                                                                            .currentUser!
-                                                                            .uid)
-                                                                    ? Colors.red
-                                                                    : R.colors
-                                                                        .unSelectedIcon,
-                                                                size: FetchPixels
-                                                                    .getPixelHeight(
-                                                                        24),
-                                                              ),
-                                                            ),
-                                                            getHorSpace(FetchPixels
-                                                                .getPixelWidth(
-                                                                    8)),
-                                                            Text(
-                                                              snapshot.data!
-                                                                  .data()![
-                                                                      "totalDislikes"]
-                                                                  .length
-                                                                  .toString(),
-                                                              style: R.textStyle
-                                                                  .regularLato()
-                                                                  .copyWith(
-                                                                    fontSize: FetchPixels
+                                                                  InkWell(
+                                                                    onTap: () {
+                                                                      dislikeFeed(index -
+                                                                          index ~/
+                                                                              5);
+                                                                    },
+                                                                    child:
+                                                                        Container(
+                                                                      height: FetchPixels
+                                                                          .getPixelHeight(
+                                                                              30),
+                                                                      child:
+                                                                          Row(
+                                                                        crossAxisAlignment:
+                                                                            CrossAxisAlignment.center,
+                                                                        children: [
+                                                                          getHorSpace(
+                                                                              FetchPixels.getPixelWidth(15)),
+                                                                          getAssetImage(
+                                                                            R.images.dislike,
+                                                                            color: snapshot.data!.data()!["totalDislikes"].contains(auth.currentUser!.uid)
+                                                                                ? Colors.red
+                                                                                : R.colors.unSelectedIcon,
+                                                                            height:
+                                                                                FetchPixels.getPixelHeight(20),
+                                                                          ),
+                                                                          getHorSpace(
+                                                                              FetchPixels.getPixelWidth(10)),
+                                                                          Text(
+                                                                            snapshot.data!.data()!["totalDislikes"].length.toString(),
+                                                                            style: R.textStyle.regularLato().copyWith(
+                                                                                  fontSize: FetchPixels.getPixelHeight(15),
+                                                                                  color: R.colors.unSelectedIcon,
+                                                                                ),
+                                                                          ),
+                                                                          getHorSpace(
+                                                                              FetchPixels.getPixelWidth(15)),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                  Container(
+                                                                    height: FetchPixels
                                                                         .getPixelHeight(
-                                                                            18),
+                                                                            20),
+                                                                    width: FetchPixels
+                                                                        .getPixelWidth(
+                                                                            1.5),
                                                                     color: R
                                                                         .colors
                                                                         .unSelectedIcon,
                                                                   ),
-                                                            ),
-                                                            getHorSpace(FetchPixels
-                                                                .getPixelWidth(
-                                                                    18)),
-                                                            InkWell(
-                                                              onTap: () {
-                                                                Get.to(
-                                                                    CommentsView(
-                                                                  news: newsList[
-                                                                      index -
-                                                                          index ~/
-                                                                              5],
-                                                                  docId: refId[
-                                                                      index -
-                                                                          index ~/
-                                                                              5],
-                                                                ));
-                                                              },
-                                                              child: Container(
-                                                                child:
-                                                                    getAssetImage(
-                                                                  R.images.chat,
-                                                                  color: R
-                                                                      .colors
-                                                                      .unSelectedIcon,
-                                                                  boxFit: BoxFit
-                                                                      .fill,
+                                                                  InkWell(
+                                                                    onTap: () {
+                                                                      Get.to(
+                                                                          CommentsView(
+                                                                        news: newsList[index -
+                                                                            index ~/
+                                                                                5],
+                                                                        docId: refId[index -
+                                                                            index ~/
+                                                                                5],
+                                                                      ));
+                                                                    },
+                                                                    child:
+                                                                        Container(
+                                                                      height: FetchPixels
+                                                                          .getPixelHeight(
+                                                                              30),
+                                                                      child:
+                                                                          Padding(
+                                                                        padding: EdgeInsets.symmetric(
+                                                                            horizontal:
+                                                                                FetchPixels.getPixelWidth(15),
+                                                                            vertical: FetchPixels.getPixelHeight(2)),
+                                                                        child:
+                                                                            getAssetImage(
+                                                                          R.images
+                                                                              .comment,
+                                                                          color: R
+                                                                              .colors
+                                                                              .unSelectedIcon,
+                                                                          height:
+                                                                              FetchPixels.getPixelHeight(18),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            );
+                                                          } else {
+                                                            return Container();
+                                                          }
+                                                        }),
+                                                  ),
+                                                ),
+                                                getHorSpace(
+                                                    FetchPixels.getPixelWidth(
+                                                        100)),
+                                                InkWell(
+                                                  onTap: () {
+                                                    AuthProvider
+                                                        .updateBookmarks(
+                                                            refId[index -
+                                                                index ~/ 5],
+                                                            newsList[index -
+                                                                index ~/ 5]);
+                                                  },
+                                                  child: Container(
+                                                    height: FetchPixels
+                                                        .getPixelHeight(30),
+                                                    width: FetchPixels
+                                                        .getPixelWidth(30),
+                                                    child: StreamBuilder(
+                                                        stream: firestore
+                                                            .collection("users")
+                                                            .doc(FirebaseAuth
+                                                                .instance
+                                                                .currentUser!
+                                                                .uid)
+                                                            .snapshots(),
+                                                        builder: (context,
+                                                            snapshot) {
+                                                          if (snapshot
+                                                              .hasData) {
+                                                            return Padding(
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .all(3.0),
+                                                              child: getAssetImage(
+                                                                  R.images
+                                                                      .bookmark,
+                                                                  color: snapshot
+                                                                          .data!
+                                                                          .data()![
+                                                                              "bookMarks"]
+                                                                          .contains(refId[index -
+                                                                              index ~/
+                                                                                  5])
+                                                                      ? Colors
+                                                                          .red
+                                                                      : R.colors
+                                                                          .unSelectedIcon,
                                                                   height: FetchPixels
                                                                       .getPixelHeight(
-                                                                          25),
-                                                                  width: FetchPixels
-                                                                      .getPixelWidth(
-                                                                          25),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        );
-                                                      } else {
-                                                        return Container();
-                                                      }
-                                                    }),
-                                              ),
+                                                                          20)),
+                                                            );
+                                                          }
+                                                          return Container();
+                                                        }),
+                                                  ),
+                                                )
+                                              ],
                                             )
                                           ],
                                         ),

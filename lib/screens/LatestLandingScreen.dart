@@ -71,17 +71,19 @@ class _LatestLandingScreenState extends State<LatestLandingScreen> {
         body: Container(
             height: FetchPixels.height,
             width: FetchPixels.width,
-            child: CardSwiper(
-              padding: EdgeInsets.only(left: 1),
-              isLoop: true,
-              controller: cardSwiperController,
-              allowedSwipeDirection: AllowedSwipeDirection.only(
-                  right: false, left: false, down: false, up: true),
-              cardBuilder: (context, index) {
-                return FeedView(news: newsList[index], index: index);
-              },
-              cardsCount: newsList.length,
-            )),
+            child: newsList.length == 0
+                ? Container()
+                : CardSwiper(
+                    padding: EdgeInsets.only(left: 1),
+                    isLoop: true,
+                    controller: cardSwiperController,
+                    allowedSwipeDirection: AllowedSwipeDirection.only(
+                        right: false, left: false, down: false, up: true),
+                    cardBuilder: (context, index) {
+                      return FeedView(news: newsList[index], index: index);
+                    },
+                    cardsCount: newsList.length,
+                  )),
       ),
     );
   }

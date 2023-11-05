@@ -80,6 +80,7 @@ class _NewsFeedViewState extends State<NewsFeedView> {
   @override
   Widget build(BuildContext context) {
     // String title = "Feed";
+
     List<NewsModel> newsList = Provider.of<NewsProvider>(context).newsList;
     List<String> refId = Provider.of<NewsProvider>(context).refId;
 
@@ -148,6 +149,13 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                                 : newsList.length,
                             itemBuilder: (ctx, index) {
                               if (newsList.isNotEmpty) {
+                                var ref = firestore
+                                    .collection("News")
+                                    .doc(refId[index - index ~/ 5])
+                                    .set({
+                                  "readBy": FieldValue.arrayUnion(
+                                      [auth.currentUser!.uid])
+                                }, SetOptions(merge: true));
                                 return Container(
                                     // key: UniqueKey(),
                                     color: R.colors.bgColor,
@@ -189,7 +197,7 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                                               ),
                                             ),
                                             getVerSpace(
-                                                FetchPixels.getPixelHeight(15)),
+                                                FetchPixels.getPixelHeight(10)),
                                             Padding(
                                               padding:
                                                   const EdgeInsets.symmetric(
@@ -208,9 +216,15 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                                                             .colors.blackColor),
                                               ),
                                             ),
+                                            getVerSpace(
+                                                FetchPixels.getPixelHeight(10)),
                                             Padding(
-                                              padding:
-                                                  const EdgeInsets.all(20.0),
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal:
+                                                      FetchPixels.getPixelWidth(
+                                                          20),
+                                                  vertical: FetchPixels
+                                                      .getPixelHeight(10)),
                                               child: Text(
                                                 newsList[index - index ~/ 5]
                                                     .coinDescription!,
@@ -229,11 +243,11 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                                               ),
                                             ),
                                             getVerSpace(
-                                                FetchPixels.getPixelHeight(10)),
+                                                FetchPixels.getPixelHeight(5)),
                                             Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 20.0),
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: FetchPixels
+                                                        .getPixelWidth(20)),
                                                 child: Row(
                                                   children: [
                                                     Text(
@@ -285,7 +299,7 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                                                   ],
                                                 )),
                                             getVerSpace(
-                                                FetchPixels.getPixelWidth(2)),
+                                                FetchPixels.getPixelWidth(10)),
                                             Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.start,
@@ -430,10 +444,12 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                                                             return Container(
                                                               decoration: BoxDecoration(
                                                                   borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              5),
+                                                                      BorderRadius.circular(
+                                                                          5),
                                                                   border: Border.all(
+                                                                      width: FetchPixels
+                                                                          .getPixelWidth(
+                                                                              0.5),
                                                                       color: R
                                                                           .colors
                                                                           .unSelectedIcon)),
@@ -492,7 +508,7 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                                                                             20),
                                                                     width: FetchPixels
                                                                         .getPixelWidth(
-                                                                            1.5),
+                                                                            0.5),
                                                                     color: R
                                                                         .colors
                                                                         .unSelectedIcon,
@@ -544,7 +560,7 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                                                                             20),
                                                                     width: FetchPixels
                                                                         .getPixelWidth(
-                                                                            1.5),
+                                                                            0.5),
                                                                     color: R
                                                                         .colors
                                                                         .unSelectedIcon,
@@ -571,7 +587,7 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                                                                         padding: EdgeInsets.symmetric(
                                                                             horizontal:
                                                                                 FetchPixels.getPixelWidth(15),
-                                                                            vertical: FetchPixels.getPixelHeight(2)),
+                                                                            vertical: FetchPixels.getPixelHeight(2.5)),
                                                                         child:
                                                                             getAssetImage(
                                                                           R.images

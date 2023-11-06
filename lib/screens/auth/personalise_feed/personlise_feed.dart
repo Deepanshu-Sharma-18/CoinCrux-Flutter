@@ -33,7 +33,8 @@ class _PersonaliseFeedState extends State<PersonaliseFeed> {
           body: getPaddingWidget(
             EdgeInsets.symmetric(horizontal: FetchPixels.getPixelWidth(20)),
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              getVerSpace(FetchPixels.getPixelHeight(50)),
+              getVerSpace(FetchPixels.getPixelHeight(25)),
+              getVerSpace(FetchPixels.getPixelHeight(25)),
               Text(
                 "Personalise your Feed!",
                 style: R.textStyle

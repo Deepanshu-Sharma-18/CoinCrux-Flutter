@@ -41,10 +41,15 @@ class NewsProvider extends ChangeNotifier {
         final newsData = element.data();
         final imageUrl = await getImageUrl(newsData['coinImage']);
         newsData['coinImage'] = imageUrl;
-        refId.add(element.reference.id);
-        final newsModel = NewsModel.fromMap(newsData);
+        if (newsData['readBy'] == null ||
+            newsData['readBy']
+                    .contains(FirebaseAuth.instance.currentUser!.uid) ==
+                false) {
+          refId.add(element.reference.id);
+          final newsModel = NewsModel.fromMap(newsData);
 
-        newsList.add(newsModel);
+          newsList.add(newsModel);
+        }
       }
 
       isLoading = false;

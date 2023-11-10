@@ -127,10 +127,12 @@ class LatestNewsWidget extends StatelessWidget {
                             Icon(
                               firebaseAuth.currentUser == null
                                   ? Icons.bookmark_outline_outlined
-                                  : authProvider.userM.bookMarks!
-                                          .contains(news.newsId)
-                                      ? Icons.bookmark
-                                      : Icons.bookmark_outline_outlined,
+                                  // : authProvider.userM.bookMarks!.contains(
+                                  //         news.newsId != null
+                                  //             ? news.newsId
+                                  //             : "")
+                                  //     ? Icons.bookmark
+                                  : Icons.bookmark_outline_outlined,
                               color: firebaseAuth.currentUser == null
                                   ? R.colors.blackColor.withOpacity(0.5)
                                   : authProvider.userM.bookMarks == null
@@ -141,33 +143,15 @@ class LatestNewsWidget extends StatelessWidget {
                                           : R.colors.blackColor
                                               .withOpacity(0.5),
                             ),
-                            InkWell(
-                              borderRadius: BorderRadius.circular(
-                                  FetchPixels.getPixelHeight(50)),
-                              onTap: () {
-                                Share.share(
-                                    'check out my Application https://example.com',
-                                    subject: 'Look what I made!');
-                              },
-                              child: Container(
-                                padding: EdgeInsets.all(
-                                    FetchPixels.getPixelHeight(6)),
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: R.colors.whiteColor),
-                                child: Center(
-                                    child: getAssetImage(R.images.shareIcon,
-                                        scale: 2.5)),
-                              ),
-                            ),
                           ],
                         ),
-                        getHorSpace(FetchPixels.getPixelWidth(1)),
+                        getHorSpace(FetchPixels.getPixelWidth(10)),
                       ],
                     )
                   ],
                 ),
-              )
+              ),
+              getVerSpace(FetchPixels.getPixelHeight(10))
             ],
           ),
         ),

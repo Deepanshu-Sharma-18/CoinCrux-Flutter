@@ -14,7 +14,7 @@ import '../../../../../resources/resources.dart';
 
 class LatestViewAll extends StatelessWidget {
   final NewsModel news;
-  bool isNotification = true;
+  bool isNotification = false;
   int index;
   LatestViewAll(
       {Key? key,
@@ -25,14 +25,14 @@ class LatestViewAll extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<String> loadImage(String image) async {
-      if (image.isNotEmpty) {
-        Reference ref = FirebaseStorage.instance.ref().child(image);
-        String imageUrl = await ref.getDownloadURL();
-        return imageUrl;
-      }
-      return ""; // Return a default value if imagePath is empty
-    }
+    // Future<String> loadImage(String? image) async {
+    //   if (image != null && image.isNotEmpty) {
+    //     Reference ref = FirebaseStorage.instance.ref().child(image);
+    //     String imageUrl = await ref.getDownloadURL();
+    //     return imageUrl;
+    //   }
+    //   return ""; // Return a default value if imagePath is empty
+    // }
 
     return Column(
       children: [
@@ -47,32 +47,13 @@ class LatestViewAll extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(5),
-                child: FutureBuilder(
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      if (snapshot.data == null) {
-                        return Container(
-                          height: FetchPixels.getPixelHeight(70),
-                          width: FetchPixels.getPixelWidth(70),
-                          child: Image.asset(
-                            R.images.logo,
-                            fit: BoxFit.cover,
-                          ),
-                        );
-                      }
-                      return Container(
-                        height: FetchPixels.getPixelHeight(70),
-                        width: FetchPixels.getPixelWidth(70),
-                        child: Image.network(
-                          snapshot.data.toString(),
-                          fit: BoxFit.cover,
-                        ),
-                      );
-                    } else {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                  },
-                  future: loadImage(news.coinImage!),
+                child: Container(
+                  height: FetchPixels.getPixelHeight(70),
+                  width: FetchPixels.getPixelWidth(70),
+                  child: Image.network(
+                    news.coinImage!,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               getHorSpace(FetchPixels.getPixelWidth(10)),

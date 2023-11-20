@@ -26,7 +26,7 @@ class _LatestLandingScreenState extends State<LatestLandingScreen> {
 
   @override
   void initState() {
-    AuthProvider auth = Provider.of(context, listen: false);
+    AuthProviderApp auth = Provider.of(context, listen: false);
     if (firebaseAuth.currentUser != null) {
       auth.userSubscription =
           auth.getUser(firebaseFirestore, firebaseAuth).listen((event) {

@@ -1,4 +1,5 @@
 import 'package:coincrux/screens/auth/provider/auth_provider.dart';
+import 'package:coincrux/screens/dashboard/news_feed/news_feed_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
@@ -23,7 +24,7 @@ class LatestNewsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AuthProvider authProvider = Provider.of(context, listen: false);
+    AuthProviderApp authProvider = Provider.of(context, listen: false);
     return InkWell(
       onTap: () {
         // Get.to(NewsDetailPage(
@@ -177,8 +178,8 @@ class MyLatestNewsWidget extends StatelessWidget {
         //   news: news,
         //   index: index,
         // ));
-        Get.to(CoinCategoryView(
-          coinName: news.assetName ?? "BTC",
+        Get.to(NewsFeedView(
+          index: index,
         ));
       },
       child: getPaddingWidget(

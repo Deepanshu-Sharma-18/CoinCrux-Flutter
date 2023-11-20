@@ -18,19 +18,19 @@ import 'package:provider/provider.dart';
 import '../../../resources/resources.dart';
 
 class NewsFeedView extends StatefulWidget {
+  int? index = 0;
   NewsFeedView({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+    this.index,
+  });
 
   @override
   State<NewsFeedView> createState() => _NewsFeedViewState();
 }
 
 class _NewsFeedViewState extends State<NewsFeedView> {
-  CardSwiperController cardSwiperController = CardSwiperController();
   int currentType = 0;
   var isLoading = true;
-  PageController pageCT = PageController();
 
   Timer? _appBarTimer;
   bool _isAppBarVisible = true;
@@ -49,7 +49,7 @@ class _NewsFeedViewState extends State<NewsFeedView> {
 
   void startLoadingTimer() {
     const loadingDuration =
-        Duration(seconds: 2); // Adjust the duration as needed
+        Duration(seconds: 8); // Adjust the duration as needed
 
     Timer(loadingDuration, () {
       setState(() {
@@ -87,7 +87,7 @@ class _NewsFeedViewState extends State<NewsFeedView> {
     var auth = FirebaseAuth.instance;
     var firestore = FirebaseFirestore.instance;
 
-    var controller = PageController(initialPage: 0);
+    var controller = PageController(initialPage: widget.index ?? 0);
     final customImagesCount = (newsList.length / 5).floor;
     Future<void> _refreshData() async {
       setState(() {
@@ -103,7 +103,7 @@ class _NewsFeedViewState extends State<NewsFeedView> {
           preferredSize: Size.fromHeight(_isAppBarVisible ? kToolbarHeight : 0),
           child: AnimatedContainer(
             duration: Duration(milliseconds: 200), // Adjust animation duration
-            height: _isAppBarVisible ? kToolbarHeight : 0,
+            height: _isAppBarVisible ? 100 : 0,
             child: AppBar(
               iconTheme: IconThemeData(
                 color: R.colors.blackColor, //change your color here
@@ -615,7 +615,7 @@ class _NewsFeedViewState extends State<NewsFeedView> {
                                                         100)),
                                                 InkWell(
                                                   onTap: () {
-                                                    AuthProvider
+                                                    AuthProviderApp
                                                         .updateBookmarks(
                                                             refId[index -
                                                                 index ~/ 5],

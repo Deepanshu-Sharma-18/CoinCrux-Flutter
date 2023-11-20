@@ -41,7 +41,7 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AuthProvider>(
+    return Consumer<AuthProviderApp>(
       builder: (context, auth, child) {
         return Scaffold(
           backgroundColor: R.colors.bgColor,

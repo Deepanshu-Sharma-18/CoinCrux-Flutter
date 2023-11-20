@@ -30,7 +30,7 @@ class _BookmarkState extends State<Bookmark> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<NewsProvider, AuthProvider>(
+    return Consumer2<NewsProvider, AuthProviderApp>(
       builder: (context, newsProvider, authProvider, child) {
         return Scaffold(
           backgroundColor: R.colors.bgColor,
@@ -173,7 +173,7 @@ class _BookmarkState extends State<Bookmark> {
                                         index: index,
                                       )
                                     : LatestViewAll(
-                                        isNotification: false,
+                                        isNotification: true,
                                         news: filteredNews[index],
                                         index: index);
                               },

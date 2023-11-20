@@ -27,7 +27,7 @@ class _PersonaliseFeedState extends State<PersonaliseFeed> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AuthProvider>(
+    return Consumer<AuthProviderApp>(
       builder: (context, auth, child) {
         return Scaffold(
           body: getPaddingWidget(

@@ -14,7 +14,7 @@ import '../../dashboard/home/model/category_model.dart';
 import '../userModel.dart';
 import 'package:http/http.dart' as http;
 
-class AuthProvider extends ChangeNotifier {
+class AuthProviderApp extends ChangeNotifier {
   update() {
     notifyListeners();
   }
